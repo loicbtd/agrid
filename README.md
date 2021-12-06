@@ -12,7 +12,7 @@
 
 -   node 16.13.1 installed
 
--   npm 16.13.1 installed
+-   npm 8.1.2 installed
 
 ### Setup
 
