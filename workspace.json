@@ -1,11 +1,119 @@
 {
   "version": 2,
   "projects": {
+    "angular-components-blockablediv": {
+      "projectType": "library",
+      "root": "libs/angular-components-blockablediv",
+      "sourceRoot": "libs/angular-components-blockablediv/src",
+      "prefix": "workspace",
+      "targets": {
+        "build": {
+          "executor": "@nrwl/angular:ng-packagr-lite",
+          "outputs": ["dist/libs/angular-components-blockablediv"],
+          "options": {
+            "project": "libs/angular-components-blockablediv/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "libs/angular-components-blockablediv/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "libs/angular-components-blockablediv/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/angular-components-blockablediv/src/**/*.ts",
+              "libs/angular-components-blockablediv/src/**/*.html"
+            ]
+          }
+        }
+      }
+    },
+    "common-regexp": {
+      "root": "libs/common-regexp",
+      "sourceRoot": "libs/common-regexp/src",
+      "projectType": "library",
+      "targets": {
+        "build": {
+          "executor": "@nrwl/node:package",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "dist/libs/common-regexp",
+            "tsConfig": "libs/common-regexp/tsconfig.lib.json",
+            "packageJson": "libs/common-regexp/package.json",
+            "main": "libs/common-regexp/src/index.ts",
+            "assets": ["libs/common-regexp/*.md"]
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "outputs": ["{options.outputFile}"],
+          "options": {
+            "lintFilePatterns": ["libs/common-regex/**/*.ts"]
+          }
+        }
+      }
+    },
+    "common-requests": {
+      "root": "libs/common-requests",
+      "sourceRoot": "libs/common-requests/src",
+      "projectType": "library",
+      "targets": {
+        "build": {
+          "executor": "@nrwl/node:package",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "dist/libs/common-requests",
+            "tsConfig": "libs/common-requests/tsconfig.lib.json",
+            "packageJson": "libs/common-requests/package.json",
+            "main": "libs/common-requests/src/index.ts",
+            "assets": ["libs/common-requests/*.md"]
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "outputs": ["{options.outputFile}"],
+          "options": {
+            "lintFilePatterns": ["libs/common-requests/**/*.ts"]
+          }
+        }
+      }
+    },
+    "common-responses": {
+      "root": "libs/common-responses",
+      "sourceRoot": "libs/common-responses/src",
+      "projectType": "library",
+      "targets": {
+        "build": {
+          "executor": "@nrwl/node:package",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "dist/libs/common-responses",
+            "tsConfig": "libs/common-responses/tsconfig.lib.json",
+            "packageJson": "libs/common-responses/package.json",
+            "main": "libs/common-responses/src/index.ts",
+            "assets": ["libs/common-responses/*.md"]
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "outputs": ["{options.outputFile}"],
+          "options": {
+            "lintFilePatterns": ["libs/common-responses/**/*.ts"]
+          }
+        }
+      }
+    },
     "webapp": {
       "projectType": "application",
       "root": "apps/webapp",
       "sourceRoot": "apps/webapp/src",
-      "prefix": "agrid",
+      "prefix": "webapp",
       "targets": {
         "build": {
           "executor": "@angular-devkit/build-angular:browser",

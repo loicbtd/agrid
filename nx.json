@@ -1,5 +1,5 @@
 {
-  "npmScope": "agrid",
+  "npmScope": "workspace",
   "affected": {
     "defaultBase": "master"
   },
@@ -27,6 +27,18 @@
     ]
   },
   "projects": {
+    "angular-components-blockablediv": {
+      "tags": []
+    },
+    "common-regexp": {
+      "tags": []
+    },
+    "common-requests": {
+      "tags": []
+    },
+    "common-responses": {
+      "tags": []
+    },
     "webapp": {
       "tags": []
     },

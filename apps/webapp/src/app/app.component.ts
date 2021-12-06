@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { BlockUiService } from './global/services/block-ui.service';
 
 @Component({
   selector: 'agrid-root',
@@ -6,5 +7,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  title = 'webapp';
+  constructor(private readonly _blockUiService: BlockUiService) {}
+
+  get $uiBlocked() {
+    return this._blockUiService.$uiBlocked;
+  }
 }

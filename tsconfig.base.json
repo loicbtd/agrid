@@ -14,7 +14,14 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@workspace/angular/components/blockablediv": [
+        "libs/angular-components-blockablediv/src/index.ts"
+      ],
+      "@workspace/common/regexp": ["libs/common-regexp/src/index.ts"],
+      "@workspace/common/requests": ["libs/common-requests/src/index.ts"],
+      "@workspace/common/responses": ["libs/common-responses/src/index.ts"]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }
