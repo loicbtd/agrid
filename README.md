@@ -4,15 +4,15 @@
 
 ### Prerequisites
 
--   Visual Studio Code Installed
+- Visual Studio Code Installed
 
--   Visual Studio Code [Nx Console](https://marketplace.visualstudio.com/items?itemName=nrwl.angular-console) extension installed
+- Visual Studio Code [Nx Console](https://marketplace.visualstudio.com/items?itemName=nrwl.angular-console) extension installed
 
--   Visual Studio Code [Prettier - Code formatter](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode) extension installed
+- Visual Studio Code [Prettier - Code formatter](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode) extension installed
 
--   node 16.13.1 installed
+- node 16.13.1 installed
 
--   npm 8.1.2 installed
+- npm 8.1.2 installed
 
 ### Setup
 
@@ -26,7 +26,28 @@
 
 #### Start the webservice and the webapp
 
-1. Open a terminal in the repository directory and run `npm start`
+1. Create a `.env` file in the root of the repository with the following content :
+
+```conf
+WEBSERVICE_ALLOWED_ORIGIN="http://localhost:4200"
+WEBSERVICE_JWT_SECRET="secret"
+WEBSERVICE_JWT_EXPIRATION_TIME="48h"
+WEBSERVICE_HOST="localhost"
+WEBSERVICE_PORT="3333"
+WEBSERVICE_EMAIL_SENDER_ADDRESS="user@company.com"
+WEBSERVICE_EMAIL_SENDER_NAME="user"
+WEBSERVICE_EMAIL_SENDER_LOGIN="login"
+WEBSERVICE_EMAIL_SENDER_PASSWORD="password",
+WEBSERVICE_EMAIL_SENDER_SMTP_HOST="localhost"
+WEBSERVICE_APPLICATION_NAME="App"
+WEBSERVICE_DATABASE_HOST="localhost"
+WEBSERVICE_DATABASE_PORT="3306"
+WEBSERVICE_DATABASE_NAME="database"
+WEBSERVICE_DATABASE_LOGIN="login"
+WEBSERVICE_DATABASE_PASSWORD="password"
+```
+
+2. Open a terminal in the repository directory and run `npm start`
 
 ### Update application version number property
 
@@ -42,14 +63,14 @@
 
 # Technological stack
 
--   Language : [TypeScript](https://www.typescriptlang.org/)
--   Language framework : [Node.js](https://nodejs.org)
--   Workspace : [Nx workspace](https://nx.dev)
--   Frontend framework : [Angular](https://angular.io)
--   Angular components : [PrimeNG](https://primefaces.org/primeng/showcase)
--   CSS framework : [PrimeFlex](https://www.primefaces.org/primeflex/display)
--   Icons pack : [Font Awesome](https://fontawesome.com/v5.15/icons)
--   ORM : [TypeORM](https://typeorm.io/#/)
+- Language : [TypeScript](https://www.typescriptlang.org/)
+- Language framework : [Node.js](https://nodejs.org)
+- Workspace : [Nx workspace](https://nx.dev)
+- Frontend framework : [Angular](https://angular.io)
+- Angular components : [PrimeNG](https://primefaces.org/primeng/showcase)
+- CSS framework : [PrimeFlex](https://www.primefaces.org/primeflex/display)
+- Icons pack : [Font Awesome](https://fontawesome.com/v5.15/icons)
+- ORM : [TypeORM](https://typeorm.io/#/)
 
 # Changelog
 

@@ -1,6 +1,3 @@
-import { ExternalApiService } from './services/external-api.service';
-import { Interest } from './entities/interest.entity';
-import { Webinar } from './entities/webinar.entity';
 import { EmailsService } from './services/emails.service';
 import { JwtModule } from '@nestjs/jwt';
 import { Global, HttpModule, Module } from '@nestjs/common';
@@ -8,22 +5,20 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from '../domain/entities/user.entity';
 import { PassportModule } from '@nestjs/passport';
 import { JwtStrategy } from './strategies/jwt.strategy';
+import { environment } from '../../environments/environment';
+import { UsersService } from './services/users.service';
 
-const PROVIDERS = [
-  EmailsService,
-  ExternalApiService,
-  JwtStrategy,
-];
+const PROVIDERS = [EmailsService, UsersService, JwtStrategy];
 
-const ENTITIES = [User, Webinar, Interest];
+const ENTITIES = [User];
 
 @Global()
 @Module({
   imports: [
     JwtModule.register({
-      secret: environment.jwtsecret,
+      secret: environment.jwtSecret,
       signOptions: {
-        expiresIn: environment.jwtexpiresIn,
+        expiresIn: environment.jwtExpirationTime,
       },
     }),
     PassportModule,
@@ -32,16 +27,16 @@ const ENTITIES = [User, Webinar, Interest];
       maxRedirects: 5,
     }),
     TypeOrmModule.forRoot({
-      type: 'postgres',
-      host: environment.typeormHost,
-      port: environment.typeormPort,
-      username: environment.typeormUsername,
-      password: environment.typeormPassword,
-      database: environment.typeormDatabase,
+      type: 'mariadb',
+      host: environment.databaseHost,
+      port: environment.databasePort,
+      username: environment.databaseLogin,
+      password: environment.databasePassword,
+      database: environment.databaseName,
       autoLoadEntities: true,
       synchronize: true,
-      logging: environment.typeormLogging,
-      cache: environment.typeormCache,
+      logging: true,
+      cache: environment.production,
     }),
     TypeOrmModule.forFeature([...ENTITIES]),
   ],

@@ -1,9 +1,9 @@
-import { environment } from 'environments/environment';
 import { Global, Module } from '@nestjs/common';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
 import { MailerModule } from '@nestjs-modules/mailer';
+import { environment } from '../../environments/environment';
 
 @Global()
 @Module({
@@ -14,17 +14,17 @@ import { MailerModule } from '@nestjs-modules/mailer';
     }),
     MailerModule.forRoot({
       transport: {
-        host: environment.emailSmtpServer,
+        host: environment.emailSenderSmtpHost,
         port: 465,
         auth: {
-          user: environment.emailAddress,
-          pass: environment.emailPassword,
+          user: environment.emailSenderLogin,
+          pass: environment.emailSenderPassword,
         },
-        logger: environment.debug,
-        debug: environment.debug,
+        logger: true,
+        debug: !environment.production,
       },
       defaults: {
-        from: environment.emailFrom,
+        from: `${environment.emailSenderName} <${environment.emailSenderAddress}>`,
       },
       template: {
         dir: join(__dirname, 'mail-templates'),

@@ -1,3 +1,3 @@
-export enum EmailTemplate {
+export enum EmailTemplateEnumeration {
   Welcome = 'Welcome',
 }

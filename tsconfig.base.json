@@ -15,8 +15,9 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@agrid/common/requests": ["libs/common-requests/src/index.ts"],
-      "@agrid/common/responses": ["libs/common-responses/src/index.ts"]
+      "@workspace/common/regexp": ["libs/common-regexp/src/index.ts"],
+      "@workspace/common/requests": ["libs/common-requests/src/index.ts"],
+      "@workspace/common/responses": ["libs/common-responses/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

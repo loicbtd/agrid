@@ -1,5 +1,5 @@
 {
-  "npmScope": "agrid",
+  "npmScope": "workspace",
   "affected": {
     "defaultBase": "master"
   },
@@ -27,6 +27,9 @@
     ]
   },
   "projects": {
+    "common-regexp": {
+      "tags": []
+    },
     "common-requests": {
       "tags": []
     },

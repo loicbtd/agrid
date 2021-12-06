@@ -1,6 +1,31 @@
 {
   "version": 2,
   "projects": {
+    "common-regexp": {
+      "root": "libs/common-regexp",
+      "sourceRoot": "libs/common-regexp/src",
+      "projectType": "library",
+      "targets": {
+        "build": {
+          "executor": "@nrwl/node:package",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "dist/libs/common-regexp",
+            "tsConfig": "libs/common-regexp/tsconfig.lib.json",
+            "packageJson": "libs/common-regexp/package.json",
+            "main": "libs/common-regexp/src/index.ts",
+            "assets": ["libs/common-regexp/*.md"]
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "outputs": ["{options.outputFile}"],
+          "options": {
+            "lintFilePatterns": ["libs/common-regex/**/*.ts"]
+          }
+        }
+      }
+    },
     "common-requests": {
       "root": "libs/common-requests",
       "sourceRoot": "libs/common-requests/src",
@@ -55,7 +80,7 @@
       "projectType": "application",
       "root": "apps/webapp",
       "sourceRoot": "apps/webapp/src",
-      "prefix": "agrid",
+      "prefix": "webapp",
       "targets": {
         "build": {
           "executor": "@angular-devkit/build-angular:browser",
