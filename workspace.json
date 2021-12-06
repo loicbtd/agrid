@@ -108,6 +108,49 @@
           }
         }
       }
+    },
+    "webservice": {
+      "root": "apps/webservice",
+      "sourceRoot": "apps/webservice/src",
+      "projectType": "application",
+      "targets": {
+        "build": {
+          "executor": "@nrwl/node:build",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "dist/apps/webservice",
+            "main": "apps/webservice/src/main.ts",
+            "tsConfig": "apps/webservice/tsconfig.app.json",
+            "assets": ["apps/webservice/src/assets"]
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "extractLicenses": true,
+              "inspect": false,
+              "fileReplacements": [
+                {
+                  "replace": "apps/webservice/src/environments/environment.ts",
+                  "with": "apps/webservice/src/environments/environment.prod.ts"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "executor": "@nrwl/node:execute",
+          "options": {
+            "buildTarget": "webservice:build"
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "outputs": ["{options.outputFile}"],
+          "options": {
+            "lintFilePatterns": ["apps/webservice/**/*.ts"]
+          }
+        }
+      }
     }
   },
   "cli": {
