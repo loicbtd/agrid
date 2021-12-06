@@ -30,10 +30,6 @@
     "webapp": {
       "tags": []
     },
-    "webapp-e2e": {
-      "tags": [],
-      "implicitDependencies": ["webapp"]
-    },
     "webservice": {
       "tags": []
     }
