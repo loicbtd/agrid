@@ -1,6 +1,56 @@
 {
   "version": 2,
   "projects": {
+    "common-requests": {
+      "root": "libs/common-requests",
+      "sourceRoot": "libs/common-requests/src",
+      "projectType": "library",
+      "targets": {
+        "build": {
+          "executor": "@nrwl/node:package",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "dist/libs/common-requests",
+            "tsConfig": "libs/common-requests/tsconfig.lib.json",
+            "packageJson": "libs/common-requests/package.json",
+            "main": "libs/common-requests/src/index.ts",
+            "assets": ["libs/common-requests/*.md"]
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "outputs": ["{options.outputFile}"],
+          "options": {
+            "lintFilePatterns": ["libs/common-requests/**/*.ts"]
+          }
+        }
+      }
+    },
+    "common-responses": {
+      "root": "libs/common-responses",
+      "sourceRoot": "libs/common-responses/src",
+      "projectType": "library",
+      "targets": {
+        "build": {
+          "executor": "@nrwl/node:package",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "dist/libs/common-responses",
+            "tsConfig": "libs/common-responses/tsconfig.lib.json",
+            "packageJson": "libs/common-responses/package.json",
+            "main": "libs/common-responses/src/index.ts",
+            "assets": ["libs/common-responses/*.md"]
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "outputs": ["{options.outputFile}"],
+          "options": {
+            "lintFilePatterns": ["libs/common-responses/**/*.ts"]
+          }
+        }
+      }
+    },
     "webapp": {
       "projectType": "application",
       "root": "apps/webapp",
