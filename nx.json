@@ -27,6 +27,9 @@
     ]
   },
   "projects": {
+    "angular-components-blockablediv": {
+      "tags": []
+    },
     "common-regexp": {
       "tags": []
     },

@@ -1,6 +1,39 @@
 {
   "version": 2,
   "projects": {
+    "angular-components-blockablediv": {
+      "projectType": "library",
+      "root": "libs/angular-components-blockablediv",
+      "sourceRoot": "libs/angular-components-blockablediv/src",
+      "prefix": "workspace",
+      "targets": {
+        "build": {
+          "executor": "@nrwl/angular:ng-packagr-lite",
+          "outputs": ["dist/libs/angular-components-blockablediv"],
+          "options": {
+            "project": "libs/angular-components-blockablediv/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "libs/angular-components-blockablediv/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "libs/angular-components-blockablediv/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/angular-components-blockablediv/src/**/*.ts",
+              "libs/angular-components-blockablediv/src/**/*.html"
+            ]
+          }
+        }
+      }
+    },
     "common-regexp": {
       "root": "libs/common-regexp",
       "sourceRoot": "libs/common-regexp/src",
