@@ -1,7 +1,7 @@
 {
   "name": "agrid",
   "version": "0.1.0",
-  "license": "MIT",
+  "license": "UNLICENSED",
   "scripts": {
     "start:step1": "nx serve webservice",
     "start:step2": "wait-on tcp:3333 && nx serve webapp",
