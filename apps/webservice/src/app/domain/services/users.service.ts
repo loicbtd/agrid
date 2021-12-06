@@ -10,6 +10,7 @@ import {
 import {
   BadRequestException,
   ConflictException,
+  InternalServerErrorException,
   Injectable,
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
@@ -66,11 +67,15 @@ export class UsersService {
       throw new ConflictException();
     }
 
-    this.emailsService.send(
-      EmailTemplateEnumeration.Welcome,
-      command.email,
-      `[${environment.applicationName}] Welcome !`
-    );
+    try {
+      this.emailsService.send(
+        EmailTemplateEnumeration.Welcome,
+        command.email,
+        `[${environment.applicationName}] Welcome !`
+      );
+    } catch (error) {
+      throw new InternalServerErrorException();
+    }
   }
 
   async whoami(userId: string): Promise<WhoamiResponseDto> {
