@@ -233,6 +233,31 @@
           }
         }
       }
+    },
+    "winston-transports": {
+      "root": "libs/winston-transports",
+      "sourceRoot": "libs/winston-transports/src",
+      "projectType": "library",
+      "targets": {
+        "build": {
+          "executor": "@nrwl/node:package",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "dist/libs/winston-transports",
+            "tsConfig": "libs/winston-transports/tsconfig.lib.json",
+            "packageJson": "libs/winston-transports/package.json",
+            "main": "libs/winston-transports/src/index.ts",
+            "assets": ["libs/winston-transports/*.md"]
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "outputs": ["{options.outputFile}"],
+          "options": {
+            "lintFilePatterns": ["libs/winston-transports/**/*.ts"]
+          }
+        }
+      }
     }
   },
   "cli": {

@@ -1,6 +1,6 @@
 import { EmailsService } from './services/emails.service';
 import { JwtModule } from '@nestjs/jwt';
-import { Global, HttpModule, Module } from '@nestjs/common';
+import { Global, HttpModule, Logger, Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from '../domain/entities/user.entity';
 import { PassportModule } from '@nestjs/passport';
@@ -35,12 +35,12 @@ const ENTITIES = [User];
       database: environment.databaseName,
       autoLoadEntities: true,
       synchronize: true,
-      logging: true,
+      logging: false,
       cache: environment.production,
     }),
     TypeOrmModule.forFeature([...ENTITIES]),
   ],
-  providers: [...PROVIDERS],
+  providers: [...PROVIDERS, Logger],
   exports: [...PROVIDERS, JwtModule, TypeOrmModule, HttpModule, PassportModule],
 })
 export class DomainModule {}

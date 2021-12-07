@@ -44,6 +44,9 @@
     },
     "webservice": {
       "tags": []
+    },
+    "winston-transports": {
+      "tags": []
     }
   }
 }

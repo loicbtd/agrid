@@ -40,6 +40,7 @@
     "handlebars": "^4.7.7",
     "helmet": "^4.4.1",
     "mysql": "^2.18.1",
+    "nest-winston": "^1.6.2",
     "nodemailer": "^6.5.0",
     "passport": "^0.4.1",
     "passport-jwt": "^4.0.0",
@@ -54,6 +55,7 @@
     "typeorm": "^0.2.31",
     "typeorm-uml": "^1.6.2",
     "validator": "^13.5.2",
+    "winston": "^3.3.3",
     "zone.js": "~0.11.4"
   },
   "devDependencies": {

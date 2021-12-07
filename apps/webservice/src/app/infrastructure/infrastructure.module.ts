@@ -1,4 +1,4 @@
-import { Global, Module } from '@nestjs/common';
+import { Global, Logger, Module } from '@nestjs/common';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
@@ -7,6 +7,7 @@ import { environment } from '../../environments/environment';
 
 @Global()
 @Module({
+  providers: [Logger],
   imports: [
     MailerModule.forRoot({
       transport: {
@@ -16,7 +17,6 @@ import { environment } from '../../environments/environment';
           user: environment.emailSenderLogin,
           pass: environment.emailSenderPassword,
         },
-        logger: true,
         debug: !environment.production,
       },
       defaults: {

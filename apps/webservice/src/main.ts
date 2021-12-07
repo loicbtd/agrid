@@ -8,6 +8,8 @@ import { AppModule } from './app/app.module';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import * as helmet from 'helmet';
 import { environment } from './environments/environment';
+import { WinstonModule } from 'nest-winston';
+import { ConsoleTransport } from '@workspace/winston/transports';
 
 (async () => {
   const app = await NestFactory.create<NestFastifyApplication>(
@@ -15,6 +17,9 @@ import { environment } from './environments/environment';
     new FastifyAdapter(),
     {
       cors: true,
+      logger: WinstonModule.createLogger({
+        transports: [new ConsoleTransport()],
+      }),
     }
   );
 
