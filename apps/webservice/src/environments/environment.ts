@@ -12,8 +12,8 @@ export const environment = {
   port: Number(process.env.WEBSERVICE_PORT) || 3333,
   webserviceName: `${
     packageDotJson.name.charAt(0).toUpperCase() + packageDotJson.name.slice(1)
-  } Api Staging`,
-  version: 'staging',
+  } Api`,
+  version: 'local',
   emailSenderAddress: process.env.WEBSERVICE_EMAIL_SENDER_ADDRESS || '',
   emailSenderName: process.env.WEBSERVICE_EMAIL_SENDER_NAME || '',
   emailSenderLogin: process.env.WEBSERVICE_EMAIL_SENDER_LOGIN || '',

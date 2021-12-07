@@ -28,6 +28,13 @@ import { AppRoute } from './global/constants/app-route.constant';
             ),
         },
         {
+          path: AppRoute.subscription,
+          loadChildren: () =>
+            import('./modules/subscription/subscription.module').then(
+              (m) => m.SubsriptionModule
+            ),
+        },
+        {
           path: '**',
           redirectTo: AppRoute.showcase,
         },

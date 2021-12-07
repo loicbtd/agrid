@@ -1,0 +1,45 @@
+<p-card styleClass="m-2">
+  <div class="flex flex-row">
+    <p-button
+      routerLink="../step-2"
+      label="Suivant"
+      icon="pi pi-chevron-right"
+      iconPos="right"
+      class="ml-auto mb-auto"
+    >
+    </p-button>
+  </div>
+  <div class="flex flex-column">
+    <span class="p-float-label w-full">
+      <p-dropdown
+        inputId="database-type"
+        styleClass="w-full"
+        [autoDisplayFirst]="false"
+      ></p-dropdown>
+      <label for="database-type">Database type</label>
+    </span>
+    <ng-container>
+      <span class="p-float-label w-full mt-3">
+        <input id="database-username" type="text" pInputText class="w-full" />
+        <label for="database-username">Username</label>
+      </span>
+      <span class="p-float-label w-full mt-3">
+        <p-password
+          inputId="database-password"
+          styleClass="w-full"
+          [feedback]="false"
+          [toggleMask]="true"
+        ></p-password>
+        <label for="database-password">Password</label>
+      </span>
+    </ng-container>
+    <span class="p-float-label w-full mt-3">
+      <input id="database-server" type="text" pInputText class="w-full" />
+      <label for="database-server">Server</label>
+    </span>
+    <span class="p-float-label w-full mt-3">
+      <input id="database-database" type="text" pInputText class="w-full" />
+      <label for="database-database">Database</label>
+    </span>
+  </div>
+</p-card>
