@@ -19,6 +19,7 @@
     "@angular/platform-browser": "^12.2.0",
     "@angular/platform-browser-dynamic": "^12.2.0",
     "@angular/router": "^12.2.0",
+    "@fortawesome/fontawesome-free": "^5.15.4",
     "@nestjs-modules/mailer": "^1.5.1",
     "@nestjs/common": "^7.6.15",
     "@nestjs/config": "^0.5.0",
