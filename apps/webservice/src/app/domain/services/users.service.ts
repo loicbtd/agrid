@@ -14,7 +14,7 @@ import {
   Injectable,
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { User } from '../../domain/entities/user.entity';
+import { UserEntity } from '@workspace/common/entities';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import * as bcrypt from 'bcrypt';
@@ -23,8 +23,8 @@ import { EmailTemplateEnumeration } from '../enumerations/email-template.emumera
 @Injectable()
 export class UsersService {
   constructor(
-    @InjectRepository(User)
-    private userRepository: Repository<User>,
+    @InjectRepository(UserEntity)
+    private userRepository: Repository<UserEntity>,
     private jwtService: JwtService,
     private emailsService: EmailsService
   ) {}

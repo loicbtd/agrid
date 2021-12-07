@@ -2,7 +2,7 @@ import { EmailsService } from './services/emails.service';
 import { JwtModule } from '@nestjs/jwt';
 import { Global, HttpModule, Logger, Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { User } from '../domain/entities/user.entity';
+import { UserEntity } from '@workspace/common/entities';
 import { PassportModule } from '@nestjs/passport';
 import { JwtStrategy } from './strategies/jwt.strategy';
 import { environment } from '../../environments/environment';
@@ -10,7 +10,7 @@ import { UsersService } from './services/users.service';
 
 const PROVIDERS = [EmailsService, UsersService, JwtStrategy];
 
-const ENTITIES = [User];
+const ENTITIES = [UserEntity];
 
 @Global()
 @Module({
