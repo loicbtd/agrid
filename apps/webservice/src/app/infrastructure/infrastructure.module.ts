@@ -8,10 +8,6 @@ import { environment } from '../../environments/environment';
 @Global()
 @Module({
   imports: [
-    ServeStaticModule.forRoot({
-      serveRoot: '/static',
-      rootPath: join(__dirname, 'static'),
-    }),
     MailerModule.forRoot({
       transport: {
         host: environment.emailSenderSmtpHost,

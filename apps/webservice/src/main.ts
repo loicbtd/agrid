@@ -1,4 +1,7 @@
-import { NestFastifyApplication } from '@nestjs/platform-fastify';
+import {
+  FastifyAdapter,
+  NestFastifyApplication,
+} from '@nestjs/platform-fastify';
 import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app/app.module';
@@ -7,9 +10,13 @@ import * as helmet from 'helmet';
 import { environment } from './environments/environment';
 
 (async () => {
-  const app = await NestFactory.create<NestFastifyApplication>(AppModule, {
-    cors: true,
-  });
+  const app = await NestFactory.create<NestFastifyApplication>(
+    AppModule,
+    new FastifyAdapter(),
+    {
+      cors: true,
+    }
+  );
 
   const config = new DocumentBuilder()
     .setTitle(environment.webserviceName)
