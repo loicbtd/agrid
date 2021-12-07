@@ -1,8 +1,11 @@
 import { TokenPayload } from '../../domain/interfaces/token-payload.interface';
-import { WhoamiResponseDto } from '@workspace/common/responses';
+import {
+  SigninResponseDto,
+  WhoamiResponseDto,
+} from '@workspace/common/responses';
 import { SigninRequestDto } from '@workspace/common/requests';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
-import { Body, Controller, Post, Logger } from '@nestjs/common';
+import { Body, Controller, Post } from '@nestjs/common';
 import { UsersService } from '../../domain/services/users.service';
 import { RegisterRequestDto } from '@workspace/common/requests';
 import { Get, UseGuards } from '@nestjs/common/decorators';
@@ -12,14 +15,11 @@ import { JwtPayload } from '../../api/decorators/jwt-payload.decorator';
 @ApiTags('identities')
 @Controller('identities')
 export class IdentitiesController {
-  constructor(
-    private readonly usersService: UsersService,
-    private readonly logger: Logger
-  ) {}
+  constructor(private readonly usersService: UsersService) {}
 
   @Post('signin')
   @ApiOperation({ summary: 'Logs a user' })
-  async signin(@Body() command: SigninRequestDto): Promise<any> {
+  async signin(@Body() command: SigninRequestDto): Promise<SigninResponseDto> {
     return await this.usersService.signin(command);
   }
 
@@ -27,12 +27,6 @@ export class IdentitiesController {
   @ApiOperation({ summary: 'Registers a user' })
   async register(@Body() command: RegisterRequestDto): Promise<void> {
     await this.usersService.register(command);
-  }
-
-  @Post('test')
-  @ApiOperation({})
-  test(): void {
-    this.logger.log(1, 'test');
   }
 
   @ApiBearerAuth()

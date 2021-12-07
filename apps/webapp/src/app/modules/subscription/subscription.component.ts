@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 
 @Component({
-  selector: 'agrid-subscription',
+  selector: 'app-subscription',
   templateUrl: './subscription.component.html',
 })
 export class SubscriptionComponent {

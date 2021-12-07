@@ -10,9 +10,9 @@ export const environment = {
   jwtExpirationTime: process.env.WEBSERVICE_JWT_EXPIRATION_TIME || '48h',
   host: process.env.WEBSERVICE_HOST || 'localhost',
   port: Number(process.env.WEBSERVICE_PORT) || 3333,
-  webserviceName: `${
-    packageDotJson.name.charAt(0).toUpperCase() + packageDotJson.name.slice(1)
-  } Api`,
+  webserviceName: `${packageDotJson.name
+    .charAt(0)
+    .toUpperCase()}${packageDotJson.name.slice(1).split('-').join(' ')} Api`,
   version: 'local',
   emailSenderAddress: process.env.WEBSERVICE_EMAIL_SENDER_ADDRESS || '',
   emailSenderName: process.env.WEBSERVICE_EMAIL_SENDER_NAME || '',

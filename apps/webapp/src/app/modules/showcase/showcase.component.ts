@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'agrid-showcase',
+  selector: 'app-showcase',
   templateUrl: './showcase.component.html',
 })
 export class ShowcaseComponent {}
