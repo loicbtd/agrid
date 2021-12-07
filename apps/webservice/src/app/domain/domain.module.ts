@@ -16,8 +16,9 @@ import { PassportModule } from '@nestjs/passport';
 import { JwtStrategy } from './strategies/jwt.strategy';
 import { environment } from '../../environments/environment';
 import { UsersService } from './services/users.service';
+import { StripeService } from './services/stripe.service';
 
-const PROVIDERS = [EmailsService, UsersService, JwtStrategy];
+const PROVIDERS = [EmailsService, UsersService, JwtStrategy, StripeService];
 
 const ENTITIES = [
   CompanyTypeEntity,

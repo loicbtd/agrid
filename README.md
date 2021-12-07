@@ -45,6 +45,8 @@ WEBSERVICE_DATABASE_PORT="3306"
 WEBSERVICE_DATABASE_NAME="database"
 WEBSERVICE_DATABASE_LOGIN="login"
 WEBSERVICE_DATABASE_PASSWORD="password"
+WEBSERVICE_STRIPE_SECRET_KEY="secret"
+WEBSERVICE_STRIPE_PUBLISHABLE_KEY="publishable"
 ```
 
 2. Open a terminal in the repository directory and run `npm start`
