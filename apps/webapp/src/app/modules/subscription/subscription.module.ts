@@ -2,11 +2,19 @@ import { NgModule } from '@angular/core';
 import { SharedModule } from '../../shared.module';
 import { RouterModule } from '@angular/router';
 import { SubscriptionComponent } from './subscription.component';
-import { Step1Component } from './components/step-1-personal/step-1.component';
-
+import { SubscriptionStep1Component } from './components/subscription-step-1/subscription-step-1.component';
+import { SubscriptionStep2Component } from './components/subscription-step-2/subscription-step-2.component';
+import { SubscriptionStep3Component } from './components/subscription-step-3/subscription-step-3.component';
+import { SubscriptionStep4Component } from './components/subscription-step-4/subscription-step-4.component';
 
 @NgModule({
-  declarations: [SubscriptionComponent, Step1Component],
+  declarations: [
+    SubscriptionComponent,
+    SubscriptionStep1Component,
+    SubscriptionStep2Component,
+    SubscriptionStep3Component,
+    SubscriptionStep4Component,
+  ],
   providers: [SubsriptionModule],
   imports: [
     SharedModule,
@@ -17,7 +25,19 @@ import { Step1Component } from './components/step-1-personal/step-1.component';
         children: [
           {
             path: 'step-1',
-            component: Step1Component,
+            component: SubscriptionStep1Component,
+          },
+          {
+            path: 'step-2',
+            component: SubscriptionStep2Component,
+          },
+          {
+            path: 'step-3',
+            component: SubscriptionStep3Component,
+          },
+          {
+            path: 'step-4',
+            component: SubscriptionStep4Component,
           },
           {
             path: '**',

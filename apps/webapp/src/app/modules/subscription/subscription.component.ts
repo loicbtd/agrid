@@ -7,8 +7,9 @@ import { MenuItem } from 'primeng/api';
 })
 export class SubscriptionComponent {
   stepItems: MenuItem[] = [
-    { label: 'Step 1' },
-    { label: 'Step 2' },
-    { label: 'Step 3' },
+    { label: 'Offre', routerLink: 'step-1' },
+    { label: 'Informations', routerLink: 'step-2' },
+    { label: 'Paiement', routerLink: 'step-3' },
+    { label: 'Confirmation', routerLink: 'step-4' },
   ];
 }

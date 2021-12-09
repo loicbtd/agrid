@@ -1,5 +1,9 @@
 <p-card styleClass="mt-2 mx-2">
-  <p-steps [model]="stepItems" [readonly]="false"></p-steps>
+  <p-steps
+    [model]="stepItems"
+    [readonly]="false"
+    styleClass="select-none"
+  ></p-steps>
 </p-card>
 
 <router-outlet></router-outlet>
