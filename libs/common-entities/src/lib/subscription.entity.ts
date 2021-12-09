@@ -5,20 +5,20 @@ import { PlanEntity } from './plan.entity';
 @Entity('subscription')
 export class SubscriptionEntity {
   @PrimaryGeneratedColumn('uuid')
-  id!: string;
+  id?: string;
 
   @ManyToOne(() => UserEntity, (user) => user.id)
-  user!: PlanEntity;
+  user?: PlanEntity;
 
   @ManyToOne(() => PlanEntity, (plan) => plan.id)
-  plan!: PlanEntity;
+  plan?: PlanEntity;
 
   @Column()
-  creationDate!: Date;
+  creationDate?: Date;
 
   @Column()
-  renewalDate!: Date;
+  renewalDate?: Date;
 
   @Column()
-  renewalCount!: number;
+  renewalCount?: number;
 }

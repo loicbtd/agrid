@@ -4,14 +4,14 @@ import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 @Entity('plan')
 export class PlanEntity {
   @PrimaryGeneratedColumn('uuid')
-  id!: string;
+  id: string;
 
   @Column()
-  name!: string;
+  name: string;
 
   @Column('float')
-  price!: number;
+  price: number;
 
   @ManyToOne(() => SupportTypeEntity, (supportType) => supportType.id)
-  supportType!: SupportTypeEntity;
+  supportType: SupportTypeEntity;
 }

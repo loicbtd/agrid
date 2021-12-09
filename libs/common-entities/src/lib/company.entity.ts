@@ -4,13 +4,13 @@ import { CompanyTypeEntity } from './company-type.entity';
 @Entity('company')
 export class CompanyEntity {
   @PrimaryGeneratedColumn('uuid')
-  id!: string;
+  id?: string;
 
   @ManyToOne(() => CompanyTypeEntity, (companyType) => companyType.id)
-  companyType!: CompanyTypeEntity;
+  companyType?: CompanyTypeEntity;
 
   @Column()
-  name!: string;
+  name?: string;
 
   @Column('float', { nullable: true })
   latitude?: number;

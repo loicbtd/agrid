@@ -4,20 +4,20 @@ import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 @Entity('user')
 export class UserEntity {
   @PrimaryGeneratedColumn('uuid')
-  id!: string;
+  id?: string;
 
   @Column({ unique: true })
-  email!: string;
+  email?: string;
 
   @Column()
-  password!: string;
+  password?: string;
 
   @Column()
-  firstname!: string;
+  firstname?: string;
 
   @Column()
-  lastname!: string;
+  lastname?: string;
 
   @ManyToOne(() => CompanyEntity, (company) => company.id)
-  company: CompanyEntity;
+  company?: CompanyEntity;
 }

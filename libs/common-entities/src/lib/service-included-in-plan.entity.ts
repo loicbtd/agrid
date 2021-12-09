@@ -5,8 +5,8 @@ import { ServiceEntity } from './service.entity';
 @Entity('service_included_in_plan')
 export class ServiceIncludedInPlanEntity {
   @ManyToOne(() => ServiceEntity, (service) => service.id, { primary: true })
-  service!: ServiceEntity;
+  service?: ServiceEntity;
 
   @ManyToOne(() => PlanEntity, (plan) => plan.id, { primary: true })
-  plan!: PlanEntity;
+  plan?: PlanEntity;
 }
