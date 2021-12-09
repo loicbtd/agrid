@@ -1,0 +1,21 @@
+.link-question :hover {
+  color: red !important;
+}
+
+:host ::ng-deep {
+  .loaded > div {
+    animation: 3s hoverShadow;
+  }
+
+  @keyframes hoverShadow {
+    from {
+      box-shadow: none !important;
+    }
+    25% {
+      box-shadow: 0px 0px 4px 4px #d50e0e;
+    }
+    to {
+      box-shadow: none !important;
+    }
+  }
+}
