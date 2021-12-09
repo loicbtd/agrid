@@ -2,7 +2,10 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MenubarModule } from 'primeng/menubar';
 import { InputTextModule } from 'primeng/inputtext';
-import { MessageService, SharedModule as PrimengSharedModule } from 'primeng/api';
+import {
+  MessageService,
+  SharedModule as PrimengSharedModule,
+} from 'primeng/api';
 import { TerminalModule } from 'primeng/terminal';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { ButtonModule } from 'primeng/button';
@@ -39,6 +42,7 @@ import { ToolbarModule } from 'primeng/toolbar';
 import { AngularComponentsBlockableDivModule } from '@workspace/angular/components/blockablediv';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputSwitchModule } from 'primeng/inputswitch';
+import { CarouselModule } from 'primeng/carousel';
 
 const importedAndExportedModules = [
   CommonModule,
@@ -83,6 +87,7 @@ const importedAndExportedModules = [
   AngularComponentsBlockableDivModule,
   InputNumberModule,
   InputSwitchModule,
+  CarouselModule,
 ];
 
 @NgModule({
