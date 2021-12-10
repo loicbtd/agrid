@@ -1,7 +1,11 @@
-FROM node:16.13.1-alpine
+FROM node:16.13.1-alpine AS builder
 COPY . /app
 WORKDIR /app
-RUN npm install && npm
+RUN npm install && npm run postinstall
+RUN npx nx build webservice --configuration=production
+
+FROM node:16.13.1-alpine
+COPY --from=builder /app/dist/apps/webservice /app
+WORKDIR /app
 EXPOSE 80
-RUN ["chmod", "+x", "/app/entrypoint/start.sh"]
-CMD /app/entrypoint/start.sh $ENVIRONMENT
+CMD node main.js
