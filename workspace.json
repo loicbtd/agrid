@@ -177,40 +177,40 @@
             "inlineStyleLanguage": "scss",
             "assets": ["apps/webapp/src/favicon.ico", "apps/webapp/src/assets"],
             "styles": ["apps/webapp/src/styles.scss"],
-            "scripts": []
+            "scripts": [],
+            "budgets": [
+              {
+                "type": "initial",
+                "maximumWarning": "1mb",
+                "maximumError": "2mb"
+              },
+              {
+                "type": "anyComponentStyle",
+                "maximumWarning": "2kb",
+                "maximumError": "4kb"
+              }
+            ],
+            "outputHashing": "all"
           },
           "configurations": {
-            "production": {
-              "budgets": [
-                {
-                  "type": "initial",
-                  "maximumWarning": "1mb",
-                  "maximumError": "2mb"
-                },
-                {
-                  "type": "anyComponentStyle",
-                  "maximumWarning": "2kb",
-                  "maximumError": "4kb"
-                }
-              ],
-              "fileReplacements": [
-                {
-                  "replace": "apps/webapp/src/environments/environment.ts",
-                  "with": "apps/webapp/src/environments/environment.prod.ts"
-                }
-              ],
-              "outputHashing": "all"
-            },
-            "development": {
+             "development": {
               "buildOptimizer": false,
               "optimization": false,
               "vendorChunk": true,
               "extractLicenses": false,
               "sourceMap": true,
               "namedChunks": true
+            },
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/webapp/src/environments/environment.ts",
+                  "with": "apps/webapp/src/environments/environment.production.ts"
+                }
+              ]
             }
           },
-          "defaultConfiguration": "production"
+          "defaultConfiguration": "development"
         },
         "serve": {
           "executor": "@angular-devkit/build-angular:dev-server",
@@ -256,6 +256,9 @@
             "assets": ["apps/webservice/src/assets"]
           },
           "configurations": {
+            "development": {
+              "optimization": false
+            },
             "production": {
               "optimization": true,
               "extractLicenses": true,
@@ -263,7 +266,7 @@
               "fileReplacements": [
                 {
                   "replace": "apps/webservice/src/environments/environment.ts",
-                  "with": "apps/webservice/src/environments/environment.prod.ts"
+                  "with": "apps/webservice/src/environments/environment.production.ts"
                 }
               ]
             }
