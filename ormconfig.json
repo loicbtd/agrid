@@ -1,0 +1,16 @@
+[
+  {
+    "name": "default",
+    "type": "postgres",
+    "host": "postgresql-loicbtd.alwaysdata.net",
+    "port": 5432,
+    "username": "loicbtd_agrid_local",
+    "password": "K9jo4weZe&jmA8",
+    "database": "loicbtd_agrid_local",
+    "entities": ["libs/common-entities/lib/*.entity.ts"],
+    "migrations": ["migration/*.ts"],
+    "cli": {
+      "migrationsDir": "migration"
+    }
+  }
+]
