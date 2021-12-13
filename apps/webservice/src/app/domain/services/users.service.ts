@@ -1,8 +1,7 @@
 import { environment } from './../../../environments/environment';
-import { SigninRequestDto } from '@workspace/common/requests';
+import { RegisterRequest, SigninRequest } from '@workspace/common/requests';
 import { TokenPayload } from '../../domain/interfaces/token-payload.interface';
 import { EmailsService } from './emails.service';
-import { RegisterRequestDto } from '@workspace/common/requests';
 import {
   SigninResponseDto,
   WhoamiResponseDto,
@@ -29,7 +28,7 @@ export class UsersService {
     private emailsService: EmailsService
   ) {}
 
-  async signin(command: SigninRequestDto): Promise<SigninResponseDto> {
+  async signin(command: SigninRequest): Promise<SigninResponseDto> {
     const user = await this.userRepository.findOne({ email: command.email });
     if (!user) {
       throw new BadRequestException();
@@ -51,7 +50,7 @@ export class UsersService {
     };
   }
 
-  async register(command: RegisterRequestDto): Promise<void> {
+  async register(command: RegisterRequest): Promise<void> {
     const hashedPassword = await bcrypt.hash(command.password, 10);
 
     try {

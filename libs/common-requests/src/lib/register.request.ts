@@ -3,7 +3,7 @@ import { passwordRegexp } from '@workspace/common/regexp';
 import { ApiProperty } from '@nestjs/swagger';
 
 
-export class RegisterRequestDto {
+export class RegisterRequest {
   @ApiProperty()
   @IsEmail()
   email!: string;

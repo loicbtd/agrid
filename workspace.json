@@ -59,6 +59,31 @@
         }
       }
     },
+    "common-enumerations": {
+      "root": "libs/common-enumerations",
+      "sourceRoot": "libs/common-enumerations/src",
+      "projectType": "library",
+      "targets": {
+        "build": {
+          "executor": "@nrwl/node:package",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "dist/libs/common-enumerations",
+            "tsConfig": "libs/common-enumerations/tsconfig.lib.json",
+            "packageJson": "libs/common-enumerations/package.json",
+            "main": "libs/common-enumerations/src/index.ts",
+            "assets": ["libs/common-enumerations/*.md"]
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "outputs": ["{options.outputFile}"],
+          "options": {
+            "lintFilePatterns": ["libs/common-enumerations/**/*.ts"]
+          }
+        }
+      }
+    },
     "common-regexp": {
       "root": "libs/common-regexp",
       "sourceRoot": "libs/common-regexp/src",

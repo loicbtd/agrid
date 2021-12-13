@@ -33,6 +33,9 @@
     "common-entities": {
       "tags": []
     },
+    "common-enumerations": {
+      "tags": []
+    },
     "common-regexp": {
       "tags": []
     },

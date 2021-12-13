@@ -1,3 +1,4 @@
+import { PlansService } from './services/plans.service';
 import { EmailsService } from './services/emails.service';
 import { JwtModule } from '@nestjs/jwt';
 import { Global, HttpModule, Logger, Module } from '@nestjs/common';
@@ -18,7 +19,13 @@ import { environment } from '../../environments/environment';
 import { UsersService } from './services/users.service';
 import { StripeService } from './services/stripe.service';
 
-const PROVIDERS = [EmailsService, UsersService, JwtStrategy, StripeService];
+const PROVIDERS = [
+  EmailsService,
+  PlansService,
+  JwtStrategy,
+  StripeService,
+  UsersService,
+];
 
 const ENTITIES = [
   CompanyTypeEntity,
@@ -46,7 +53,7 @@ const ENTITIES = [
       maxRedirects: 5,
     }),
     TypeOrmModule.forRoot({
-      type: 'mariadb',
+      type: 'postgres',
       host: environment.databaseHost,
       port: environment.databasePort,
       username: environment.databaseLogin,

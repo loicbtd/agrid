@@ -1,4 +1,4 @@
-import { UserEntity } from '@workspace/common/entities';
+import { UserEntity } from '../lib/user.entity';
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { PlanEntity } from './plan.entity';
 

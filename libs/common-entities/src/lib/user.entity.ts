@@ -1,5 +1,6 @@
 import { CompanyEntity } from './company.entity';
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { RightEnumeration } from '@workspace/common/enumerations';
 
 @Entity('user')
 export class UserEntity {
@@ -11,6 +12,14 @@ export class UserEntity {
 
   @Column()
   password?: string;
+
+  @Column({
+    type: 'enum',
+    enum: RightEnumeration,
+    array: true,
+    default: [],
+  })
+  rights: RightEnumeration[];
 
   @Column()
   firstname?: string;

@@ -3,11 +3,11 @@ import {
   SigninResponseDto,
   WhoamiResponseDto,
 } from '@workspace/common/responses';
-import { SigninRequestDto } from '@workspace/common/requests';
+import { SigninRequest } from '@workspace/common/requests';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { Body, Controller, Post } from '@nestjs/common';
 import { UsersService } from '../../domain/services/users.service';
-import { RegisterRequestDto } from '@workspace/common/requests';
+import { RegisterRequest } from '@workspace/common/requests';
 import { Get, UseGuards } from '@nestjs/common/decorators';
 import { JwtGuard } from '../../api/guards/jwt.guard';
 import { JwtPayload } from '../../api/decorators/jwt-payload.decorator';
@@ -19,13 +19,13 @@ export class IdentitiesController {
 
   @Post('signin')
   @ApiOperation({ summary: 'Logs a user' })
-  async signin(@Body() command: SigninRequestDto): Promise<SigninResponseDto> {
+  async signin(@Body() command: SigninRequest): Promise<SigninResponseDto> {
     return await this.usersService.signin(command);
   }
 
   @Post('register')
   @ApiOperation({ summary: 'Registers a user' })
-  async register(@Body() command: RegisterRequestDto): Promise<void> {
+  async register(@Body() command: RegisterRequest): Promise<void> {
     await this.usersService.register(command);
   }
 
