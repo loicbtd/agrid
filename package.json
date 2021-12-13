@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "license": "UNLICENSED",
   "scripts": {
-    "typeorm": "ts-node -P ./tsconfig.base.json -r tsconfig-paths/register ./node_modules/typeorm/cli.js",
+    "typeorm": "ts-node -P ./tsconfig.base.json --transpile-only -r tsconfig-paths/register ./node_modules/typeorm/cli.js",
     "start:step1": "nx serve webservice",
     "start:step2": "wait-on tcp:3333 && nx serve webapp",
     "start": "run-p start:step1 start:step2",
