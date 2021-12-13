@@ -63,4 +63,5 @@ After you have had new or modified existing documentation to the `docs/`, execut
 
 ```shell
 git commit -m 'rebuild pages' --allow-empty
+git push <remote name> <branch name>
 ```
