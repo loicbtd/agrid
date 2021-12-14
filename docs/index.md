@@ -45,10 +45,6 @@ Execute `npm run typeorm migration:generate -- -n <MigrationName>`
 
 Execute `npm run typeorm migration:create -- -n <MigrationName>`
 
-### Create a new empty migration
-
-Execute `npm run typeorm migration:create -- -n <MigrationName>`
-
 ### Run a migration
 
 Execute `npm run typeorm migration:run`
