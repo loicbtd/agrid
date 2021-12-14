@@ -1,0 +1,5 @@
+{
+  "emailHeaderSource": "http://localhost:3333/images/email-header.jpg",
+  "webappUrl": "http://localhost:4200",
+  "firstname": "Estevan"
+}

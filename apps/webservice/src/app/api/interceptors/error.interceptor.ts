@@ -16,7 +16,7 @@ export class ErrorsInterceptor implements NestInterceptor {
       return await next.handle().toPromise();
     } catch (error: any) {
       this._logger.error(error.message, error);
-      throw new BadRequestException(error.message);
+      throw new BadRequestException();
     }
   }
 }

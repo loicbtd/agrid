@@ -1,15 +1,18 @@
 import { Global, Logger, Module } from '@nestjs/common';
 import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
 import { MailerModule } from '@nestjs-modules/mailer';
+import { ServeStaticModule } from '@nestjs/serve-static';
 import { environment } from '../../environments/environment';
-
-console.log(environment);
-
+import { join } from 'path';
 
 @Global()
 @Module({
   providers: [Logger],
   imports: [
+    ServeStaticModule.forRoot({
+      serveRoot: '/images',
+      rootPath: join(__dirname, 'assets', 'images'),
+    }),
     MailerModule.forRoot({
       transport: {
         host: environment.emailSenderSmtpHost,
