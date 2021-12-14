@@ -16,12 +16,23 @@ import { ConsoleTransport } from '@workspace/winston/transports';
     AppModule,
     new FastifyAdapter(),
     {
-      cors: { origin: [environment.webappUrl] },
       logger: WinstonModule.createLogger({
         transports: [new ConsoleTransport()],
       }),
     }
   );
+
+  app.register(require('fastify-cors'), {
+    origin: [environment.webappUrl],
+    allowedHeaders: [
+      'Origin',
+      'X-Requested-With',
+      'Accept',
+      'Content-Type',
+      'Authorization',
+    ],
+    methods: ['GET', 'PUT', 'OPTIONS', 'POST', 'DELETE'],
+  });
 
   const config = new DocumentBuilder()
     .setTitle(`${environment.solutionName} Api`)

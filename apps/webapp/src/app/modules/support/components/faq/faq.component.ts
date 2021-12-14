@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Faq } from '../../models/faq.models';
-import { FaqService } from '../../services/faq/faq.service';
+import { FaqService } from '../../services/faq.service';
 
 @Component({
-  selector: 'agrid-faq',
+  selector: 'app-support-faq',
   templateUrl: './faq.component.html',
   styleUrls: ['./faq.component.scss'],
 })

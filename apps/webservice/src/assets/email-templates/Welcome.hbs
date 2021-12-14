@@ -74,7 +74,7 @@
                 '
               >
                 <div style='font-size: 22px; color: #5cb270'>
-                  <strong>Bienvenue sur Agrid 🚜 !</strong>
+                  <strong>Bienvenue sur Agrid !</strong> 🚜
                 </div>
               </td>
             </tr>
@@ -99,39 +99,76 @@
                   Bonjour
                   {{firstname}},<br />
                   <br />
-                  Nous avons le plaisir de vous accueillir sur Agrid, votre nouvelle plate-forme de gestion stratégique dédiée aux agriculteurs.<br />
+                  Nous avons le plaisir de vous accueillir sur Agrid, votre
+                  nouvelle plateforme de gestion stratégique dédiée aux
+                  agriculteurs.<br />
                   <br />
-                  Connectez-vous pour découvrir toutes les fonctionnalités de Agrid.
                   <br />
-                  <br />
-                  <br />
-                  A bientôt sur
-                  <a
-                    style='color: #5cb270; text-decoration: none;'
-                    href='{{webappUrl}}'
-                  ><b>Agrid</b></a>
-                  !
                 </div>
               </td>
             </tr>
             <tr>
-              <td style="border-radius: 2px;" bgcolor="#ED2939">
-                      <a href="https://www.copernica.com" target="_blank" style="padding: 8px 12px; border: 1px solid #ED2939;border-radius: 2px;font-family: Helvetica, Arial, sans-serif;font-size: 14px; color: #ffffff;text-decoration: none;font-weight:bold;display: inline-block;">
-                          Click             
-                      </a>
-                  </td>
+              <td>
+                <table
+                  cellspacing='0'
+                  cellpadding='0'
+                  style='margin:0 auto'
+                  align='center'
+                >
+                  <tbody>
+                    <tr>
+                      <td
+                        style='background-color: #5cb270; border-radius: 8px; font-size: 16px; padding: 14px 18px;'
+                      >
+                        <a
+                          href='{{webappUrl}}/#/signin'
+                          style='border:none; border-radius: 6px; color:#fff; text-decoration:none; display:inline-block'
+                          target='_blank'
+                        >
+                          Se connecter
+                        </a>
+                      </td>
+                    </tr>
+                  </tbody></table>
+              </td>
             </tr>
 
             <tr>
-              <td
-                style='
+              <td style='line-height: 1.2em; padding: 10px'>
+                <br />
+              </td>
+            </tr>
+
+            <tr>
+              <td>
+                <div
+                  style='
                   font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
                   line-height: 1.2;
                   background-color: #5cb270;
                   color: #ffffff;
                   padding: 20px 10px;
                 '
-              ></td>
+                ></div>
+              </td>
+            </tr>
+
+            <tr>
+              <td
+                style='font-family:Arial,Helvetica Neue,Helvetica,sans-serif;line-height:1.2;font-size:12px;background-color:#404040;color:#fafafa;padding:20px 10px'
+              >
+                Vous recevez ce courriel dans le cadre de votre inscription à
+                Agrid. Il s’agit d’un message de notification duquel vous ne
+                pouvez vous désinscrire. Pour toute question, nous vous invitons
+                à écrire à
+                <a
+                  href='mailto:{{supportEmailAddress}}'
+                  style='color:#5cb270'
+                  target='_blank'
+                >
+                  {{supportEmailAddress}}
+                </a>
+              </td>
             </tr>
           </table>
         </td>

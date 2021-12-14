@@ -3,6 +3,7 @@ import { Injectable } from '@nestjs/common';
 import { MailerService } from '@nestjs-modules/mailer';
 import { EmailTemplateEnumeration } from '../enumerations/email-template.emumeration';
 import { join } from 'path';
+import { Address } from '@nestjs-modules/mailer/dist/interfaces/send-mail-options.interface';
 
 @Injectable()
 export class EmailsService {
@@ -12,8 +13,27 @@ export class EmailsService {
     template: EmailTemplateEnumeration,
     to: string | string[],
     subject: string,
-    data?: any
+    options?: {
+      data?: any;
+      from?: Address;
+      replyto?: string;
+    }
   ): Promise<void> {
+    if (!options) {
+      options = {};
+    }
+
+    if (!options.data) {
+      options.data = {};
+    }
+
+    options.data = {
+      ...options.data,
+      emailHeaderSource: `${environment.protocol}://${environment.host}:${environment.port}/images/email-header.jpg`,
+      supportEmailAddress: environment.supportEmailAddress,
+      webappUrl: environment.webappUrl,
+    };
+
     try {
       await this.mailerService.sendMail({
         to: environment.production ? to : environment.emailSenderAddress,
@@ -24,10 +44,8 @@ export class EmailsService {
           'email-templates',
           `${template}.hbs`
         ),
-        context: {
-          ...data,
-          emailHeaderSource: `${environment.protocol}://${environment.host}:${environment.port}/images/email-header.jpg`,
-        },
+        context: options.data,
+        replyTo: options.replyto,
       });
     } catch (error) {
       console.log(error);

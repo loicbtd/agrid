@@ -23,9 +23,9 @@ import { EmailTemplateEnumeration } from '../enumerations/email-template.emumera
 export class UsersService {
   constructor(
     @InjectRepository(UserEntity)
-    private userRepository: Repository<UserEntity>,
-    private jwtService: JwtService,
-    private emailsService: EmailsService
+    private readonly userRepository: Repository<UserEntity>,
+    private readonly jwtService: JwtService,
+    private readonly emailsService: EmailsService
   ) {}
 
   async signin(command: SigninRequest): Promise<SigninResponseDto> {
@@ -70,7 +70,12 @@ export class UsersService {
       this.emailsService.send(
         EmailTemplateEnumeration.Welcome,
         command.email,
-        `[${environment.solutionName}] Welcome !`
+        `[${environment.solutionName}] Bienvenue !`,
+        {
+          data: {
+            firstname: command.firstname,
+          },
+        }
       );
     } catch (error) {
       throw new InternalServerErrorException();
@@ -91,10 +96,10 @@ export class UsersService {
   }
 
   async test() {
-    await this.emailsService.send(
-      EmailTemplateEnumeration.Welcome,
-      'loic.bert.marcel@gmail.com',
-      'Hello'
-    );
+    // await this.emailsService.send(
+    //   EmailTemplateEnumeration.Welcome,
+    //   'loic.bert.marcel@gmail.com',
+    //   'Hello'
+    // );
   }
 }

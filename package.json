@@ -39,6 +39,7 @@
     "dataloader": "^2.0.0",
     "date-fns": "^2.19.0",
     "dateformat": "^4.5.1",
+    "fastify-cors": "^6.0.2",
     "fastify-swagger": "^4.12.6",
     "handlebars": "^4.7.7",
     "helmet": "^4.4.1",

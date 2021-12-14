@@ -27,4 +27,5 @@ export const environment = {
   databasePassword: process.env.WEBSERVICE_DATABASE_PASSWORD || '',
   stripeSecretKey: process.env.WEBSERVICE_STRIPE_SECRET_KEY || '',
   stripePublishableKey: process.env.WEBSERVICE_STRIPE_PUBLISHABLE_KEY || '',
+  supportEmailAddress: process.env.WEBSERVICE_SUPPORT_EMAIL_ADDRESS || '',
 };
