@@ -1,21 +1,18 @@
 import { environment } from '../../../environments/environment';
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { MailerService } from '@nestjs-modules/mailer';
-import { Address } from '@nestjs-modules/mailer/dist/interfaces/send-mail-options.interface';
 import { EmailTemplateEnumeration } from '../enumerations/email-template.emumeration';
 import { join } from 'path';
 
 @Injectable()
 export class EmailsService {
-  private readonly mailBannerSrc = `https://${environment.host}:${environment.port}/static/mail-banner.png`;
-
   constructor(private readonly mailerService: MailerService) {}
 
   async send(
     template: EmailTemplateEnumeration,
     to: string | string[],
     subject: string,
-    data?: unknown,
+    data?: any
   ): Promise<void> {
     try {
       await this.mailerService.sendMail({
@@ -27,9 +24,14 @@ export class EmailsService {
           'email-templates',
           `${template}.hbs`
         ),
-        context: data,
+        context: {
+          ...data,
+          emailHeaderSource: `${environment.protocol}://${environment.host}:${environment.port}/images/email-header.jpg`,
+        },
       });
     } catch (error) {
+      console.log(error);
+
       throw new Error(error.message);
     }
   }

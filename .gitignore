@@ -57,4 +57,4 @@ override.tf.json
 .terraformrc
 terraform.rc
 
-ormconfig.env
+ormconfig.json

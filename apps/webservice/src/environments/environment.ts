@@ -5,7 +5,7 @@ export const environment = {
   production: false,
   jwtSecret: process.env.WEBSERVICE_JWT_SECRET || 'secret',
   jwtExpirationTime: process.env.WEBSERVICE_JWT_EXPIRATION_TIME || '48h',
-  schema: process.env.WEBSERVICE_SCHEMA || 'http',
+  protocol: process.env.WEBSERVICE_SCHEMA || 'http',
   host: process.env.WEBSERVICE_HOST || 'localhost',
   port: Number(process.env.WEBSERVICE_PORT) || 3333,
   solutionName: `${packageDotJson.name

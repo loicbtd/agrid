@@ -24,11 +24,13 @@ import { join } from 'path';
         },
         debug: !environment.production,
       },
+
       defaults: {
         from: `"${environment.emailSenderName}" <${environment.emailSenderAddress}>`,
       },
       template: {
         adapter: new HandlebarsAdapter(),
+        dir: join(__dirname, 'assets', 'email-templates'),
         options: {
           strict: true,
         },

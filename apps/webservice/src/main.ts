@@ -38,6 +38,6 @@ import { ConsoleTransport } from '@workspace/winston/transports';
   await app.listen(environment.port, environment.host);
 
   new Logger().log(
-    `Listening ${environment.schema}://${environment.host}:${environment.port}`
+    `Listening ${environment.protocol}://${environment.host}:${environment.port}`
   );
 })();
