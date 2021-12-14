@@ -3,10 +3,11 @@ import { Global, Logger, Module } from '@nestjs/common';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 import { IdentitiesController } from '../api/controllers/identities.controller';
 import { PlansController } from './controllers/plans.controller';
+import { SupportController } from './controllers/support.controller';
 
 @Global()
 @Module({
-  controllers: [IdentitiesController, PlansController],
+  controllers: [IdentitiesController, PlansController, SupportController],
   providers: [
     Logger,
     {

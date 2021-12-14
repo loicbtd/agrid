@@ -7,4 +7,5 @@ export const environment = {
     .charAt(0)
     .toUpperCase()}${packageDotJson.name.slice(1).split('-').join(' ')}`,
   version: packageDotJson.version,
+  webserviceOrigin: 'https://api.agrid.ml',
 };

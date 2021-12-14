@@ -1,5 +1,5 @@
 import { environment } from '../../../environments/environment';
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { MailerService } from '@nestjs-modules/mailer';
 import { Address } from '@nestjs-modules/mailer/dist/interfaces/send-mail-options.interface';
 import { EmailTemplateEnumeration } from '../enumerations/email-template.emumeration';
@@ -15,8 +15,13 @@ export class EmailsService {
     template: EmailTemplateEnumeration,
     to: string | string[],
     subject: string,
-    data?: unknown,
+    options?: {
+      data?: unknown;
+      from?: Address;
+      replyto?: string;
+    }
   ): Promise<void> {
+    options['data']['mailBannerSrc'] = this.mailBannerSrc;
     try {
       await this.mailerService.sendMail({
         to: environment.production ? to : environment.emailSenderAddress,
@@ -27,7 +32,8 @@ export class EmailsService {
           'email-templates',
           `${template}.hbs`
         ),
-        context: data,
+        context: options?.data,
+        replyTo: options?.replyto,
       });
     } catch (error) {
       throw new Error(error.message);
