@@ -1,4 +1,4 @@
-import { ContactRequestDto } from '@workspace/common/requests';
+import { SupportRequest } from '@workspace/common/requests';
 import { Body, Controller, Post } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { SupportService } from '../../domain/services/support.service';
@@ -8,9 +8,9 @@ import { SupportService } from '../../domain/services/support.service';
 export class SupportController {
   constructor(private readonly contactService: SupportService) {}
 
-  @Post('sendsMail')
-  @ApiOperation({ summary: 'Sends a message to the support team' })
-  async sendContactEmail(@Body() command: ContactRequestDto): Promise<void> {
-    await this.contactService.sendContactEmail(command);
+  @Post('request')
+  @ApiOperation({ summary: 'Requests the support team' })
+  async sendContactEmail(@Body() command: SupportRequest): Promise<void> {
+    await this.contactService.request(command);
   }
 }

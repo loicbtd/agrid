@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsEmail, IsNotEmpty } from 'class-validator';
 
-export class ContactRequestDto {
+export class SupportRequest {
   @ApiProperty()
   @IsNotEmpty()
   firstname!: string;
@@ -21,8 +21,4 @@ export class ContactRequestDto {
   @ApiProperty()
   @IsNotEmpty()
   explanation!: string;
-
-  public constructor(attributes?: Partial<ContactRequestDto>) {
-    Object.assign(this, attributes);
-  }
 }

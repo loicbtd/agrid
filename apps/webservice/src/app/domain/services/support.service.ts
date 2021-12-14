@@ -1,19 +1,19 @@
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
-import { ContactRequestDto } from '@workspace/common/requests';
+import { SupportRequest } from '@workspace/common/requests';
 import { environment } from '../../../environments/environment';
 import { EmailTemplateEnumeration } from '../enumerations/email-template.emumeration';
 import { EmailsService } from './emails.service';
 
 @Injectable()
 export class SupportService {
-  constructor(private emailsService: EmailsService) {}
+  constructor(private readonly emailsService: EmailsService) {}
 
-  async sendContactEmail(command: ContactRequestDto) {
+  async request(command: SupportRequest) {
     try {
       await this.emailsService.send(
         EmailTemplateEnumeration.Contact,
-        'support@agrid.ml',
-        `[${environment.solutionName}] Demande de Contact`,
+        environment.supportEmailAddress,
+        command.subject,
         {
           data: command,
           replyto: command.email,
