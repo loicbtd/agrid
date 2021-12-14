@@ -24,7 +24,7 @@ import { ConsoleTransport } from '@workspace/winston/transports';
   );
 
   const config = new DocumentBuilder()
-    .setTitle(environment.webserviceName)
+    .setTitle(`${environment.solutionName} Api`)
     .setVersion(environment.version)
     .addBearerAuth()
     .build();

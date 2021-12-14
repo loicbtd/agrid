@@ -70,7 +70,7 @@ export class UsersService {
       this.emailsService.send(
         EmailTemplateEnumeration.Welcome,
         command.email,
-        `[${environment.applicationName}] Welcome !`
+        `[${environment.solutionName}] Welcome !`
       );
     } catch (error) {
       throw new InternalServerErrorException();

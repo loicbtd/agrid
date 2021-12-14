@@ -16,12 +16,10 @@ export class EmailsService {
     to: string | string[],
     subject: string,
     data?: unknown,
-    from?: Address
   ): Promise<void> {
     try {
       await this.mailerService.sendMail({
-        from: from,
-        to: environment.production ? environment.emailSenderAddress : to,
+        to: environment.production ? to : environment.emailSenderAddress,
         subject: subject,
         template: join(
           __dirname,

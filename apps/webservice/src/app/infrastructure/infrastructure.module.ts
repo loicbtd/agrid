@@ -13,7 +13,8 @@ console.log(environment);
     MailerModule.forRoot({
       transport: {
         host: environment.emailSenderSmtpHost,
-        port: environment.emailSenderSmtpPort,
+        secure: true,
+        port: 465,
         auth: {
           user: environment.emailSenderLogin,
           pass: environment.emailSenderPassword,
@@ -21,7 +22,7 @@ console.log(environment);
         debug: !environment.production,
       },
       defaults: {
-        from: `${environment.emailSenderName} <${environment.emailSenderAddress}>`,
+        from: `"${environment.emailSenderName}" <${environment.emailSenderAddress}>`,
       },
       template: {
         adapter: new HandlebarsAdapter(),
