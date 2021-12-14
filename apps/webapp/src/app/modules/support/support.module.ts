@@ -4,9 +4,15 @@ import { SupportComponent } from './support.component';
 import { RouterModule } from '@angular/router';
 import { HomeComponent } from './components/home/home.component';
 import { FaqComponent } from './components/faq/faq.component';
+import { ContactComponent } from './components/contact/contact.component';
 
 @NgModule({
-  declarations: [SupportComponent, HomeComponent, FaqComponent],
+  declarations: [
+    SupportComponent,
+    HomeComponent,
+    FaqComponent,
+    ContactComponent,
+  ],
   providers: [SupportModule],
   imports: [
     SharedModule,
@@ -22,6 +28,10 @@ import { FaqComponent } from './components/faq/faq.component';
           {
             path: 'faq',
             component: FaqComponent,
+          },
+          {
+            path: 'contact',
+            component: ContactComponent,
           },
           {
             path: '**',

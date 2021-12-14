@@ -18,6 +18,7 @@ import { JwtStrategy } from './strategies/jwt.strategy';
 import { environment } from '../../environments/environment';
 import { UsersService } from './services/users.service';
 import { StripeService } from './services/stripe.service';
+import { SupportService } from './services/support.service';
 
 const PROVIDERS = [
   EmailsService,
@@ -25,6 +26,10 @@ const PROVIDERS = [
   JwtStrategy,
   StripeService,
   UsersService,
+  UsersService,
+  JwtStrategy,
+  StripeService,
+  SupportService,
 ];
 
 const ENTITIES = [
