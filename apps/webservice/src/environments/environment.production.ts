@@ -3,7 +3,6 @@ const packageDotJson = require('../../../../package.json');
 
 export const environment = {
   production: true,
-  allowedOrigin: process.env.WEBSERVICE_ALLOWED_ORIGIN || '*',
   jwtSecret: process.env.WEBSERVICE_JWT_SECRET || 'secret',
   jwtExpirationTime: process.env.WEBSERVICE_JWT_EXPIRATION_TIME || '48h',
   schema: process.env.WEBSERVICE_SCHEMA || 'https',
@@ -12,6 +11,7 @@ export const environment = {
   solutionName: `${packageDotJson.name
     .charAt(0)
     .toUpperCase()}${packageDotJson.name.slice(1).split('-').join(' ')}`,
+  webappUrl: process.env.WEBSERVICE_WEBAPP_URL || '',
   version: packageDotJson.version,
   emailSenderAddress: process.env.WEBSERVICE_EMAIL_SENDER_ADDRESS || '',
   emailSenderName: process.env.WEBSERVICE_EMAIL_SENDER_NAME || '',

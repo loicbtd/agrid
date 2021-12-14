@@ -16,7 +16,7 @@ import { ConsoleTransport } from '@workspace/winston/transports';
     AppModule,
     new FastifyAdapter(),
     {
-      cors: true,
+      cors: { origin: [environment.webappUrl] },
       logger: WinstonModule.createLogger({
         transports: [new ConsoleTransport()],
       }),
@@ -34,10 +34,10 @@ import { ConsoleTransport } from '@workspace/winston/transports';
   app.useGlobalPipes(new ValidationPipe({ transform: true }));
 
   app.use(helmet());
-  
+
   await app.listen(environment.port, environment.host);
 
   new Logger().log(
     `Listening ${environment.schema}://${environment.host}:${environment.port}`
-  );    
+  );
 })();
