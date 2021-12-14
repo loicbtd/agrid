@@ -6,6 +6,7 @@ export const environment = {
   allowedOrigin: process.env.WEBSERVICE_ALLOWED_ORIGIN || '*',
   jwtSecret: process.env.WEBSERVICE_JWT_SECRET || 'secret',
   jwtExpirationTime: process.env.WEBSERVICE_JWT_EXPIRATION_TIME || '48h',
+  schema: process.env.WEBSERVICE_SCHEMA || 'http',
   host: process.env.WEBSERVICE_HOST || 'localhost',
   port: process.env.WEBSERVICE_PORT || 3333,
   webserviceName: `${packageDotJson.name
@@ -17,6 +18,8 @@ export const environment = {
   emailSenderLogin: process.env.WEBSERVICE_EMAIL_SENDER_LOGIN || '',
   emailSenderPassword: process.env.WEBSERVICE_EMAIL_SENDER_PASSWORD || '',
   emailSenderSmtpHost: process.env.WEBSERVICE_EMAIL_SENDER_SMTP_HOST || '',
+  emailSenderSmtpPort:
+    Number(process.env.WEBSERVICE_EMAIL_SENDER_SMTP_PORT) || 465,
   applicationName: process.env.WEBSERVICE_APPLICATION_NAME || '',
   databaseHost: process.env.WEBSERVICE_DATABASE_HOST || '',
   databasePort: process.env.WEBSERVICE_DATABASE_PORT || 3306,

@@ -2,7 +2,7 @@ import {
   FastifyAdapter,
   NestFastifyApplication,
 } from '@nestjs/platform-fastify';
-import { ValidationPipe } from '@nestjs/common';
+import { Logger, ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app/app.module';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
@@ -34,12 +34,10 @@ import { ConsoleTransport } from '@workspace/winston/transports';
   app.useGlobalPipes(new ValidationPipe({ transform: true }));
 
   app.use(helmet());
-
+  
   await app.listen(environment.port, environment.host);
 
-  if (!environment.production) {
-    console.log(
-      `\nWebservice running on http://${environment.host}:${environment.port}\n`
-    );
-  }
+  new Logger().log(
+    `Listening ${environment.schema}://${environment.host}:${environment.port}`
+  );    
 })();

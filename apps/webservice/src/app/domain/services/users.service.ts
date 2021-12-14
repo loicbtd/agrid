@@ -89,4 +89,12 @@ export class UsersService {
       lastname: user.lastname,
     };
   }
+
+  async test() {
+    await this.emailsService.send(
+      EmailTemplateEnumeration.Welcome,
+      'loic.bert.marcel@gmail.com',
+      'Hello'
+    );
+  }
 }

@@ -3,12 +3,13 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { MailerService } from '@nestjs-modules/mailer';
 import { Address } from '@nestjs-modules/mailer/dist/interfaces/send-mail-options.interface';
 import { EmailTemplateEnumeration } from '../enumerations/email-template.emumeration';
+import { join } from 'path';
 
 @Injectable()
 export class EmailsService {
   private readonly mailBannerSrc = `https://${environment.host}:${environment.port}/static/mail-banner.png`;
 
-  constructor(private mailerService: MailerService) {}
+  constructor(private readonly mailerService: MailerService) {}
 
   async send(
     template: EmailTemplateEnumeration,
@@ -22,11 +23,16 @@ export class EmailsService {
         from: from,
         to: environment.production ? environment.emailSenderAddress : to,
         subject: subject,
-        template: `assets/email-templates/${template}.hbs`,
+        template: join(
+          __dirname,
+          'assets',
+          'email-templates',
+          `${template}.hbs`
+        ),
         context: data,
       });
     } catch (error) {
-      throw new BadRequestException();
+      throw new Error(error.message);
     }
   }
 }
