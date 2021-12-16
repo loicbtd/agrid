@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ContactRequestDto } from '@workspace/common/requests';
+import { SupportRequest } from '@workspace/common/requests';
 import { environment } from '../../../../environments/environment';
 
 @Injectable({
@@ -9,7 +9,7 @@ import { environment } from '../../../../environments/environment';
 export class ContactService {
   constructor(private _httpClient: HttpClient) {}
 
-  sendContactMail(command: ContactRequestDto) {
+  sendContactMail(command: SupportRequest) {
     return this._httpClient.post(
       `${environment.webserviceOrigin}/support/sendsMail`,
       command
