@@ -38,9 +38,4 @@ export class IdentitiesController {
   ): Promise<WhoamiResponseDto> {
     return await this.usersService.whoami(payload.userId);
   }
-
-  @Get('test')
-  async test(): Promise<void> {
-    await this.usersService.test();
-  }
 }

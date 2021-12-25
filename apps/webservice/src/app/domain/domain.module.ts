@@ -20,17 +20,15 @@ import { UsersService } from './services/users.service';
 import { StripeService } from './services/stripe.service';
 import { SupportService } from './services/support.service';
 
-const PROVIDERS = [
+const SERVICES = [
   EmailsService,
   PlansService,
-  JwtStrategy,
-  StripeService,
-  UsersService,
-  UsersService,
-  JwtStrategy,
   StripeService,
   SupportService,
+  UsersService,
 ];
+
+const STRATEGIES = [JwtStrategy];
 
 const ENTITIES = [
   CompanyTypeEntity,
@@ -71,7 +69,14 @@ const ENTITIES = [
     }),
     TypeOrmModule.forFeature([...ENTITIES]),
   ],
-  providers: [...PROVIDERS, Logger],
-  exports: [...PROVIDERS, JwtModule, TypeOrmModule, HttpModule, PassportModule],
+  providers: [...SERVICES, ...STRATEGIES, Logger],
+  exports: [
+    ...SERVICES,
+    ...STRATEGIES,
+    JwtModule,
+    TypeOrmModule,
+    HttpModule,
+    PassportModule,
+  ],
 })
 export class DomainModule {}
