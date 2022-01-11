@@ -8,7 +8,7 @@ export class SubscriptionEntity {
   id?: string;
 
   @ManyToOne(() => UserEntity, (user) => user.id)
-  user?: PlanEntity;
+  user?: UserEntity;
 
   @ManyToOne(() => PlanEntity, (plan) => plan.id)
   plan?: PlanEntity;
@@ -16,9 +16,9 @@ export class SubscriptionEntity {
   @Column()
   creationDate?: Date;
 
-  @Column()
-  renewalDate?: Date;
+  // @Column()
+  // renewalDate?: Date;
 
-  @Column()
-  renewalCount?: number;
+  // @Column()
+  // renewalCount?: number;
 }

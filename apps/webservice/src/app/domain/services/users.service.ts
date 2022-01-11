@@ -23,13 +23,13 @@ import { EmailTemplateEnumeration } from '../enumerations/email-template.emumera
 export class UsersService {
   constructor(
     @InjectRepository(UserEntity)
-    private readonly userRepository: Repository<UserEntity>,
+    private readonly usersRepository: Repository<UserEntity>,
     private readonly jwtService: JwtService,
     private readonly emailsService: EmailsService
   ) {}
 
   async signin(command: SigninRequest): Promise<SigninResponseDto> {
-    const user = await this.userRepository.findOne({ email: command.email });
+    const user = await this.usersRepository.findOne({ email: command.email });
     if (!user) {
       throw new BadRequestException();
     }
@@ -54,7 +54,7 @@ export class UsersService {
     const hashedPassword = await bcrypt.hash(command.password, 10);
 
     try {
-      await this.userRepository.insert({
+      await this.usersRepository.insert({
         email: command.email,
         password: hashedPassword,
         firstname:
@@ -83,7 +83,7 @@ export class UsersService {
   }
 
   async whoami(userId: string): Promise<WhoamiResponseDto> {
-    const user = await this.userRepository.findOne(userId);
+    const user = await this.usersRepository.findOne(userId);
     if (!user) {
       throw new BadRequestException();
     }

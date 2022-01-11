@@ -11,7 +11,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 export class PlansService {
   constructor(
     @InjectRepository(PlanEntity)
-    private readonly planRepository: Repository<PlanEntity>,
+    private readonly plansRepository: Repository<PlanEntity>,
     private readonly logger: Logger
   ) {}
 
@@ -19,7 +19,7 @@ export class PlansService {
     let newPlan: PlanEntity;
 
     try {
-      newPlan = await this.planRepository.create(plan);
+      newPlan = await this.plansRepository.create(plan);
     } catch (error) {
       this.logger.error(`impossible to find entities`, error);
       throw new InternalServerErrorException();
@@ -32,7 +32,7 @@ export class PlansService {
     let plans: PlanEntity[];
 
     try {
-      plans = await this.planRepository.find();
+      plans = await this.plansRepository.find();
     } catch (error) {
       this.logger.error(`impossible to find entities`, error);
       throw new InternalServerErrorException();

@@ -19,11 +19,13 @@ import { environment } from '../../environments/environment';
 import { UsersService } from './services/users.service';
 import { StripeService } from './services/stripe.service';
 import { SupportService } from './services/support.service';
+import { SubscriptionService } from './services/subscriptions.service';
 
 const SERVICES = [
   EmailsService,
   PlansService,
   StripeService,
+  SubscriptionService,
   SupportService,
   UsersService,
 ];
