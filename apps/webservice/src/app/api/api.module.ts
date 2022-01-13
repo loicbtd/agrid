@@ -1,3 +1,4 @@
+import { StripeController } from './controllers/stripe.controller';
 import { ErrorsInterceptor } from './interceptors/error.interceptor';
 import { Global, Logger, Module } from '@nestjs/common';
 import { APP_INTERCEPTOR } from '@nestjs/core';
@@ -11,6 +12,7 @@ import { SubscriptionsController } from './controllers/subscriptions.controller'
   controllers: [
     IdentitiesController,
     PlansController,
+    StripeController,
     SubscriptionsController,
     SupportController,
   ],

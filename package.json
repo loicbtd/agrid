@@ -46,6 +46,7 @@
     "handlebars": "^4.7.7",
     "helmet": "^4.4.1",
     "nest-winston": "^1.6.2",
+    "ngx-stripe": "^13.0.0",
     "nodemailer": "^6.5.0",
     "passport": "^0.4.1",
     "passport-jwt": "^4.0.0",

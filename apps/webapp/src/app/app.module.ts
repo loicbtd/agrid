@@ -1,3 +1,5 @@
+import { environment } from './../environments/environment';
+import { NgxStripeModule } from 'ngx-stripe';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -42,6 +44,7 @@ import { AppRoute } from './global/constants/app-route.constant';
       { initialNavigation: 'enabledBlocking', useHash: true }
     ),
     SharedModule,
+    
   ],
   bootstrap: [AppComponent],
 })
