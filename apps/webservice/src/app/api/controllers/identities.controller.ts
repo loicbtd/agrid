@@ -1,4 +1,3 @@
-import { TokenPayload } from '../../domain/interfaces/token-payload.interface';
 import {
   SigninResponseDto,
   WhoamiResponseDto,
@@ -11,6 +10,7 @@ import { RegisterRequest } from '@workspace/common/requests';
 import { Get, UseGuards } from '@nestjs/common/decorators';
 import { JwtGuard } from '../../api/guards/jwt.guard';
 import { JwtPayload } from '../../api/decorators/jwt-payload.decorator';
+import { TokenPayload } from '../../domain/models/token-payload.model';
 
 @ApiTags('identities')
 @Controller('identities')

@@ -1,7 +1,5 @@
 import { environment } from './../../../environments/environment';
 import { RegisterRequest, SigninRequest } from '@workspace/common/requests';
-import { TokenPayload } from '../../domain/interfaces/token-payload.interface';
-import { EmailsService } from './emails.service';
 import {
   SigninResponseDto,
   WhoamiResponseDto,
@@ -18,6 +16,8 @@ import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import * as bcrypt from 'bcrypt';
 import { EmailTemplateEnumeration } from '../enumerations/email-template.emumeration';
+import { EmailsService } from './emails.service';
+import { TokenPayload } from '../models/token-payload.model';
 
 @Injectable()
 export class UsersService {

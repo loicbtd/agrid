@@ -1,3 +1,4 @@
 {
-  "StripePublishableKeyNotFoundError": "Clé publiable Stripe non trouvée"
+  "StripePublishableKeyNotFoundError": "Clé publiable Stripe non trouvée",
+  "Unkown": "Erreur inconnue"
 }

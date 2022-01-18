@@ -1,5 +1,5 @@
-import { PlansService } from './services/plans.service';
 import { EmailsService } from './services/emails.service';
+import { PlansService } from './services/plans.service';
 import { JwtModule } from '@nestjs/jwt';
 import { Global, Logger, Module } from '@nestjs/common';
 import { HttpModule } from '@nestjs/axios';
