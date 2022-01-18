@@ -3,6 +3,7 @@ import { ApiProperty } from '@nestjs/swagger';
 
 export class SigninRequest {
   @ApiProperty()
+  @IsNotEmpty()
   @IsEmail()
   email!: string;
 

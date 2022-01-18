@@ -13,13 +13,16 @@ export class UserEntity {
   @Column()
   password?: string;
 
+  @Column({ default: true })
+  mustDefinePassword?: boolean;
+
   @Column({
     type: 'enum',
     enum: RightEnumeration,
     array: true,
     default: [],
   })
-  rights: RightEnumeration[];
+  rights?: RightEnumeration[];
 
   @Column()
   firstname?: string;
@@ -27,6 +30,6 @@ export class UserEntity {
   @Column()
   lastname?: string;
 
-  @ManyToOne(() => CompanyEntity, (company) => company.id)
+  @ManyToOne(() => CompanyEntity, (company) => company.id, { nullable: true })
   company?: CompanyEntity;
 }

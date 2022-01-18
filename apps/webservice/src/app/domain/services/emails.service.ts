@@ -1,9 +1,10 @@
 import { environment } from '../../../environments/environment';
 import { Injectable } from '@nestjs/common';
 import { MailerService } from '@nestjs-modules/mailer';
-import { EmailTemplateEnumeration } from '../enumerations/email-template.emumeration';
 import { join } from 'path';
 import { Address } from '@nestjs-modules/mailer/dist/interfaces/send-mail-options.interface';
+import { EmailTemplateEnumeration } from '../enumerations/email-template.emumeration';
+import { UnabilityToSendEmailError } from '../errors/unability-to-send-email.error';
 
 @Injectable()
 export class EmailsService {
@@ -48,9 +49,7 @@ export class EmailsService {
         replyTo: options.replyto,
       });
     } catch (error) {
-      console.log(error);
-
-      throw new Error(error.message);
+      throw new UnabilityToSendEmailError(error.message, to, subject);
     }
   }
 }

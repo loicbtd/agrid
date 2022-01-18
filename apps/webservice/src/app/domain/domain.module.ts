@@ -1,7 +1,8 @@
-import { PlansService } from './services/plans.service';
 import { EmailsService } from './services/emails.service';
+import { PlansService } from './services/plans.service';
 import { JwtModule } from '@nestjs/jwt';
-import { Global, HttpModule, Logger, Module } from '@nestjs/common';
+import { Global, Logger, Module } from '@nestjs/common';
+import { HttpModule } from '@nestjs/axios';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import {
   CompanyTypeEntity,
@@ -19,11 +20,13 @@ import { environment } from '../../environments/environment';
 import { UsersService } from './services/users.service';
 import { StripeService } from './services/stripe.service';
 import { SupportService } from './services/support.service';
+import { SubscriptionService } from './services/subscriptions.service';
 
 const SERVICES = [
   EmailsService,
   PlansService,
   StripeService,
+  SubscriptionService,
   SupportService,
   UsersService,
 ];

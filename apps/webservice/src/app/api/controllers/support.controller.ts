@@ -9,7 +9,7 @@ export class SupportController {
   constructor(private readonly contactService: SupportService) {}
 
   @Post('request')
-  @ApiOperation({ summary: 'Requests the support team' })
+  @ApiOperation({ summary: 'requests the support team' })
   async sendContactEmail(@Body() command: SupportRequest): Promise<void> {
     await this.contactService.request(command);
   }

@@ -43,6 +43,8 @@ import { AngularComponentsBlockableDivModule } from '@workspace/angular/componen
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { CarouselModule } from 'primeng/carousel';
+import { NgxStripeModule } from 'ngx-stripe';
+import { environment } from '../environments/environment';
 
 const importedAndExportedModules = [
   CommonModule,

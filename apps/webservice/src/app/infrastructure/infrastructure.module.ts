@@ -1,3 +1,4 @@
+import { EmailsService } from '../domain/services/emails.service';
 import { Global, Logger, Module } from '@nestjs/common';
 import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
 import { MailerModule } from '@nestjs-modules/mailer';

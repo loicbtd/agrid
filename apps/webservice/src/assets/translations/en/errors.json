@@ -1,0 +1,4 @@
+{
+  "StripePublishableKeyNotFoundError": "Stripe publishable key not found",
+  "Unkown": "Unknown error"
+}
