@@ -11,7 +11,7 @@ export class SubscriptionsController {
   constructor(private readonly subscriptionService: SubscriptionService) {}
 
   @Post('subscribe')
-  @ApiOperation({ summary: 'subscribe' })
+  @ApiOperation({ summary: 'subscribes to a plan' })
   async subscribe(
     @Body() command: SubscribeRequest
   ): Promise<SubscriptionEntity> {

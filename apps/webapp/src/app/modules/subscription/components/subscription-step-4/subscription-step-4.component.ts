@@ -76,7 +76,7 @@ export class SubscriptionStep4Component implements OnInit {
 
   private createPaymentIntent(amount: number): Observable<PaymentIntent> {
     return this.http.post<PaymentIntent>(
-      `$http://localhost:3333/subscriptions/subscribe`,
+      `http://localhost:3333/subscriptions/subscribe`,
       { amount }
     );
   }

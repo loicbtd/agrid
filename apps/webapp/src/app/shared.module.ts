@@ -94,9 +94,7 @@ const importedAndExportedModules = [
 
 @NgModule({
   declarations: [],
-  imports: [
-    ...importedAndExportedModules,
-  ],
+  imports: [...importedAndExportedModules],
   exports: [...importedAndExportedModules],
   providers: [
     {

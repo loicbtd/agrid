@@ -18,13 +18,13 @@ export class IdentitiesController {
   constructor(private readonly usersService: UsersService) {}
 
   @Post('signin')
-  @ApiOperation({ summary: 'Logs a user' })
+  @ApiOperation({ summary: 'logs a user' })
   async signin(@Body() command: SigninRequest): Promise<SigninResponseDto> {
     return await this.usersService.signin(command);
   }
 
   @Post('register')
-  @ApiOperation({ summary: 'Registers a user' })
+  @ApiOperation({ summary: 'registers a user' })
   async register(@Body() command: RegisterRequest): Promise<void> {
     await this.usersService.register(command);
   }
@@ -32,7 +32,7 @@ export class IdentitiesController {
   @ApiBearerAuth()
   @UseGuards(JwtGuard)
   @Get('whoami')
-  @ApiOperation({ summary: 'Gets who am I' })
+  @ApiOperation({ summary: 'gets who am I' })
   async whoami(
     @JwtPayload() payload: TokenPayload
   ): Promise<WhoamiResponseDto> {

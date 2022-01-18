@@ -44,7 +44,9 @@ import { AppRoute } from './global/constants/app-route.constant';
       { initialNavigation: 'enabledBlocking', useHash: true }
     ),
     SharedModule,
-    
+    NgxStripeModule.forRoot(
+      'pk_test_51K45joGyNnbBl4uQMzFx0YsDQefzYcLFIwEuTVOoJXW08zetFvE0p1EQ7LnUsFuPHfTNtod5eXWU3xSGUlsnWQ3G00N4eWb5nW'
+    ),
   ],
   bootstrap: [AppComponent],
 })

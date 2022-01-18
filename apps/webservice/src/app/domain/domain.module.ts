@@ -1,7 +1,8 @@
 import { PlansService } from './services/plans.service';
 import { EmailsService } from './services/emails.service';
 import { JwtModule } from '@nestjs/jwt';
-import { Global, HttpModule, Logger, Module } from '@nestjs/common';
+import { Global, Logger, Module } from '@nestjs/common';
+import { HttpModule } from '@nestjs/axios';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import {
   CompanyTypeEntity,

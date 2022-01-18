@@ -14,7 +14,7 @@ export class PlansController {
   @ApiBearerAuth()
   @UseGuards(JwtGuard)
   @Post('create')
-  @ApiOperation({ summary: 'Creates a plan' })
+  @ApiOperation({ summary: 'creates a plan' })
   async create(@Body() command: CreatePlanRequest): Promise<PlanEntity> {
     return this.plansService.create({
       name: command.name,
@@ -26,7 +26,7 @@ export class PlansController {
   @ApiBearerAuth()
   @UseGuards(JwtGuard)
   @Get('retrieve')
-  @ApiOperation({ summary: 'Retrieves plans' })
+  @ApiOperation({ summary: 'retrieves plans' })
   async retrieve(): Promise<PlanEntity[]> {
     return this.plansService.retrieve();
   }

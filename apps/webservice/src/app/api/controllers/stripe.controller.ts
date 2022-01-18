@@ -10,7 +10,7 @@ export class StripeController {
 
   @Get('retrievePublishableKey')
   @ApiOperation({ summary: 'retrieves the stripe publishable key' })
-  async signin(): Promise<string> {
-    return await this.stripeService.retrievePushableKey();
+  async retrievePublishableKey(): Promise<string> {
+    return await this.stripeService.retrievePublishableKey();
   }
 }

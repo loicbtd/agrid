@@ -32,7 +32,8 @@
             ]
           }
         }
-      }
+      },
+      "tags": []
     },
     "common-entities": {
       "root": "libs/common-entities",
@@ -57,7 +58,8 @@
             "lintFilePatterns": ["libs/common-entities/**/*.ts"]
           }
         }
-      }
+      },
+      "tags": []
     },
     "common-enumerations": {
       "root": "libs/common-enumerations",
@@ -82,7 +84,8 @@
             "lintFilePatterns": ["libs/common-enumerations/**/*.ts"]
           }
         }
-      }
+      },
+      "tags": []
     },
     "common-regexp": {
       "root": "libs/common-regexp",
@@ -107,7 +110,8 @@
             "lintFilePatterns": ["libs/common-regex/**/*.ts"]
           }
         }
-      }
+      },
+      "tags": []
     },
     "common-requests": {
       "root": "libs/common-requests",
@@ -132,7 +136,8 @@
             "lintFilePatterns": ["libs/common-requests/**/*.ts"]
           }
         }
-      }
+      },
+      "tags": []
     },
     "common-responses": {
       "root": "libs/common-responses",
@@ -157,7 +162,8 @@
             "lintFilePatterns": ["libs/common-responses/**/*.ts"]
           }
         }
-      }
+      },
+      "tags": []
     },
     "webapp": {
       "projectType": "application",
@@ -193,7 +199,7 @@
             "outputHashing": "all"
           },
           "configurations": {
-             "development": {
+            "development": {
               "buildOptimizer": false,
               "optimization": false,
               "vendorChunk": true,
@@ -239,7 +245,8 @@
             ]
           }
         }
-      }
+      },
+      "tags": []
     },
     "webservice": {
       "root": "apps/webservice",
@@ -285,7 +292,8 @@
             "lintFilePatterns": ["apps/webservice/**/*.ts"]
           }
         }
-      }
+      },
+      "tags": []
     },
     "winston-transports": {
       "root": "libs/winston-transports",
@@ -310,27 +318,8 @@
             "lintFilePatterns": ["libs/winston-transports/**/*.ts"]
           }
         }
-      }
+      },
+      "tags": []
     }
-  },
-  "cli": {
-    "defaultCollection": "@nrwl/angular"
-  },
-  "generators": {
-    "@nrwl/angular:application": {
-      "style": "scss",
-      "linter": "eslint",
-      "unitTestRunner": "none",
-      "e2eTestRunner": "cypress"
-    },
-    "@nrwl/angular:library": {
-      "style": "scss",
-      "linter": "eslint",
-      "unitTestRunner": "none"
-    },
-    "@nrwl/angular:component": {
-      "style": "scss"
-    }
-  },
-  "defaultProject": "webapp"
+  }
 }

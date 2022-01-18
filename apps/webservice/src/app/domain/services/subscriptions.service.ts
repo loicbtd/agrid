@@ -1,17 +1,19 @@
-import { PlanEntity } from './../../../../../../libs/common-entities/src/lib/plan.entity';
 import { environment } from './../../../environments/environment';
-import { UserEntity } from './../../../../../../libs/common-entities/src/lib/user.entity';
-import { SubscribeRequest } from './../../../../../../libs/common-requests/src/lib/subscribe.request';
 import {
+  BadRequestException,
   Injectable,
   InternalServerErrorException,
   Logger,
-  NotFoundException,
 } from '@nestjs/common';
-import { SubscriptionEntity } from '@workspace/common/entities';
+import {
+  PlanEntity,
+  SubscriptionEntity,
+  UserEntity,
+} from '@workspace/common/entities';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Stripe } from 'stripe';
+import { SubscribeRequest } from '@workspace/common/requests';
 
 @Injectable()
 export class SubscriptionService {
@@ -40,7 +42,6 @@ export class SubscriptionService {
         subscriptionRequest.planId
       );
     } catch (error) {
-      this.logger.error(`unknown plan`, error);
       throw new InternalServerErrorException('Plan inconnu');
     }
 
@@ -59,27 +60,21 @@ export class SubscriptionService {
         },
       });
     } catch (error) {
-      this.logger.error(
-        `unable to charge the payment source for ${subscriptionRequest.email}`,
-        error
-      );
       throw new InternalServerErrorException(
-        'Impossible de débiter le moyen de paiement'
+        'impossible de débiter le moyen de paiement'
       );
     }
 
     if (charge.outcome.type !== 'authorized') {
-      this.logger.error(
-        `unauthorized payment for ${subscriptionRequest.email}`
+      throw new BadRequestException(
+        'impossible de débiter le moyen de paiement'
       );
-      throw new NotFoundException('Impossible de débiter le moyen de paiement');
     }
 
     try {
       user = await this.usersRepository.create(user);
     } catch (error) {
-      this.logger.error(`unable to create user ${user.email}`, error);
-      throw new InternalServerErrorException('Plan inconnu');
+      throw new InternalServerErrorException('plan inconnu');
     }
 
     let subscription: SubscriptionEntity = {
@@ -91,10 +86,6 @@ export class SubscriptionService {
     try {
       subscription = await this.subscriptionsRepository.create(subscription);
     } catch (error) {
-      this.logger.error(
-        `impossible to create subscription for plan ${plan.id} to ${user.email}`,
-        error
-      );
       throw new InternalServerErrorException();
     }
 
