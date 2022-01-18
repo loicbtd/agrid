@@ -1070,7 +1070,7 @@ ul.top_icon li a {
 }
 
 
-}
+
 .main-menu ul li:last-child a {
      padding-right: 0;
 }
@@ -1086,11 +1086,11 @@ ul.top_icon li a {
      position: relative;
      border-bottom: solid #eee 1px;
 }
-.main-menu ul>li .sub-down li a::before {}
+/* .main-menu ul>li .sub-down li a::before {} */
 .main-menu ul>li .sub-down li a:hover {
      color: #111111;
 }
-.main-menu ul>li .sub-down li a:hover::before {}
+/* .main-menu ul>li .sub-down li a:hover::before {} */
 .main-menu ul li:first-child {
      margin-left: 0;
 }
@@ -1144,7 +1144,7 @@ ul.top_icon li a {
      display: inline-block;
      vertical-align: middle;
 }
-.main-menu ul>li:nth-child (6) {
+.main-menu ul>li:nth-child(6) {
      padding-right: 0px;
 }
 .nav>li {
@@ -1160,7 +1160,7 @@ ul.top_icon li a {
      right: 0;
      padding: 15px 0px;
 }
-.sub-full {}
+/* .sub-full {} */
 .simple-down {
      padding: 15px;
 }
@@ -1637,16 +1637,19 @@ font-weight: 500;
 
 .relative {
      position: absolute;
-     top: 50%;
-     transform: translateY(-50%);
+     top: auto;
+     transform: translateY(-150%);
      text-align: left;
      bottom: auto;
+     left: auto;
+     right: auto;
 }
 
 .banner-main {
      position: relative;
      font-family: poppins;
 }
+
 .carousel-indicators li {
     width: 25px;
     height: 25px;
@@ -1659,6 +1662,15 @@ font-weight: 500;
 #myCarousel a.carousel-control-prev {display: none;}
 #myCarousel a.carousel-control-next {display: none;}
 .carousel-indicators .active {background-color:#4bc714;}
+
+.carousel-caption {
+     text-align: left;
+     transform: translateY(-150%);
+     left: auto;
+     right: auto;
+     top: auto;
+     bottom: auto;
+}
 
 .banner-main .carousel-caption span {
      font-size: 50px;
@@ -1985,17 +1997,19 @@ text-transform: uppercase;
 .pa_left {padding-left: 0px;}
 
 .testimonial_cont p {color: #fff;
-background: #052501;
-padding: 40px 50px;}
+     background: #052501;
+     padding: 40px 50px;
+}
 #testimonial_slider .carousel-indicators {
      bottom: -50px;
 }
 
+
 #testimonial_slider .carousel-indicators li {
      width: 25px;
-height: 25px;
-background-color: #052501;
-border-radius: 50px;
+     height: 25px;
+     background-color: #052501;
+     border-radius: 50px;
 }
 #testimonial_slider .carousel-indicators li.active {
      background-color: #4bc714;
@@ -2028,7 +2042,7 @@ bottom: -61px;;
 z-index: 9999;
 }
 .testomonial_img i img { border: #4bc714 solid 13px; width: 100%;}
-transform: skew(190deg);
+/* transform: skew(190deg); */
 
 .testimonial_cont h3 { color: #000; font-family: poppins;}
 
@@ -2063,11 +2077,14 @@ transform: skew(190deg);
 }
 
 .main_form {
-    position: absolute;
-    z-index: 990;
-    background: #052501;
-   margin-top: 80px;
-    padding: 60px 40px;
+     position: relative;
+     z-index: 990;
+     background: #052501;
+     /* margin-top: 80px; */
+     padding: 60px 40px;
+     /* margin-left: 10%; */
+     /* margin-right: 20%; */
+     margin: 10% 20%;
 }
 
 .form-control {
