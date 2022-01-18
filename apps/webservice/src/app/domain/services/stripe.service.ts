@@ -5,7 +5,10 @@ import { Injectable } from '@nestjs/common';
 @Injectable()
 export class StripeService {
   async retrievePublishableKey(): Promise<string> {
-    throw new StripePublishableKeyNotFoundError();
+    if (!environment.stripePublishableKey) {
+      throw new StripePublishableKeyNotFoundError();
+    }
+
     return environment.stripePublishableKey;
   }
 }

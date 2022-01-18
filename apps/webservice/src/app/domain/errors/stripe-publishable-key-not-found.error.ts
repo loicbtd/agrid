@@ -2,6 +2,6 @@ import { DomainError } from './domain.error';
 
 export class StripePublishableKeyNotFoundError extends DomainError {
   constructor() {
-    super('stripe publishable key not found');
+    super('payment method charge is not authorized by stripe');
   }
 }

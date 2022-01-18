@@ -1,7 +1,8 @@
-import { Injectable, InternalServerErrorException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { SupportRequest } from '@workspace/common/requests';
 import { environment } from '../../../environments/environment';
 import { EmailTemplateEnumeration } from '../enumerations/email-template.emumeration';
+import { UnabilityToSendEmailError } from '../errors/unability-to-send-email.error';
 import { EmailsService } from './emails.service';
 
 @Injectable()
@@ -20,7 +21,11 @@ export class SupportService {
         }
       );
     } catch (error) {
-      throw new InternalServerErrorException();
+      throw new UnabilityToSendEmailError(
+        error.message,
+        environment.supportEmailAddress,
+        command.subject
+      );
     }
   }
 }

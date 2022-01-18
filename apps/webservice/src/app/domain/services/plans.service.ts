@@ -1,11 +1,8 @@
-import {
-  Injectable,
-  InternalServerErrorException,
-  Logger,
-} from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { PlanEntity } from '@workspace/common/entities';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
+import { EntityNotFoundError } from '../errors/entity-not-found.error';
 
 @Injectable()
 export class PlansService {
@@ -20,9 +17,8 @@ export class PlansService {
 
     try {
       newPlan = await this.plansRepository.create(plan);
-    } catch (error) {
-      this.logger.error(`impossible to find entities`, error);
-      throw new InternalServerErrorException();
+    } catch (error: any) {
+      throw new EntityNotFoundError(error.message, PlanEntity.constructor.name);
     }
 
     return newPlan;
@@ -34,8 +30,7 @@ export class PlansService {
     try {
       plans = await this.plansRepository.find();
     } catch (error) {
-      this.logger.error(`impossible to find entities`, error);
-      throw new InternalServerErrorException();
+      throw new EntityNotFoundError(error.message, PlanEntity.constructor.name);
     }
 
     return plans;
