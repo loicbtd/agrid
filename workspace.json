@@ -184,19 +184,7 @@
             "assets": ["apps/webapp/src/favicon.ico", "apps/webapp/src/assets"],
             "styles": ["apps/webapp/src/styles.scss"],
             "scripts": [],
-            "budgets": [
-              {
-                "type": "initial",
-                "maximumWarning": "1mb",
-                "maximumError": "2mb"
-              },
-              {
-                "type": "anyComponentStyle",
-                "maximumWarning": "2kb",
-                "maximumError": "4kb"
-              }
-            ],
-            "outputHashing": "all"
+            "outputHashing": "none"
           },
           "configurations": {
             "development": {
@@ -213,10 +201,17 @@
                   "replace": "apps/webapp/src/environments/environment.ts",
                   "with": "apps/webapp/src/environments/environment.production.ts"
                 }
+              ],
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "3mb"
+                }
               ]
             }
           },
-          "defaultConfiguration": "development"
+          "defaultConfiguration": "production"
         },
         "serve": {
           "executor": "@angular-devkit/build-angular:dev-server",
