@@ -1,4 +1,11 @@
 {
+  "EntityNotFoundError": "Entité non trouvée",
+  "PaymentMethodChargeIsNotAuthorizedByStripeError": "Débit du moyen de paiement non autorisé par Stripe",
   "StripePublishableKeyNotFoundError": "Clé publiable Stripe non trouvée",
+  "UnabilityToChargePaymentMethodWithStripeError": "Impossible de débiter le moyen de paiement avec Stripe",
+  "UnabilityToCreateSubscriptionError": "Impossible de créer une souscription",
+  "UnabilityToCreateUserError": "Impossible de créer un utilisateur",
+  "UnabilityToSendEmailError": "Impossible d'envoyer un courriel",
+  "UnkownPlanError": "Plan inconnu",
   "Unkown": "Erreur inconnue"
 }

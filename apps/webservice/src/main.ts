@@ -1,4 +1,3 @@
-import { ErrorsFilter } from './app/api/filters/errors.filter';
 import {
   FastifyAdapter,
   NestFastifyApplication,
@@ -11,24 +10,17 @@ import { environment } from './environments/environment';
 import { WinstonModule } from 'nest-winston';
 import { ConsoleTransport } from '@workspace/winston/transports';
 import { fastifyHelmet } from 'fastify-helmet';
-import { I18nJsonParser, I18nService } from 'nestjs-i18n';
-import { Observable } from 'rxjs';
-import * as path from 'path';
 
 (async () => {
-  const fastifyAdapter = new FastifyAdapter();
-
   const app = await NestFactory.create<NestFastifyApplication>(
     AppModule,
-    fastifyAdapter,
+    new FastifyAdapter(),
     {
       logger: WinstonModule.createLogger({
         transports: [new ConsoleTransport()],
       }),
     }
   );
-
-  const logger = new Logger();
 
   app.register(require('fastify-cors'), {
     origin: [environment.webappUrl],
@@ -54,7 +46,7 @@ import * as path from 'path';
 
   await app.listen(environment.port, environment.host);
 
-  logger.log(
+  new Logger().log(
     `Listening ${environment.protocol}://${environment.host}:${environment.port}`
   );
 })();
