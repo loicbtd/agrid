@@ -6,81 +6,8 @@
     <base href="/" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" type="image/x-icon" href="favicon.ico" />
-
-    <!-- bootstrap css -->
-    <link rel="stylesheet" href="/assets/landing-page/css/bootstrap.min.css">
-    <!-- style css -->
-    <link rel="stylesheet" href="/assets/landing-page/css/style.css">
-    <!-- Responsive-->
-    <link rel="stylesheet" href="/assets/landing-page/css/responsive.css">
-    <!-- fevicon -->
-    <link rel="icon" href="/assets/landing-page/images/fevicon.png" type="image/gif" />
-    <!-- Scrollbar Custom CSS -->
-    <link rel="stylesheet" href="/assets/landing-page/css/jquery.mCustomScrollbar.min.css">
-    <!-- Tweaks for older IEs-->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css" media="screen">
-
-
   </head>
   <body>
     <app-root></app-root>
-
-    <!-- Javascript files-->
-    <script src="/assets/landing-page/js/jquery.min.js"></script>
-    <script src="/assets/landing-page/js/popper.min.js"></script>
-    <script src="/assets/landing-page/js/bootstrap.bundle.min.js"></script>
-    <script src="/assets/landing-page/js/jquery-3.0.0.min.js"></script>
-    <script src="/assets/landing-page/js/plugin.js"></script>
-    <!-- sidebar -->
-    <script src="/assets/landing-page/js/jquery.mCustomScrollbar.concat.min.js"></script>
-    <script src="/assets/landing-page/js/custom.js"></script>
-    <!-- javascript -->
-    <script src="/assets/landing-page/js/owl.carousel.js"></script>
-    <script src="https:cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.js"></script>
-    <script>
-        $(document).ready(function() {
-            $(".fancybox").fancybox({
-                openEffect: "none",
-                closeEffect: "none"
-            });
-
-            $(".zoom").hover(function() {
-
-                $(this).addClass('transition');
-            }, function() {
-
-                $(this).removeClass('transition');
-            });
-        });
-    </script>
-    <script>
-        // This example adds a marker to indicate the position of Bondi Beach in Sydney,
-        // Australia.
-        function initMap() {
-            var map = new google.maps.Map(document.getElementById('map'), {
-                zoom: 11,
-                center: {
-                    lat: 40.645037,
-                    lng: -73.880224
-                },
-            });
-
-            var image = '/assets/landing-page/images/maps-and-flags.png';
-            var beachMarker = new google.maps.Marker({
-                position: {
-                    lat: 40.645037,
-                    lng: -73.880224
-                },
-                map: map,
-                icon: image
-            });
-        }
-    </script>
-    <!-- google map js -->
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA8eaHt9Dh5H57Zh0xVTqxVdBFCvFMqFjQ&callback=initMap"></script>
-    <!-- end google map js -->
-
-
   </body>
 </html>

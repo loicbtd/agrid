@@ -11,16 +11,6 @@
  ----------------------------------------*****/
 
 
-/*--------------------------------------------------------------------- import Files ---------------------------------------------------------------------*/
-
-@import url(animate.min.css);
-@import url(normalize.css);
-@import url(meanmenu.css);
-@import url(owl.carousel.min.css);
-@import url(slick.css);
-@import url(jquery-ui.css);
-@import url(nice-select.css);
-
 /*--------------------------------------------------------------------- skeleton ---------------------------------------------------------------------*/
 
 * {
@@ -279,7 +269,7 @@ button {
      color: #114c7d;
      font-weight: 400;
      font-size: 28px;
-     background-image: url('../images/fevicon.png');
+     /* background-image: url('/assets/landing-page/images/fevicon.png'); */
      background-repeat: no-repeat;
      padding-left: 55px;
      letter-spacing: -0.5px;
@@ -1352,19 +1342,19 @@ ul.top_icon li a {
 }
 .heroslider .slider-01 {
      width: 100%;
-     background-image: url(../images/slider-01.jpg);
+     /* background-image: url('/assets/landing-page/images/slider-01.jpg'); */
      background-size: cover;
      background-position: center;
 }
 .heroslider .slider-02 {
      width: 100%;
-     background-image: url(../images/slider-02.jpg);
+     /* background-image: url('/assets/landing-page//images/slider-02.jpg'); */
      background-size: cover;
      background-position: center;
 }
 .heroslider .slider-03 {
      width: 100%;
-     background-image: url(../images/slider-03.jpg);
+     /* background-image: url('/assets/landing-page/images/slider-03.jpg'); */
      background-size: cover;
      background-position: center;
 }
@@ -1617,7 +1607,7 @@ font-weight: 500;
      position: absolute;
 content: "";
 top: 0px;
-background: url(../icon/wfe4.png);
+/* background: url(../icon/wfe4.png); */
 background-repeat: repeat;
 width: 67px;
 height: 67px;
@@ -2033,7 +2023,7 @@ line-height: 10px;
     position: absolute;
 content: "";
 
-background: url(../images/bg1.png);
+/* background: url(../images/bg1.png); */
 background-repeat: no-repeat;
 width: 61px;
 height: 61px;
