@@ -18,14 +18,14 @@ import { PassportModule } from '@nestjs/passport';
 import { JwtStrategy } from './strategies/jwt.strategy';
 import { environment } from '../../environments/environment';
 import { UsersService } from './services/users.service';
-import { StripeService } from './services/stripe.service';
+import { ConfigurationService } from './services/configuration.service';
 import { SupportService } from './services/support.service';
 import { SubscriptionService } from './services/subscriptions.service';
 
 const SERVICES = [
+  ConfigurationService,
   EmailsService,
   PlansService,
-  StripeService,
   SubscriptionService,
   SupportService,
   UsersService,

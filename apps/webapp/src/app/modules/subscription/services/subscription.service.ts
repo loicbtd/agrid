@@ -8,7 +8,7 @@ import { PlanEntity } from '@workspace/common/entities';
 export class SubscriptionService {
   selectedPlan: PlanEntity;
 
-  constructor(private readonly _httpClient: HttpClient) {}
+  constructor(private readonly httpClient: HttpClient) {}
 
   async getAvailablePlans(): Promise<PlanEntity[]> {
     return [

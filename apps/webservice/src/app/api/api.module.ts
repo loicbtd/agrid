@@ -1,4 +1,4 @@
-import { StripeController } from './controllers/stripe.controller';
+import { ConfigurationController } from './controllers/configuration.controller';
 import { Global, Logger, Module, Scope } from '@nestjs/common';
 import { IdentitiesController } from '../api/controllers/identities.controller';
 import { PlansController } from './controllers/plans.controller';
@@ -34,9 +34,9 @@ import * as path from 'path';
     }),
   ],
   controllers: [
+    ConfigurationController,
     IdentitiesController,
     PlansController,
-    StripeController,
     SubscriptionsController,
     SupportController,
   ],

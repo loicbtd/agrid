@@ -30,23 +30,23 @@ export class SubscriptionStep1Component implements OnInit {
   ];
 
   constructor(
-    private readonly _subscriptionService: SubscriptionService,
-    private readonly _router: Router,
-    private readonly _activatedRoute: ActivatedRoute
+    private readonly subscriptionService: SubscriptionService,
+    private readonly router: Router,
+    private readonly activatedRoute: ActivatedRoute
   ) {}
 
   get selectedPlan() {
-    return this._subscriptionService.selectedPlan;
+    return this.subscriptionService.selectedPlan;
   }
 
   async ngOnInit() {
-    this.availablePlans = await this._subscriptionService.getAvailablePlans();
+    this.availablePlans = await this.subscriptionService.getAvailablePlans();
   }
 
   select(plan: PlanEntity) {
-    this._subscriptionService.selectedPlan = plan;
-    this._router.navigate(['..', 'step-2'], {
-      relativeTo: this._activatedRoute,
+    this.subscriptionService.selectedPlan = plan;
+    this.router.navigate(['..', 'step-2'], {
+      relativeTo: this.activatedRoute,
     });
   }
 }

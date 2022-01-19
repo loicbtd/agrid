@@ -26,6 +26,7 @@
       "@workspace/common/extension/winston": [
         "libs/common-extension-winston/src/index.ts"
       ],
+      "@workspace/common/models": ["libs/common-models/src/index.ts"],
       "@workspace/common/regexp": ["libs/common-regexp/src/index.ts"],
       "@workspace/common/requests": ["libs/common-requests/src/index.ts"],
       "@workspace/common/responses": ["libs/common-responses/src/index.ts"],

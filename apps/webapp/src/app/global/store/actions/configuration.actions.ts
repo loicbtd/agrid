@@ -1,11 +1,10 @@
-import { createAction, props } from '@ngrx/store';
+import { ConfigurationModel } from '@workspace/common/models';
 
+export class Get {
+  static readonly type = '[Configuration] Get';
+}
 
-export const retrieveStripePublishableKey = createAction(
-  '[Configuration] Retrieve Stripe Publishable Key'
-);
-
-export const retrieveStripePublishableKeySuccess = createAction(
-  '[Configuration] Retrieve Stripe Publishable Key Success',
-  props<{ stripePublishableKey: string }>()
-);
+export class Refresh {
+  static readonly type = '[Configuration] Refresh Success';
+  constructor(public configuration: ConfigurationModel) {}
+}
