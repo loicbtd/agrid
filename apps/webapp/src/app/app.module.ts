@@ -49,12 +49,6 @@ import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
       { initialNavigation: 'enabledBlocking', useHash: true }
     ),
     SharedModule,
-    NgxStripeModule.forRoot(),
-    NgxsModule.forRoot([ConfigurationModel], {
-      developmentMode: !environment.production,
-    }),
-    NgxsStoragePluginModule.forRoot(),
-    NgxsReduxDevtoolsPluginModule.forRoot({ disabled: environment.production }),
   ],
   bootstrap: [AppComponent],
   providers: [

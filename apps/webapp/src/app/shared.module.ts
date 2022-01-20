@@ -45,6 +45,10 @@ import { InputSwitchModule } from 'primeng/inputswitch';
 import { CarouselModule } from 'primeng/carousel';
 import { NgxStripeModule } from 'ngx-stripe';
 import { environment } from '../environments/environment';
+import { NgxsModule } from '@ngxs/store';
+import { NgxsStoragePluginModule } from '@ngxs/storage-plugin';
+import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
+import { ConfigurationModel } from '@workspace/common/models';
 
 const importedAndExportedModules = [
   CommonModule,
@@ -94,7 +98,15 @@ const importedAndExportedModules = [
 
 @NgModule({
   declarations: [],
-  imports: [...importedAndExportedModules],
+  imports: [
+    ...importedAndExportedModules,
+    NgxStripeModule.forRoot(),
+    NgxsModule.forRoot([ConfigurationModel], {
+      developmentMode: !environment.production,
+    }),
+    NgxsStoragePluginModule.forRoot(),
+    NgxsReduxDevtoolsPluginModule.forRoot({ disabled: environment.production }),
+  ],
   exports: [...importedAndExportedModules],
   providers: [
     {

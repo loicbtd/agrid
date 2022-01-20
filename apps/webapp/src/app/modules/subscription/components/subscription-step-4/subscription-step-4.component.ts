@@ -27,7 +27,7 @@ export class SubscriptionStep4Component implements OnInit {
   paying = false;
 
   constructor(
-    private http: HttpClient,
+    private httpClient: HttpClient,
     private fb: FormBuilder,
     private stripeService: StripeService
   ) {}
@@ -75,7 +75,7 @@ export class SubscriptionStep4Component implements OnInit {
   }
 
   private createPaymentIntent(amount: number): Observable<PaymentIntent> {
-    return this.http.post<PaymentIntent>(
+    return this.httpClient.post<PaymentIntent>(
       `http://localhost:3333/subscriptions/subscribe`,
       { amount }
     );
