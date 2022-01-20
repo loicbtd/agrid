@@ -13,8 +13,8 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
           ),
           radial-gradient(
             77.36% 256.97% at 77.36% 57.52%,
-            #eeefaf 0%,
-            #c3e3fa 100%
+            #4BC714 0%,
+            #E8BE28 100%,
           );
         height: 700px;
         overflow: hidden;
