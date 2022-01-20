@@ -49,6 +49,7 @@ import { NgxsModule } from '@ngxs/store';
 import { NgxsStoragePluginModule } from '@ngxs/storage-plugin';
 import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
 import { ConfigurationModel } from '@workspace/common/models';
+import {DividerModule} from 'primeng/divider';
 
 const importedAndExportedModules = [
   CommonModule,
@@ -94,6 +95,7 @@ const importedAndExportedModules = [
   InputNumberModule,
   InputSwitchModule,
   CarouselModule,
+  DividerModule,
 ];
 
 @NgModule({
