@@ -13,22 +13,25 @@
       /><span
         _ngcontent-qrt-c150=""
         class="text-gray-900 font-medium text-2xl line-height-3 mr-8"
-        >SAKAI</span>
-        </a>
-      <a
-        _ngcontent-qrt-c150=""
-        pripple=""
-        pstyleclass="@next"
-        enterclass="hidden"
-        leavetoclass="hidden"
-        class="p-ripple p-element cursor-pointer block lg:hidden text-700"
+        >SAKAI</span
+      >
+    </a>
+    <a
+      _ngcontent-qrt-c150=""
+      pripple=""
+      pstyleclass="@next"
+      enterclass="hidden"
+      leavetoclass="hidden"
+      class="p-ripple p-element cursor-pointer block lg:hidden text-700"
+      (click)="displayMobileMenu = !displayMobileMenu"
       ><i _ngcontent-qrt-c150="" class="pi pi-bars text-4xl"></i
       ><span class="p-ink"></span>
     </a>
     <div
       _ngcontent-qrt-c150=""
-      class="align-items-center flex-grow-1 justify-content-between hidden lg:flex absolute lg:static w-full surface-overlay left-0 px-6 lg:px-0 z-2"
+      class="align-items-center flex-grow-1 justify-content-between lg:flex absolute lg:static w-full surface-overlay left-0 px-6 lg:px-0 z-2 hidden"
       style="top: 92%"
+      [ngClass]="{ hidden: displayMobileMenu }"
     >
       <ul
         _ngcontent-qrt-c150=""
