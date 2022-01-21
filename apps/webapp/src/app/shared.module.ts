@@ -43,13 +43,7 @@ import { AngularComponentsBlockableDivModule } from '@workspace/angular/componen
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { CarouselModule } from 'primeng/carousel';
-import { NgxStripeModule } from 'ngx-stripe';
-import { environment } from '../environments/environment';
-import { NgxsModule } from '@ngxs/store';
-import { NgxsStoragePluginModule } from '@ngxs/storage-plugin';
-import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
-import { ConfigurationModel } from '@workspace/common/models';
-import {DividerModule} from 'primeng/divider';
+import { DividerModule } from 'primeng/divider';
 
 const importedAndExportedModules = [
   CommonModule,
@@ -100,22 +94,8 @@ const importedAndExportedModules = [
 
 @NgModule({
   declarations: [],
-  imports: [
-    ...importedAndExportedModules,
-    NgxStripeModule.forRoot(),
-    NgxsModule.forRoot([ConfigurationModel], {
-      developmentMode: !environment.production,
-    }),
-    NgxsStoragePluginModule.forRoot(),
-    NgxsReduxDevtoolsPluginModule.forRoot({ disabled: environment.production }),
-  ],
+  imports: [...importedAndExportedModules],
   exports: [...importedAndExportedModules],
-  providers: [
-    {
-      provide: Window,
-      useValue: window,
-    },
-    MessageService,
-  ],
+  providers: [MessageService],
 })
 export class SharedModule {}

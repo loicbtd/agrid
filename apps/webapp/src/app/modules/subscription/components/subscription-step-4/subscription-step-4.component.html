@@ -16,6 +16,8 @@
   <button (click)="pay()">PAY</button>
 </div> -->
 
-<!-- <ngx-stripe-card></ngx-stripe-card> -->
+<ngx-stripe-payment-request-button
+  [paymentOptions]="paymentRequestOptions"
+></ngx-stripe-payment-request-button>
 
 <button type="submit">CREATE TOKEN</button>

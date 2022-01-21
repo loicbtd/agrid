@@ -1,1 +1,1 @@
-export * from './lib/configuration.model';
+export * from './lib/stripe-configuration.model';

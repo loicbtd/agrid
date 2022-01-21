@@ -1,4 +1,3 @@
-import { ConfigurationController } from './controllers/configuration.controller';
 import { Global, Logger, Module, Scope } from '@nestjs/common';
 import { IdentitiesController } from '../api/controllers/identities.controller';
 import { PlansController } from './controllers/plans.controller';
@@ -15,6 +14,7 @@ import {
 } from 'nestjs-i18n';
 import { environment } from '../../environments/environment';
 import * as path from 'path';
+import { StripeConfigurationController } from './controllers/stripe-configuration.controller';
 
 @Global()
 @Module({
@@ -34,9 +34,9 @@ import * as path from 'path';
     }),
   ],
   controllers: [
-    ConfigurationController,
     IdentitiesController,
     PlansController,
+    StripeConfigurationController,
     SubscriptionsController,
     SupportController,
   ],
