@@ -5,7 +5,7 @@ import { Refresh } from '../actions/stripe-configuration.actions';
 
 @State<StripeConfigurationModel>({
   name: StripeConfigurationState.name,
-  defaults: {},
+  defaults: undefined,
 })
 @Injectable()
 export class StripeConfigurationState {

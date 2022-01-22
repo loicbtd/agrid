@@ -16,20 +16,6 @@ export class StripeConfigurationService {
     private readonly store: Store
   ) {}
 
-  async get(): Promise<StripeConfigurationModel> {
-    if (
-      !this.store.selectSnapshot<StripeConfigurationModel>(
-        StripeConfigurationState
-      )
-    ) {
-      await this.refresh();
-    }
-
-    return this.store.selectSnapshot<StripeConfigurationModel>(
-      StripeConfigurationState
-    );
-  }
-
   async refresh(): Promise<void> {
     const configuration = await lastValueFrom(
       this.httpClient.get<StripeConfigurationModel>(

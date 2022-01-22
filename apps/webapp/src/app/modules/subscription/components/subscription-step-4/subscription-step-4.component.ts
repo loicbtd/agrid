@@ -1,17 +1,18 @@
-import { environment } from './../../../../../environments/environment';
-import { Component, OnInit, ViewChild } from '@angular/core';
-import {
-  Stripe,
-  loadStripe,
-  StripeElementsOptions,
-  PaymentIntent,
-  StripeCardElementOptions,
-} from '@stripe/stripe-js';
-import { StripeFactoryService, StripeInstance } from 'ngx-stripe';
-import { FormBuilder } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { PaymentIntent } from '@stripe/stripe-js';
+
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { StripeConfigurationService } from 'apps/webapp/src/app/global/services/stripe-configuration.service';
+import { StripeConfigurationService } from '../../../../global/services/stripe-configuration.service';
+import { Store } from '@ngxs/store';
+import { FormBuilder } from '@angular/forms';
+import { environment } from '../../../../../environments/environment';
+import { lastValueFrom } from 'rxjs';
+import { CreatePaymentIntentForPlanRequest } from '@workspace/common/requests';
+import { StripeConfigurationModel } from '@workspace/common/models';
+import { StripeConfigurationState } from '../../../../global/store/state/stripe-configuration.state';
+import { loadStripe } from '@stripe/stripe-js';
+import { ToastMessageService } from '../../../../global/services/toast-message.service';
+import { UndefinedStripePublishableKeyError } from '../../../../global/errors/undefined-stripe-publishable-key.error';
 
 @Component({
   selector: 'app-subscription-step-4',
@@ -19,68 +20,48 @@ import { StripeConfigurationService } from 'apps/webapp/src/app/global/services/
   styleUrls: ['./subscription-step-4.component.scss'],
 })
 export class SubscriptionStep4Component implements OnInit {
-  elementsOptions: StripeElementsOptions = {
-    locale: 'es',
-  };
-
-  paymentRequestOptions = {
-    country: 'ES',
-    currency: 'eur',
-    total: {
-      label: 'Demo Total',
-      amount: 1099,
-    },
-    requestPayerName: true,
-    requestPayerEmail: true,
-  };
-  stripe: StripeInstance;
-
   constructor(
     private readonly httpClient: HttpClient,
+    private readonly stripeConfigurationService: StripeConfigurationService,
+    private readonly store: Store,
     private readonly fb: FormBuilder,
-    private readonly stripeFactory: StripeFactoryService,
-    private readonly stripeConfigurationService: StripeConfigurationService
+    private readonly toastMessageService: ToastMessageService
   ) {}
 
   async ngOnInit(): Promise<void> {
-    this.stripe = this.stripeFactory.create(
-      (await this.stripeConfigurationService.get()).publishableKey
-    );
-  }
+    await this.stripeConfigurationService.refresh();
 
-  pay() {
-    // this.stripeService
-    //   .confirmPayment({
-    //     elements: this.paymentElement.elements,
-    //     confirmParams: {
-    //       payment_method_data: {
-    //         billing_details: {
-    //           name: this.stripeTest?.get('name')?.value,
-    //         },
-    //       },
-    //     },
-    //     redirect: 'if_required',
-    //   })
-    //   .subscribe((result) => {
-    //     this.paying = false;
-    //     console.log('Result', result);
-    //     if (result.error) {
-    //       // Show error to your customer (e.g., insufficient funds)
-    //       alert({ success: false, error: result.error.message });
-    //     } else {
-    //       // The payment has been processed!
-    //       if (result?.paymentIntent?.status === 'succeeded') {
-    //         // Show a success message to your customer
-    //         alert({ success: true });
-    //       }
-    //     }
-    //   });
-  }
+    const publishableKey = this.store.selectSnapshot<StripeConfigurationModel>(
+      StripeConfigurationState
+    ).publishableKey;
 
-  private createPaymentIntent(amount: number): Observable<PaymentIntent> {
-    return this.httpClient.post<PaymentIntent>(
-      `http://localhost:3333/subscriptions/subscribe`,
-      { amount }
-    );
+    throw new UndefinedStripePublishableKeyError();
+
+    if (!publishableKey) {
+      throw new UndefinedStripePublishableKeyError();
+    }
+
+    // const stripe = await loadStripe(publishableKey);
+    // if (!stripe) {
+    //   this.toastMessageService.showError(
+    //     'Impossible de charger le service Stripe'
+    //   );
+    //   return;
+    // }
+
+    // const clientSecret = (
+    //   await lastValueFrom(
+    //     this.httpClient.post<PaymentIntent>(
+    //       `${environment.webserviceOrigin}/stripe/createPaymentIntentForPlan`,
+    //       {
+    //         planId: '5e3683fa-f920-4c26-8e23-dde712e8fd8c',
+    //       } as CreatePaymentIntentForPlanRequest
+    //     )
+    //   )
+    // ).client_secret;
+
+    // const elements = stripe?.elements({
+    //   clientSecret: 'CLIENT_SECRET',
+    // });
   }
 }

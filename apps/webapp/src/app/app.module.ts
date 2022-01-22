@@ -10,6 +10,17 @@ import { NgxsStoragePluginModule } from '@ngxs/storage-plugin';
 import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
 import { environment } from '../environments/environment';
 import { StripeConfigurationState } from './global/store/state/stripe-configuration.state';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { HttpClient } from '@angular/common/http';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+
+export function createTranslateLoader(httpClient: HttpClient) {
+  return new TranslateHttpLoader(
+    httpClient,
+    'assets/global/translations/',
+    '.json'
+  );
+}
 
 @NgModule({
   declarations: [AppComponent],
@@ -52,6 +63,14 @@ import { StripeConfigurationState } from './global/store/state/stripe-configurat
     }),
     NgxsStoragePluginModule.forRoot(),
     NgxsReduxDevtoolsPluginModule.forRoot({ disabled: environment.production }),
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: createTranslateLoader,
+        deps: [HttpClient],
+      },
+      defaultLanguage: 'fr',
+    }),
   ],
   bootstrap: [AppComponent],
 })
