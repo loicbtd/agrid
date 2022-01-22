@@ -70,6 +70,7 @@ export class LandingPageComponent implements OnInit {
   //   constructor() {}
 
   ngOnInit(): void {
+    this.displayMobileMenu = false;
     this.themeElement = document.getElementById('theme-css');
     // this.themeElement.setAttribute('href','/assets/theme/saga-blue/theme.css');
     this.themeElement.setAttribute(
