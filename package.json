@@ -9,8 +9,7 @@
     "start:step2": "wait-on tcp:3333 && nx serve webapp",
     "start": "run-p start:step1 start:step2",
     "webapp": "nx serve webapp",
-    "webservice": "nx serve webservice",
-    "postinstall": "ngcc --properties es2015 browser module main"
+    "webservice": "nx serve webservice"
   },
   "private": true,
   "dependencies": {
@@ -66,11 +65,11 @@
     "primeicons": "^4.1.0",
     "primeng": "^12.2.2",
     "reflect-metadata": "^0.1.13",
-    "rxjs": "^7.1.0",
+    "rxjs": "^7.4.0",
     "stripe": "^8.191.0",
     "ts-loader": "^8.0.18",
     "tsconfig-paths": "^3.9.0",
-    "tslib": "^2.0.0",
+    "tslib": "^2.3.0",
     "typeorm": "^0.2.31",
     "typeorm-uml": "^1.6.2",
     "validator": "^13.5.2",

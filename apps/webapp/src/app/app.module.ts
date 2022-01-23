@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { ErrorHandler, Injector, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppComponent } from './app.component';
@@ -13,6 +13,7 @@ import { StripeConfigurationState } from './global/store/state/stripe-configurat
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { HttpClient } from '@angular/common/http';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { ErrorsHandler } from './global/handlers/errors.handler';
 
 export function createTranslateLoader(httpClient: HttpClient) {
   return new TranslateHttpLoader(
@@ -20,6 +21,10 @@ export function createTranslateLoader(httpClient: HttpClient) {
     'assets/global/translations/',
     '.json'
   );
+}
+
+export function createErrorsHandler(injector: Injector) {
+  return new ErrorsHandler(injector);
 }
 
 @NgModule({
@@ -73,5 +78,12 @@ export function createTranslateLoader(httpClient: HttpClient) {
     }),
   ],
   bootstrap: [AppComponent],
+  providers: [
+    {
+      provide: ErrorHandler,
+      useFactory: createErrorsHandler,
+      deps: [Injector],
+    },
+  ],
 })
 export class AppModule {}

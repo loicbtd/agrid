@@ -1,8 +1,7 @@
-import { GlobalError } from './global.error';
+import { ApplicationError } from './application.error';
 
-export class UndefinedStripePublishableKeyError extends GlobalError {
+export class UndefinedStripePublishableKeyError extends ApplicationError {
   constructor() {
-    super('Undefined stripe publishable key');
-    console.log(this);
+    super('Undefined Stripe publishable key');
   }
 }

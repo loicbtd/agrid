@@ -1,4 +1,4 @@
-import { ErrorHandler, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MenubarModule } from 'primeng/menubar';
 import { InputTextModule } from 'primeng/inputtext';
@@ -44,9 +44,7 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { CarouselModule } from 'primeng/carousel';
 import { DividerModule } from 'primeng/divider';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { ErrorsHandler } from './global/handlers/errors.handler';
-import { ToastMessageService } from './global/services/toast-message.service';
+import { TranslateModule } from '@ngx-translate/core';
 
 const importedAndExportedModules = [
   CommonModule,
@@ -95,24 +93,10 @@ const importedAndExportedModules = [
   DividerModule,
 ];
 
-export function createErrorsHandler(
-  toastMessageService: ToastMessageService,
-  translateService: TranslateService
-) {
-  return new ErrorsHandler(toastMessageService, translateService);
-}
-
 @NgModule({
   declarations: [],
   imports: [...importedAndExportedModules],
   exports: [...importedAndExportedModules, TranslateModule],
-  providers: [
-    MessageService,
-    {
-      provide: ErrorHandler,
-      useFactory: createErrorsHandler,
-      deps: [ToastMessageService, TranslateService],
-    },
-  ],
+  providers: [MessageService],
 })
 export class SharedModule {}
