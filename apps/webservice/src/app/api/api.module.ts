@@ -25,6 +25,7 @@ import { StripeController } from './controllers/stripe.controller';
         'fr-*': 'fr',
         'en-*': 'en',
       },
+      logging: false,
       parser: I18nJsonParser,
       parserOptions: {
         path: join(__dirname, 'assets', 'translations'),

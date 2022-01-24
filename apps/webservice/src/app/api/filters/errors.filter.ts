@@ -18,7 +18,7 @@ export class ErrorsFilter implements ExceptionFilter {
   constructor(
     @Inject(FASTIFY_ADAPTER) private readonly _fastifyAdapter: FastifyAdapter,
     private readonly _logger: Logger,
-    private readonly _i18nService: I18nRequestScopeService
+    private readonly _i18nRequestScopeService: I18nRequestScopeService
   ) {}
 
   async catch(exception: unknown, host: ArgumentsHost) {
@@ -27,19 +27,19 @@ export class ErrorsFilter implements ExceptionFilter {
 
     if (exception instanceof ApiError || exception instanceof DomainError) {
       httpStatusCode = HttpStatus.BAD_REQUEST;
-      httpMessage = await this._i18nService.translate(
-        `errors.${exception.constructor.name}`
+      httpMessage = await this.retrieveErrorTranslation(
+        exception.constructor.name
       );
       this._logger.warn(exception.message, exception);
     } else if (exception instanceof InfrastructureError) {
       httpStatusCode = HttpStatus.INTERNAL_SERVER_ERROR;
-      httpMessage = await this._i18nService.translate(
-        `errors.${exception.constructor.name}`
+      httpMessage = await this._i18nRequestScopeService.translate(
+        exception.constructor.name
       );
       this._logger.error(exception.message, exception);
     } else {
       httpStatusCode = HttpStatus.INTERNAL_SERVER_ERROR;
-      httpMessage = await this._i18nService.translate('errors.Unkown');
+      httpMessage = await this.retrieveErrorTranslation('Unkown');
       this._logger.error(JSON.stringify(exception), exception);
     }
 
@@ -48,5 +48,21 @@ export class ErrorsFilter implements ExceptionFilter {
       { statusCode: httpStatusCode, message: httpMessage },
       httpStatusCode
     );
+  }
+
+  async retrieveErrorTranslation(errorName: string): Promise<string> {
+    let translation: string;
+
+    try {
+      translation = await this._i18nRequestScopeService.translate(
+        `errors.${errorName}`
+      );
+
+      return '';
+    } catch (error) {
+      return 'Error translation not available';
+    }
+
+    return translation;
   }
 }
