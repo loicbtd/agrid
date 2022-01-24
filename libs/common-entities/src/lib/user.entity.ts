@@ -1,5 +1,5 @@
 import { CompanyEntity } from './company.entity';
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { RightEnumeration } from '@workspace/common/enumerations';
 
 @Entity('user')
@@ -32,4 +32,7 @@ export class UserEntity {
 
   @ManyToOne(() => CompanyEntity, (company) => company.id, { nullable: true })
   company?: CompanyEntity;
+
+  @CreateDateColumn()
+  createdAt?: Date;
 }

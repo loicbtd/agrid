@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-landing',
@@ -71,19 +71,6 @@ export class LandingPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.displayMobileMenu = false;
-    this.themeElement = document.getElementById('theme-css');
-    // this.themeElement.setAttribute('href','/assets/theme/saga-blue/theme.css');
-    this.themeElement.setAttribute(
-      'href',
-      '/assets/global/stylesheets/primeng/theme-landing.css'
-    );
   }
 
-  ngOnDestroy(): void {
-    // this.themeElement.setAttribute('href', 'assets/theme/lara-light-indigo/theme.css');
-    this.themeElement.setAttribute(
-      'href',
-      '/assets/global/stylesheets/primeng/theme-landing.css'
-    );
-  }
 }
