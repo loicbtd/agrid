@@ -1,31 +1,6 @@
-<!-- <p-card styleClass="m-2">
-  <p-carousel
-    [value]="availablePlans"
-    [numVisible]="3"
-    [numScroll]="3"
-    [circular]="false"
-    [responsiveOptions]="responsiveOptions"
-    styleClass="mt-2"
-  >
-    <ng-template let-plan pTemplate="item">
-      <div class="plan-item select-none" (click)="select(plan)">
-        <div
-          class="plan-item-content flex flex-column"
-          [class]="{ active: plan === selectedPlan }"
-        >
-          <div class="m-auto">
-            <div class="font-semibold">{{ plan.name }}</div>
-            <div>{{ plan.price }}€/mois</div>
-          </div>
-        </div>
-      </div>
-    </ng-template>
-  </p-carousel>
-  <div class="flex flex-row">
-    <a [routerLink]="['/showcase']" class="m-auto text-green-600"
-      >Découvrir nos offres</a
-    >
+<p-card styleClass="mt-2 mx-2">
+  <div class="flex w-100">
+    <workspace-progress-spinner class="w-100 m-auto">
+    </workspace-progress-spinner>
   </div>
-</p-card> -->
-
-<p-progressSpinner></p-progressSpinner>
+</p-card>

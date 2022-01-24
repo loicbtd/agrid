@@ -45,7 +45,7 @@ export class SubscriptionStep1Component implements OnInit {
   }
 
   async ngOnInit() {
-    await this.plansService.refresh();
+    // await this.plansService.refresh();
   }
 
   select(plan: PlanEntity) {

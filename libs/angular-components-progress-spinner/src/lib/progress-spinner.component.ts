@@ -2,24 +2,12 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'workspace-progress-spinner',
+  styleUrls: ['./progress-spinner.component.scss'],
   template: `
-    <div class="cssload-body">
-      <span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-      </span>
-      <div class="cssload-base">
-        <span></span>
-        <div class="cssload-face"></div>
-      </div>
-    </div>
-    <div class="cssload-longfazers">
-      <span></span>
-      <span></span>
-      <span></span>
-      <span></span>
+    <div id="spinner">
+      <div id="spinner_1" class="spinner"></div>
+      <div id="spinner_2" class="spinner"></div>
+      <div id="spinner_3" class="spinner"></div>
     </div>
   `,
 })
