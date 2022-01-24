@@ -44,7 +44,7 @@ export class StripeService {
         null
       ).paymentIntents.create({
         payment_method_types: ['card'],
-        amount: plan.price,
+        amount: plan.price * 100,
         currency: 'eur',
       });
     } catch (error: any) {
