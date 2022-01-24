@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'workspace-progress-spinner',
-  styleUrls: ['./progress-spinner.component.scss'],
   template: `
     <div class="cssload-body">
       <span>
