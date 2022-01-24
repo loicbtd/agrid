@@ -4,5 +4,5 @@ WORKDIR /app
 RUN npm install && npm run postinstall
 RUN npx nx build webapp --configuration=production
 
-FROM nginx:1.19.8-alpine
-COPY --from=builder /app/dist/apps/webservice /app
+FROM nginx:1.20-alpine
+COPY --from=builder /app/dist/apps/webapp /usr/share/nginx/html
