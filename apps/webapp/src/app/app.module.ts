@@ -58,9 +58,7 @@ export function createErrorsHandler(injector: Injector) {
         {
           path: AppRoute.signin,
           loadChildren: () =>
-            import('./modules/login/login.module').then(
-              (m) => m.LoginModule
-            ),
+            import('./modules/login/login.module').then((m) => m.LoginModule),
         },
         {
           path: '**',
