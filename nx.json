@@ -14,7 +14,8 @@
     "default": {
       "runner": "@nrwl/workspace/tasks-runners/default",
       "options": {
-        "cacheableOperations": ["build", "lint", "test", "e2e"]
+        "cacheableOperations": ["build", "lint", "test", "e2e"],
+        "parallel": 1
       }
     }
   },
@@ -26,33 +27,24 @@
       }
     ]
   },
-  "projects": {
-    "angular-components-blockablediv": {
-      "tags": []
+  "cli": {
+    "defaultCollection": "@nrwl/angular"
+  },
+  "generators": {
+    "@nrwl/angular:application": {
+      "style": "scss",
+      "linter": "eslint",
+      "unitTestRunner": "none",
+      "e2eTestRunner": "cypress"
     },
-    "common-entities": {
-      "tags": []
+    "@nrwl/angular:library": {
+      "style": "scss",
+      "linter": "eslint",
+      "unitTestRunner": "none"
     },
-    "common-enumerations": {
-      "tags": []
-    },
-    "common-regexp": {
-      "tags": []
-    },
-    "common-requests": {
-      "tags": []
-    },
-    "common-responses": {
-      "tags": []
-    },
-    "webapp": {
-      "tags": []
-    },
-    "webservice": {
-      "tags": []
-    },
-    "winston-transports": {
-      "tags": []
+    "@nrwl/angular:component": {
+      "style": "scss"
     }
-  }
+  },
+  "defaultProject": "webapp"
 }

@@ -1,5 +1,5 @@
 {
-  "emailHeaderSource": "http://localhost:3333/images/email-header.jpg",
+  "emailHeaderSource": "http://localhost:3333/images/email-header.png",
   "webappUrl": "http://localhost:4200",
   "firstname": "Jean-Claude",
   "lastname": "DUJARDIN",

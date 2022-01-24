@@ -1,0 +1,82 @@
+<div
+  class="surface-card flex align-items-center justify-content-center min-h-screen min-w-screen overflow-hidden"
+>
+  <div class="grid justify-content-center p-2 lg:p-0" style="min-width: 80%">
+    <div class="col-12 mt-5 xl:mt-0 text-center">
+      <img
+        src="assets/logo-agrid.svg"
+        alt="Sakai logo"
+        class="mb-5"
+        style="width: 10rem"
+      />
+    </div>
+    <div
+      class="col-12 xl:col-6"
+      style="
+        border-radius: 56px;
+        padding: 0.3rem;
+        background: linear-gradient(
+          180deg,
+          rgba(75, 199, 20, 0.4) 10%,
+          rgba(232, 190, 40, 0) 30%
+        );
+      "
+    >
+      <div
+        class="surface-card h-full w-full m-0 py-7 px-4"
+        style="border-radius: 53px"
+      >
+        <div class="text-center mb-5">
+          <div class="text-900 text-3xl font-medium mb-3">Bienvenue !</div>
+          <span class="text-600 font-medium"
+            >Connecter vous pour continuer</span
+          >
+        </div>
+
+        <div class="w-full md:w-10 mx-auto">
+          <div class="form-group">
+
+            <label for="email" class="block text-900 text-xl font-medium mb-2">Email</label>
+            <input id="email" type="email" ngModel email="true" pInputText class="form-control w-full mb-2" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" ngModel #email="ngModel" style="padding:1rem;">
+            <div *ngIf="email.errors &&(email.touched || email.dirty)" class="aler alert-danger mt-2">
+              <div [hidden]="!email.errors?.pattern" class="mb-3" style="color: red;">
+                Email invalide
+              </div>
+            </div>
+          </div>
+
+          <label for="password1" class="block text-900 font-medium text-xl mb-2">Password</label>
+          <p-password id="password1" [(ngModel)]="password" placeholder="Password" [toggleMask]="true" styleClass="w-full mb-3"></p-password>
+  
+          <button pButton pRipple label="Connexion" class="w-full p-3 text-xl"></button>
+        </div>
+
+        <div class="w-full md:w-10 mx-auto mt-4" style="text-align: center">
+          <button
+            pbutton=""
+            pripple=""
+            label="Login"
+            class="p-ripple p-element p-button-text p-button-rounded border-none font-light line-height-2 text-500 p-button p-component"
+            [routerLink]="['/']"
+          >
+            <span class="p-ink"></span>
+            <span class="p-button-label" style="color: #4bc714">Accueil</span>
+          </button>
+          <button
+            pbutton=""
+            pripple=""
+            label="Login"
+            class="p-ripple p-element p-button-text p-button-rounded border-none font-light line-height-2 text-500 p-button p-component"
+            [routerLink]="['/subscription']"
+          >
+            <span class="p-ink"></span>
+            <span class="p-button-label" style="color: #e8be28"
+              >Pas encore inscrit ?</span
+            >
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

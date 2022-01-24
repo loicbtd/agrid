@@ -6,6 +6,6 @@ export const environment = {
   webappName: `${packageDotJson.name
     .charAt(0)
     .toUpperCase()}${packageDotJson.name.slice(1).split('-').join(' ')}`,
-  version: 'local',
+  version: packageDotJson.version,
   webserviceOrigin: 'http://localhost:3333',
 };

@@ -1,0 +1,11 @@
+{
+  "EntityNotFoundError": "Entity not found",
+  "PaymentMethodChargeIsNotAuthorizedByStripeError": "Payment method charge is not authorized by Stripe",
+  "StripePublishableKeyNotFoundError": "Stripe publishable key not found",
+  "UnabilityToChargePaymentMethodWithStripeError": "Unability to charge payment method with Stripe",
+  "UnabilityToCreateSubscriptionError": "Unability to create a subscription",
+  "UnabilityToCreateUserError": "Unability to create a user",
+  "UnabilityToSendEmailError": "Unability to send an email",
+  "UnkownPlanError": "Unknown plan",
+  "Unkown": "Unknown error"
+}
