@@ -14,7 +14,6 @@ import {
 } from 'nestjs-i18n';
 import { environment } from '../../environments/environment';
 import { join } from 'path';
-import { StripeConfigurationController } from './controllers/stripe-configuration.controller';
 import { StripeController } from './controllers/stripe.controller';
 
 @Global()
@@ -37,7 +36,6 @@ import { StripeController } from './controllers/stripe.controller';
   controllers: [
     IdentitiesController,
     PlansController,
-    StripeConfigurationController,
     StripeController,
     SubscriptionsController,
     SupportController,

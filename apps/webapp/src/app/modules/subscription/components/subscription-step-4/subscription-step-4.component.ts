@@ -30,7 +30,7 @@ export class SubscriptionStep4Component implements OnInit {
   ) {}
 
   async ngOnInit(): Promise<void> {
-    this.stripeConfigurationService.refresh();
+    await this.stripeConfigurationService.refresh();
 
     const publishableKey = this.store.selectSnapshot<StripeConfigurationModel>(
       StripeConfigurationState

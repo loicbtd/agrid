@@ -19,7 +19,7 @@ export class StripeConfigurationService {
   async refresh(): Promise<void> {
     const configuration = await lastValueFrom(
       this.httpClient.get<StripeConfigurationModel>(
-        `${environment.webserviceOrigin}/stripeConfiguration/retrieve`
+        `${environment.webserviceOrigin}/stripe/retrieveConfiguration`
       )
     );
 
