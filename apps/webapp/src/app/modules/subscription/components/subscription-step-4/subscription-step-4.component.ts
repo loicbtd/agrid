@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { PaymentIntent } from '@stripe/stripe-js';
+import { PaymentIntent, Stripe, StripeElements } from '@stripe/stripe-js';
 import { HttpClient } from '@angular/common/http';
 import { StripeConfigurationService } from '../../../../global/services/stripe-configuration.service';
 import { Store } from '@ngxs/store';
@@ -14,6 +14,7 @@ import { ToastMessageService } from '../../../../global/services/toast-message.s
 import { UndefinedStripePublishableKeyError } from '../../../../global/errors/undefined-stripe-publishable-key.error';
 import { ImpossibleToLoadStripeError } from '../../../../global/errors/impossible-to-load-stripe.error';
 import { UndefinedStripeClientSecretError } from '../../../../global/errors/undefined-stripe-client-secret.error';
+import { PlansService } from 'apps/webapp/src/app/global/services/plans.service';
 
 @Component({
   selector: 'app-subscription-step-4',
@@ -21,9 +22,14 @@ import { UndefinedStripeClientSecretError } from '../../../../global/errors/unde
   styleUrls: ['./subscription-step-4.component.scss'],
 })
 export class SubscriptionStep4Component implements OnInit {
+  private stripe: Stripe | null;
+
+  private stripeElements: StripeElements;
+
   constructor(
     private readonly httpClient: HttpClient,
     private readonly stripeConfigurationService: StripeConfigurationService,
+    private readonly plansService: PlansService,
     private readonly store: Store,
     private readonly fb: FormBuilder,
     private readonly toastMessageService: ToastMessageService
@@ -40,8 +46,8 @@ export class SubscriptionStep4Component implements OnInit {
       throw new UndefinedStripePublishableKeyError();
     }
 
-    const stripe = await loadStripe(publishableKey);
-    if (!stripe) {
+    this.stripe = await loadStripe(publishableKey);
+    if (!this.stripe) {
       throw new ImpossibleToLoadStripeError();
     }
 
@@ -60,14 +66,34 @@ export class SubscriptionStep4Component implements OnInit {
       throw new UndefinedStripeClientSecretError();
     }
 
-    const elements = stripe.elements({
+    this.stripeElements = this.stripe.elements({
       clientSecret: clientSecret,
+      locale: 'fr',
     });
 
-    elements.update({ locale: 'fr' });
-
-    const paymentElement = elements.create('payment');
+    const paymentElement = this.stripeElements.create('payment', {
+      business: { name: 'Agrid' },
+      fields: {
+        billingDetails: {
+          name: 'auto',
+          email: 'auto',
+        },
+      },
+    });
 
     paymentElement.mount('#payment-element');
+  }
+
+  async confirmPayment() {
+    if (!this.stripe) {
+      return;
+    }
+
+    const paymentConfirmation = await this.stripe.confirmPayment({
+      elements: this.stripeElements,
+      redirect: 'if_required',
+    });
+
+    console.log(paymentConfirmation);
   }
 }

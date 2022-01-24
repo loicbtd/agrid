@@ -14,6 +14,9 @@ import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { HttpClient } from '@angular/common/http';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { ErrorsHandler } from './global/handlers/errors.handler';
+import { PlansState } from './global/store/state/plans.state';
+
+const states = [StripeConfigurationState, PlansState];
 
 export function createTranslateLoader(httpClient: HttpClient) {
   return new TranslateHttpLoader(
@@ -68,7 +71,7 @@ export function createErrorsHandler(injector: Injector) {
       { initialNavigation: 'enabledBlocking', useHash: true }
     ),
     SharedModule,
-    NgxsModule.forRoot([StripeConfigurationState], {
+    NgxsModule.forRoot(states, {
       developmentMode: !environment.production,
     }),
     NgxsStoragePluginModule.forRoot(),

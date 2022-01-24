@@ -19,6 +19,9 @@
       "@workspace/angular/components/blockablediv": [
         "libs/angular-components-blockablediv/src/index.ts"
       ],
+      "@workspace/angular/components/progress-spinner": [
+        "libs/angular-components-progress-spinner/src/index.ts"
+      ],
       "@workspace/common/entities": ["libs/common-entities/src/index.ts"],
       "@workspace/common/enumerations": [
         "libs/common-enumerations/src/index.ts"

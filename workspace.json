@@ -35,6 +35,40 @@
       },
       "tags": []
     },
+    "angular-components-progress-spinner": {
+      "projectType": "library",
+      "root": "libs/angular-components-progress-spinner",
+      "sourceRoot": "libs/angular-components-progress-spinner/src",
+      "prefix": "workspace",
+      "targets": {
+        "build": {
+          "executor": "@nrwl/angular:ng-packagr-lite",
+          "outputs": ["dist/libs/angular-components-progress-spinner"],
+          "options": {
+            "project": "libs/angular-components-progress-spinner/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "libs/angular-components-progress-spinner/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "libs/angular-components-progress-spinner/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/angular-components-progress-spinner/src/**/*.ts",
+              "libs/angular-components-progress-spinner/src/**/*.html"
+            ]
+          }
+        }
+      },
+      "tags": []
+    },
     "common-entities": {
       "root": "libs/common-entities",
       "sourceRoot": "libs/common-entities/src",
