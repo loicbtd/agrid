@@ -1,28 +1,20 @@
 {
   "QAs": [
     {
-      "question": "enim duis cupidatat qui velit enim magna pariatur",
-      "answer": "Est aute nisi do proident nulla mollit elit tempor. Fugiat commodo tempor aliqua ad laborum esse aliquip ut id velit ullamco voluptate. Aliquip ipsum est proident aliquip aute ad ad exercitation. Elit ullamco magna tempor non ipsum velit labore veniam deserunt. Consectetur laborum cillum ut aliqua ea Lorem consectetur est laborum cillum.\r\n"
+      "question": "Comment souscrire à un abonnement ?",
+      "answer": "Il suffit d'aller sur notre site et de cliquer un des bouttons suivants : 'Inscrption', 'Choissiser votre offre' ou bien 'Rejoignez Agrid'. Vous serez alors rediriger vers une page pour que vous puissiez choisir une de nos offres.\r\n"
     },
     {
-      "question": "culpa enim laboris tempor adipisicing anim occaecat consectetur",
-      "answer": "Labore aliqua in sit et elit reprehenderit incididunt ex cupidatat nulla esse cillum excepteur. Eiusmod in occaecat pariatur commodo fugiat eu labore magna sit ut elit. Officia aute ex id ex magna. Est eiusmod incididunt do dolore deserunt labore ad consectetur cillum dolor id minim nisi reprehenderit. Exercitation aliqua cupidatat proident cupidatat ut consectetur labore pariatur ea irure. Aliqua nostrud culpa enim velit enim. Pariatur exercitation esse proident labore quis pariatur labore tempor enim culpa incididunt eiusmod esse pariatur.\r\n"
+      "question": "Je souhaiterai vous contacter, où dois-je le faire ?",
+      "answer": "Si vous n'êtes pas inscrit, vous avez la possibilité d'envoyer un mail à l'adresse suivante : contact@agrid.ml. Les délais de réponses peuvent varier.\r\nSi vous êtes déjà inscrit, cela dépend de la nature de votre demande ainsi que du niveau de votre abonnement. Vous pourrez néanmoins utilisez le formulaire de contact disponible dans votre espace client.\r\n"
     },
     {
-      "question": "dolor est et nostrud non minim irure enim",
-      "answer": "Non ipsum est tempor commodo ex cupidatat mollit ad elit eiusmod. Ipsum consectetur consequat quis et dolor pariatur officia ut nisi dolore ullamco reprehenderit. Amet voluptate duis sunt ullamco ex aliquip do aliqua cupidatat.\r\n"
+      "question": "Je souhaite passer à un abonnement supérieur, comment puis-je faire ?",
+      "answer": "Accéder à votre espace personnel ('Connexion' sur notre site) puis cliquer sur le bouton 'changer mon abonnement'. Vous serez rediriger vers une page pour que vous puissiez choisir une de nos offres.\r\n"
     },
     {
-      "question": "commodo in esse ex laborum tempor velit minim",
-      "answer": "Mollit ut est Lorem voluptate magna. Minim ex minim id magna voluptate id veniam eu consequat ea cupidatat mollit dolore sit. Labore esse irure cillum velit culpa. Ut ut ad ut aliquip amet ut non aliquip qui veniam nulla et. Eu enim eu non cillum veniam eiusmod. Labore mollit nulla est do ad magna labore non aute.\r\n"
-    },
-    {
-      "question": "culpa reprehenderit duis deserunt ad enim occaecat culpa",
-      "answer": "Ea incididunt anim laborum nulla reprehenderit. Mollit velit fugiat laborum adipisicing velit consectetur veniam sit exercitation consectetur et. Eiusmod nisi ea ea minim occaecat et ex id exercitation cupidatat elit. Culpa ea nisi nulla deserunt. Aute in sint nisi do ut proident deserunt laborum mollit aliqua irure commodo. Sint anim irure velit nulla id nisi commodo est ea consectetur aliqua. Non aliquip nostrud qui consectetur cillum.\r\n"
-    },
-    {
-      "question": "cupidatat elit amet magna mollit sunt ea culpa",
-      "answer": "Enim ea anim fugiat magna. Anim laboris quis velit exercitation in excepteur aute Lorem nostrud in aute. Ea dolor ad voluptate cupidatat qui. Cupidatat ut cillum adipisicing et qui.\r\n"
+      "question": "Quand mon abonnement sera-t-il prélevé ?",
+      "answer": "La première mensualité sera prélevée a la date du paiment. Les mensualités suivante seront prélevées le même jour chaque mois (exemple : si vous avez souscrit le 4 janvier, votre prochaine mensualité sera le 4 février).\r\n"
     }
   ]
 }
