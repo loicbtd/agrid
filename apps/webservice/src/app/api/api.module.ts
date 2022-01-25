@@ -15,6 +15,7 @@ import {
 import { environment } from '../../environments/environment';
 import { join } from 'path';
 import { StripeController } from './controllers/stripe.controller';
+import { ProfilesController } from './controllers/profiles.controller';
 
 @Global()
 @Module({
@@ -37,6 +38,7 @@ import { StripeController } from './controllers/stripe.controller';
   controllers: [
     IdentitiesController,
     PlansController,
+    ProfilesController,
     StripeController,
     SubscriptionsController,
     SupportController,

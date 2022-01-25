@@ -69,6 +69,32 @@
       },
       "tags": []
     },
+    "common-constants": {
+      "root": "libs/common-constants",
+      "sourceRoot": "libs/common-constants/src",
+      "projectType": "library",
+      "targets": {
+        "build": {
+          "executor": "@nrwl/node:package",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "dist/libs/common-constants",
+            "tsConfig": "libs/common-constants/tsconfig.lib.json",
+            "packageJson": "libs/common-constants/package.json",
+            "main": "libs/common-constants/src/index.ts",
+            "assets": ["libs/common-constants/*.md"]
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "outputs": ["{options.outputFile}"],
+          "options": {
+            "lintFilePatterns": ["libs/common-constants/**/*.ts"]
+          }
+        }
+      },
+      "tags": []
+    },
     "common-entities": {
       "root": "libs/common-entities",
       "sourceRoot": "libs/common-entities/src",

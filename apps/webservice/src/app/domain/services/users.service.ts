@@ -1,9 +1,6 @@
 import { environment } from './../../../environments/environment';
 import { RegisterRequest, SigninRequest } from '@workspace/common/requests';
-import {
-  SigninResponseDto,
-  WhoamiResponseDto,
-} from '@workspace/common/responses';
+import { SigninResponseDto } from '@workspace/common/responses';
 import {
   BadRequestException,
   ConflictException,
@@ -42,7 +39,7 @@ export class UsersService {
 
     return {
       token: this.jwtService.sign(payload),
-      whoami: {
+      profile: {
         email: user.email,
         firstname: user.firstname,
         lastname: user.lastname,
@@ -80,18 +77,5 @@ export class UsersService {
     } catch (error) {
       throw new InternalServerErrorException();
     }
-  }
-
-  async whoami(userId: string): Promise<WhoamiResponseDto> {
-    const user = await this.usersRepository.findOne(userId);
-    if (!user) {
-      throw new BadRequestException();
-    }
-
-    return {
-      email: user.email,
-      firstname: user.firstname,
-      lastname: user.lastname,
-    };
   }
 }
