@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { SigninService } from './signin.service';
 
 @Component({
   selector: 'app-login',
@@ -130,19 +133,15 @@ import { Component } from '@angular/core';
     </div>
   `,
 })
-export class LoginComponent {
+export class SigninComponent {
   form = this.fb.group({
-    email: [
-      '',
-      [Validators.required, Validators.pattern(REGEX_PATTERNS.EMAIL)],
-    ],
+    email: ['', [Validators.required, Validators.email]],
     password: ['', [Validators.required]],
   });
 
   constructor(
-    private authenticationService: AuthenticationService,
+    private signinService: SigninService,
     private fb: FormBuilder,
-    private messageService: MessageService,
     public router: Router
   ) {}
 

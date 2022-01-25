@@ -1,1 +1,1 @@
-export * from './lib/signin.response.dto';
+export * from './lib/signin.response';

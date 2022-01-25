@@ -1,6 +1,6 @@
 import { MyProfileModel } from '@workspace/common/models';
 
-export class SigninResponseDto {
+export class SigninResponse {
   token?: string;
 
   profile?: MyProfileModel;
