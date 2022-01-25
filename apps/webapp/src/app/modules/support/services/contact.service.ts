@@ -11,7 +11,7 @@ export class ContactService {
 
   sendContactMail(command: SupportRequest) {
     return this._httpClient.post(
-      `${environment.webserviceOrigin}/support/sendsMail`,
+      `${environment.webserviceOrigin}/support/request`,
       command
     );
   }
