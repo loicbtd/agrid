@@ -1,7 +1,7 @@
-import { WhoamiResponseDto } from './whoami.response.dto';
+import { MyProfileModel } from '@workspace/common/models';
 
 export class SigninResponseDto {
-  token!: string;
+  token?: string;
 
-  whoami!: WhoamiResponseDto;
+  profile?: MyProfileModel;
 }

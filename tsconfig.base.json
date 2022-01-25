@@ -22,6 +22,7 @@
       "@workspace/angular/components/progress-spinner": [
         "libs/angular-components-progress-spinner/src/index.ts"
       ],
+      "@workspace/common/constants": ["libs/common-constants/src/index.ts"],
       "@workspace/common/entities": ["libs/common-entities/src/index.ts"],
       "@workspace/common/enumerations": [
         "libs/common-enumerations/src/index.ts"

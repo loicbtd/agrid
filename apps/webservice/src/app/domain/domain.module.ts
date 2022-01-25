@@ -21,10 +21,12 @@ import { UsersService } from './services/users.service';
 import { StripeService } from './services/stripe.service';
 import { SupportService } from './services/support.service';
 import { SubscriptionService } from './services/subscriptions.service';
+import { ProfilesService } from './services/profiles.service';
 
 const SERVICES = [
   EmailsService,
   PlansService,
+  ProfilesService,
   StripeService,
   SubscriptionService,
   SupportService,
