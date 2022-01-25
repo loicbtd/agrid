@@ -6,13 +6,10 @@ import { ApplicationError } from '../errors/application.error';
 import { ToastMessageService } from '../services/toast-message.service';
 
 export class ErrorsHandler implements ErrorHandler {
-  private readonly toastMessageService: ToastMessageService;
-  private readonly translateService: TranslateService;
-
-  constructor(private readonly injector: Injector) {
-    this.toastMessageService = this.injector.get(ToastMessageService);
-    this.translateService = this.injector.get(TranslateService);
-  }
+  constructor(
+    private readonly toastMessageService: ToastMessageService,
+    private readonly translateService: TranslateService
+  ) {}
 
   async handleError(error: any) {
     if (error.promise && error.rejection) {
