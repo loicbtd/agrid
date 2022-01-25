@@ -1,4 +1,3 @@
-import { StripeController } from './controllers/stripe.controller';
 import { Global, Logger, Module, Scope } from '@nestjs/common';
 import { IdentitiesController } from '../api/controllers/identities.controller';
 import { PlansController } from './controllers/plans.controller';
@@ -14,7 +13,8 @@ import {
   I18nModule,
 } from 'nestjs-i18n';
 import { environment } from '../../environments/environment';
-import * as path from 'path';
+import { join } from 'path';
+import { StripeController } from './controllers/stripe.controller';
 
 @Global()
 @Module({
@@ -25,9 +25,10 @@ import * as path from 'path';
         'fr-*': 'fr',
         'en-*': 'en',
       },
+      logging: false,
       parser: I18nJsonParser,
       parserOptions: {
-        path: path.join(__dirname, 'assets', 'translations'),
+        path: join(__dirname, 'assets', 'translations'),
         watch: !environment.production,
       },
       resolvers: [new AcceptLanguageResolver()],

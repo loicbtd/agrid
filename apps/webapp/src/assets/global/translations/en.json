@@ -1,0 +1,11 @@
+{
+  "WELCOME": "Welcome on Agrid",
+  "ERROR": "Error",
+  "WARNING": "Warning",
+  "SUCCESS": "Success",
+  "INFORMATION": "Information",
+  "UNKOWN_ERROR": "Unkown error",
+  "ERRORS": {
+    "UndefinedStripePublishableKeyError": "Undefined Stripe publishable key"
+  }
+}

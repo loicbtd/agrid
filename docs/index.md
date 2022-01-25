@@ -37,7 +37,7 @@ Steps to handle an issue :
 ]
 ```
 
-### Generate migration after the model has changed
+### Generate the migration after the model has changed
 
 Execute `npm run typeorm migration:generate -- -n <MigrationName>`
 
@@ -45,13 +45,13 @@ Execute `npm run typeorm migration:generate -- -n <MigrationName>`
 
 Execute `npm run typeorm migration:create -- -n <MigrationName>`
 
-### Run a migration
+### Run migrations
 
 Execute `npm run typeorm migration:run`
 
-### Revert a migration
+### Revert the last migration
 
-Execute `npm run typeorm migration:revert
+Execute `npm run typeorm migration:revert`
 
 ## Update github pages
 

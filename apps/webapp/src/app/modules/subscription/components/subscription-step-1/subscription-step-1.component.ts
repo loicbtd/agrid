@@ -1,7 +1,11 @@
 import { PlanEntity } from '@workspace/common/entities';
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { SubscriptionService } from '../../services/subscription.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { PlansService } from '../../../../global/services/plans.service';
+import { Select } from '@ngxs/store';
+import { PlansState } from '../../../../global/store/state/plans.state';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-subscription-step-1',
@@ -9,7 +13,7 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./subscription-step-1.component.scss'],
 })
 export class SubscriptionStep1Component implements OnInit {
-  availablePlans: PlanEntity[] = [];
+  @Select(PlansState) plans$: Observable<PlanEntity[]>;
 
   responsiveOptions = [
     {
@@ -30,23 +34,24 @@ export class SubscriptionStep1Component implements OnInit {
   ];
 
   constructor(
-    private readonly _subscriptionService: SubscriptionService,
-    private readonly _router: Router,
-    private readonly _activatedRoute: ActivatedRoute
+    private readonly subscriptionService: SubscriptionService,
+    private readonly plansService: PlansService,
+    private readonly router: Router,
+    private readonly activatedRoute: ActivatedRoute
   ) {}
 
   get selectedPlan() {
-    return this._subscriptionService.selectedPlan;
+    return this.subscriptionService.selectedPlan;
   }
 
   async ngOnInit() {
-    this.availablePlans = await this._subscriptionService.getAvailablePlans();
+    await this.plansService.refresh();
   }
 
   select(plan: PlanEntity) {
-    this._subscriptionService.selectedPlan = plan;
-    this._router.navigate(['..', 'step-2'], {
-      relativeTo: this._activatedRoute,
+    this.subscriptionService.selectedPlan = plan;
+    this.router.navigate(['..', 'step-2'], {
+      relativeTo: this.activatedRoute,
     });
   }
 }

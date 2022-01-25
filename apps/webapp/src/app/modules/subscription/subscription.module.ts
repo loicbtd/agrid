@@ -6,6 +6,8 @@ import { SubscriptionStep1Component } from './components/subscription-step-1/sub
 import { SubscriptionStep2Component } from './components/subscription-step-2/subscription-step-2.component';
 import { SubscriptionStep3Component } from './components/subscription-step-3/subscription-step-3.component';
 import { SubscriptionStep4Component } from './components/subscription-step-4/subscription-step-4.component';
+import { NgxsModule } from '@ngxs/store';
+import { SubscribeState } from './store/state/subscribe.state';
 
 @NgModule({
   declarations: [
@@ -46,6 +48,8 @@ import { SubscriptionStep4Component } from './components/subscription-step-4/sub
         ],
       },
     ]),
+    NgxsModule.forFeature([SubscribeState]),
   ],
+  exports: [],
 })
 export class SubsriptionModule {}
