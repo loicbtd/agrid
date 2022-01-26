@@ -1,11 +1,7 @@
 import { environment } from './../../../environments/environment';
 import { CreateUserRequest, SigninRequest } from '@workspace/common/requests';
 import { SigninResponse } from '@workspace/common/responses';
-import {
-  ConflictException,
-  InternalServerErrorException,
-  Injectable,
-} from '@nestjs/common';
+import { ConflictException, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { UserEntity } from '@workspace/common/entities';
 import { Repository } from 'typeorm';
@@ -16,8 +12,8 @@ import { EmailsService } from './emails.service';
 import { TokenPayload } from '../models/token-payload.model';
 import { UnkownUserError } from '../errors/unkown-user.error';
 import { MismatchingHashesError } from '../errors/mismatching-hashes.error';
-import { RightEnumeration } from '@workspace/common/enumerations';
 import { UnabilityToSendEmailError } from '../errors/unability-to-send-email.error';
+import { RightEnumeration } from '@workspace/common/enumerations';
 
 @Injectable()
 export class UsersService {
@@ -59,11 +55,6 @@ export class UsersService {
       environment.passwordHashSalt
     );
 
-    const rights: RightEnumeration[] = [];
-    if ((await this.usersRepository.count()) < 1) {
-      rights.push(RightEnumeration.Administrate);
-    }
-
     try {
       await this.usersRepository.insert({
         email: command.email,
@@ -72,13 +63,10 @@ export class UsersService {
           command.firstname.charAt(0).toUpperCase() +
           command.firstname.slice(1),
         lastname: command.lastname.toUpperCase(),
-        rights: rights,
       });
     } catch (error) {
       throw new ConflictException();
     }
-
-
 
     try {
       this.emailsService.send(
@@ -98,5 +86,16 @@ export class UsersService {
         EmailTemplateEnumeration.Welcome
       );
     }
+  }
+
+  async isThereAtLeastOneAdministrator(): Promise<boolean> {
+    const administrators = await this.usersRepository.find({
+      where: (entity: UserEntity) =>
+        entity.rights.includes(RightEnumeration.Administrate),
+    });
+
+    console.log(administrators);
+
+    return false;
   }
 }
