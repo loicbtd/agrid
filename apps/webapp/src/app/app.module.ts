@@ -81,6 +81,13 @@ export function createJwtInterceptor(store: Store) {
             ),
         },
         {
+          path: AppRoute.initialSetup,
+          loadChildren: () =>
+            import('./modules/initial-setup/initial-setup.module').then(
+              (m) => m.InitialSetupModule
+            ),
+        },
+        {
           path: '**',
           redirectTo: AppRoute.showcase,
         },
