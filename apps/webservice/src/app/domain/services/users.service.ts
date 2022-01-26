@@ -13,7 +13,7 @@ import { TokenPayload } from '../models/token-payload.model';
 import { UnkownUserError } from '../errors/unkown-user.error';
 import { MismatchingHashesError } from '../errors/mismatching-hashes.error';
 import { UnabilityToSendEmailError } from '../errors/unability-to-send-email.error';
-import { RightEnumeration } from '@workspace/common/enumerations';
+import { GlobalRoleEnumeration } from '@workspace/common/enumerations';
 
 @Injectable()
 export class UsersService {
@@ -36,7 +36,7 @@ export class UsersService {
 
     const payload: TokenPayload = {
       userId: user.id,
-      rights: user.rights,
+      globalRoles: user.rights,
     };
 
     return {
@@ -89,10 +89,7 @@ export class UsersService {
   }
 
   async isThereAtLeastOneAdministrator(): Promise<boolean> {
-    const administrators = await this.usersRepository.find({
-      where: (entity: UserEntity) =>
-        entity.rights.includes(RightEnumeration.Administrate),
-    });
+    const administrators = await this.usersRepository.find({});
 
     console.log(administrators);
 

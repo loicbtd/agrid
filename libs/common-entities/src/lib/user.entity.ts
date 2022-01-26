@@ -1,6 +1,11 @@
 import { CompanyEntity } from './company.entity';
-import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
-import { RightEnumeration } from '@workspace/common/enumerations';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity('user')
 export class UserEntity {
@@ -15,14 +20,6 @@ export class UserEntity {
 
   @Column({ default: true })
   mustDefinePassword?: boolean;
-
-  @Column({
-    type: 'enum',
-    enum: RightEnumeration,
-    array: true,
-    default: [],
-  })
-  rights?: RightEnumeration[];
 
   @Column()
   firstname?: string;

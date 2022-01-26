@@ -1,5 +1,6 @@
 export * from './lib/company-type.entity';
 export * from './lib/company.entity';
+export * from './lib/global-right-of-user.entity';
 export * from './lib/plan.entity';
 export * from './lib/service-included-in-plan.entity';
 export * from './lib/service.entity';

@@ -15,10 +15,4 @@ export class SubscriptionEntity {
 
   @Column()
   creationDate?: Date;
-
-  // @Column()
-  // renewalDate?: Date;
-
-  // @Column()
-  // renewalCount?: number;
 }

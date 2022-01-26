@@ -1,6 +1,6 @@
-import { RightEnumeration } from "@workspace/common/enumerations";
+import { GlobalRoleEnumeration } from "@workspace/common/enumerations";
 
 export class TokenPayload {
   userId?: string;
-  rights?: RightEnumeration[];
+  globalRoles?: GlobalRoleEnumeration[];
 }
