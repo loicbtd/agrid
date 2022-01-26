@@ -1,13 +1,16 @@
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
-import { CompanyTypeEntity } from './company-type.entity';
+import { OrganizationTypeEntity } from './organization-type.entity';
 
-@Entity('company')
-export class CompanyEntity {
+@Entity('organization')
+export class OrganizationEntity {
   @PrimaryGeneratedColumn('uuid')
   id?: string;
 
-  @ManyToOne(() => CompanyTypeEntity, (companyType) => companyType.id)
-  companyType?: CompanyTypeEntity;
+  @ManyToOne(
+    () => OrganizationTypeEntity,
+    (organizationType) => organizationType.id
+  )
+  organizationType?: OrganizationTypeEntity;
 
   @Column()
   name?: string;

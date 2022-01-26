@@ -1,4 +1,4 @@
-import { CompanyEntity } from './company.entity';
+import { OrganizationEntity } from './organization.entity';
 import {
   Column,
   CreateDateColumn,
@@ -27,8 +27,10 @@ export class UserEntity {
   @Column()
   lastname?: string;
 
-  @ManyToOne(() => CompanyEntity, (company) => company.id, { nullable: true })
-  company?: CompanyEntity;
+  @ManyToOne(() => OrganizationEntity, (organization) => organization.id, {
+    nullable: true,
+  })
+  company?: OrganizationEntity;
 
   @CreateDateColumn()
   createdAt?: Date;
