@@ -2,10 +2,9 @@ import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ImpossibleToSigninError } from '../../global/errors/impossible-to-signin.error';
-import { SigninService } from './initial-setup.service';
+import { InitialSetupService } from './initial-setup.service';
 
 @Component({
-  selector: 'app-login',
   styles: [
     `
       :host ::ng-deep {
@@ -52,9 +51,11 @@ import { SigninService } from './initial-setup.service';
             style="border-radius: 53px"
           >
             <div class="text-center mb-5">
-              <div class="text-900 text-3xl font-medium mb-3">Bienvenue !</div>
+              <div class="text-900 text-3xl font-medium mb-3">
+                Merci d'avoir choisi Agrid
+              </div>
               <span class="text-600 font-medium">
-                Connectez-vous pour continuer
+                Saisissez votre courriel afin d'initialiser la solution
               </span>
             </div>
 
@@ -127,32 +128,11 @@ import { SigninService } from './initial-setup.service';
 
                 <p-button
                   pRipple
-                  label="Connexion"
+                  label="Générer le compte administrateur"
                   styleClass="w-full mt-5"
+                  (click)="submitForm()"
                 ></p-button>
               </form>
-
-              <div
-                class="w-full md:w-10 mx-auto mt-4"
-                style="text-align: center"
-              >
-                <p-button
-                  pbutton
-                  pripple
-                  styleClass="p-button-text p-button-rounded"
-                  label="Accueil"
-                >
-                </p-button>
-
-                <p-button
-                  pbutton
-                  pripple
-                  styleClass="p-button-text p-button-rounded p-button-secondary"
-                  label="Pas encore inscrit ?"
-                  [routerLink]="['subscription']"
-                >
-                </p-button>
-              </div>
             </div>
           </div>
         </div>
@@ -160,31 +140,26 @@ import { SigninService } from './initial-setup.service';
     </div>
   `,
 })
-export class SigninComponent {
+export class InitialSetupComponent {
   form = this.fb.group({
     email: ['', [Validators.required, Validators.email]],
     password: ['', [Validators.required]],
   });
 
   constructor(
-    private readonly signinService: SigninService,
+    private readonly initialSetupService: InitialSetupService,
     private readonly fb: FormBuilder,
     public readonly router: Router
   ) {}
 
-  log(thing: any) {
-    console.log(thing);
-  }
-
-  async signin() {
+  async submitForm() {
     if (this.form.invalid) {
       return;
     }
 
     try {
-      await this.signinService.signin({
+      await this.initialSetupService.initialize({
         email: this.form.get('email')?.value,
-        password: this.form.get('password')?.value,
       });
 
       this.router.navigate(['/']);

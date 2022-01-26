@@ -1,20 +1,20 @@
 import { NgModule } from '@angular/core';
 import { SharedModule } from '../../shared.module';
-import { SigninComponent } from './initial-setup.component';
+import { InitialSetupComponent } from './initial-setup.component';
 import { RouterModule } from '@angular/router';
 
 @NgModule({
-  declarations: [SigninComponent],
-  providers: [SigninModule],
+  declarations: [InitialSetupComponent],
+  providers: [InitialSetupModule],
   imports: [
     SharedModule,
     RouterModule.forChild([
       {
         path: '',
-        component: SigninComponent,
+        component: InitialSetupComponent,
       },
       { path: '**', redirectTo: '' },
     ]),
   ],
 })
-export class SigninModule {}
+export class InitialSetupModule {}

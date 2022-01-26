@@ -13,13 +13,13 @@ import { apiRoutes } from '@workspace/common/constants';
 @Injectable({
   providedIn: 'root',
 })
-export class SigninService {
+export class InitialSetupService {
   constructor(
     private readonly httpClient: HttpClient,
     private readonly store: Store
   ) {}
 
-  async signin(command: SigninRequest): Promise<void> {
+  async initialize(command: SigninRequest): Promise<void> {
     const response = await lastValueFrom(
       this.httpClient.post<SigninResponse>(
         `${environment.webserviceOrigin}/${apiRoutes.identities.root}/${apiRoutes.identities.signin}`,
