@@ -13,7 +13,6 @@ export class GlobalRoleOfUserEntity {
   @Column({
     type: 'enum',
     enum: GlobalRoleEnumeration,
-    default: GlobalRoleEnumeration.User,
   })
   role?: GlobalRoleEnumeration;
 }
