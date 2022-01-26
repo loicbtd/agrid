@@ -1,10 +1,10 @@
 import { AfterViewInit, Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Select } from '@ngxs/store';
+import { Select, Store } from '@ngxs/store';
 import { mediumStrengthPassword } from '@workspace/common/regexp';
 import { Observable } from 'rxjs';
-import { ImpossibleToSigninError } from '../../global/errors/impossible-to-signin.error';
+import { ToastMessageService } from '../../global/services/toast-message.service';
 import { InitialSetupService } from './initial-setup.service';
 import { IsInitialSetupPermittedState } from './is-initial-setup-permitted.state';
 
@@ -32,6 +32,7 @@ import { IsInitialSetupPermittedState } from './is-initial-setup-permitted.state
       class="surface-card flex align-items-center justify-content-center min-h-screen min-w-screen overflow-hidden"
     >
       <div
+        *ngIf="isInitialSetupPermitted$ | async; else loading"
         class="grid justify-content-center p-2 lg:p-0"
         style="min-width: 80%"
       >
@@ -156,6 +157,7 @@ import { IsInitialSetupPermittedState } from './is-initial-setup-permitted.state
                   pRipple
                   label="Générer le compte administrateur"
                   styleClass="w-full mt-5"
+                  [disabled]="form.invalid"
                   (click)="submitForm()"
                 ></p-button>
               </form>
@@ -164,6 +166,10 @@ import { IsInitialSetupPermittedState } from './is-initial-setup-permitted.state
         </div>
       </div>
     </div>
+
+    <ng-template #loading>
+      <workspace-progress-spinner></workspace-progress-spinner>
+    </ng-template>
   `,
 })
 export class InitialSetupComponent implements AfterViewInit {
@@ -181,11 +187,20 @@ export class InitialSetupComponent implements AfterViewInit {
   constructor(
     private readonly initialSetupService: InitialSetupService,
     private readonly fb: FormBuilder,
-    public readonly router: Router
+    private readonly store: Store,
+    public readonly router: Router,
+    public readonly toastMessageService: ToastMessageService
   ) {}
 
   async ngAfterViewInit(): Promise<void> {
     await this.initialSetupService.refreshIfInitialSetupIsPermitted();
+
+    if (!this.store.selectSnapshot<boolean>(IsInitialSetupPermittedState)) {
+      this.router.navigate(['/']);
+      this.toastMessageService.showError(
+        "Il n'est pas permis d'initialiser la solution"
+      );
+    }
   }
 
   async submitForm() {
@@ -193,11 +208,19 @@ export class InitialSetupComponent implements AfterViewInit {
       return;
     }
 
-    await this.initialSetupService.performInitialSetup({
+    const success = await this.initialSetupService.performInitialSetup({
       email: this.form.get('email')?.value,
       password: this.form.get('password')?.value,
     });
 
+    if (!success) {
+      return;
+    }
+
     this.router.navigate(['/']);
+
+    this.toastMessageService.showSuccess(
+      'La configuration initiale a été correctement effectuée'
+    );
   }
 }

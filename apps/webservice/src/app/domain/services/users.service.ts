@@ -16,6 +16,7 @@ import { UnabilityToSendEmailError } from '../errors/unability-to-send-email.err
 import { GlobalRoleEnumeration } from '@workspace/common/enumerations';
 import { UnabilityToRetrieveGlobalRolesOfUserError } from '../errors/unability-to-retrieve-global-roles-of-user.error';
 import { UnabilityToCountExistingUsersWithRoleError } from '../errors/unability-to-count-existing-users-with-role.error';
+import { UnabilityRetrieveUsersError } from '../errors/unability-to-retrieve-users.error';
 
 @Injectable()
 export class UsersService {
@@ -69,14 +70,34 @@ export class UsersService {
     };
   }
 
-  async create(command: CreateUserRequest): Promise<void> {
+  async doesItAlreadyExist(user: UserEntity): Promise<boolean> {
+    try {
+      return (
+        (await this.usersRepository.count({
+          where: [{ email: user.email }],
+        })) > 0
+      );
+    } catch (error: any) {
+      throw new UnabilityRetrieveUsersError(error.message);
+    }
+  }
+
+  async create(
+    command: CreateUserRequest,
+    options?: { globalRoles?: GlobalRoleEnumeration[] }
+  ): Promise<void> {
     const hashedPassword = await bcrypt.hash(
       command.password,
       environment.passwordHashSalt
     );
 
+    command.lastname = command.lastname.toUpperCase();
+    command.firstname =
+      command.firstname.charAt(0).toUpperCase() + command.firstname.slice(1);
+
+    let user: UserEntity;
     try {
-      await this.usersRepository.insert({
+      user = await this.usersRepository.save({
         email: command.email,
         password: hashedPassword,
         firstname:
@@ -86,6 +107,15 @@ export class UsersService {
       });
     } catch (error) {
       throw new ConflictException();
+    }
+
+    if (options.globalRoles && options.globalRoles?.length) {
+      for (const globalRole of options.globalRoles) {
+        await this.globalRoleOfUserRepository.save({
+          user: { id: user.id },
+          globalRole: globalRole,
+        });
+      }
     }
 
     try {
@@ -113,7 +143,7 @@ export class UsersService {
       return (
         (await this.globalRoleOfUserRepository.count({
           globalRole: GlobalRoleEnumeration.Administrator,
-        })) > 1
+        })) > 0
       );
     } catch (error: any) {
       throw new UnabilityToCountExistingUsersWithRoleError(error.message);

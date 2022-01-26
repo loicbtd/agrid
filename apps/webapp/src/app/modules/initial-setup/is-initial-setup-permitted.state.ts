@@ -4,6 +4,7 @@ import { Refresh } from './is-initial-setup-permitted.action';
 
 @State<boolean>({
   name: IsInitialSetupPermittedState.name,
+  defaults: false,
 })
 @Injectable()
 export class IsInitialSetupPermittedState {
