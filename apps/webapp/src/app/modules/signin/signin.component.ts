@@ -128,6 +128,7 @@ import { SigninService } from './signin.service';
                   pRipple
                   label="Connexion"
                   styleClass="w-full mt-5"
+                  (click)="submitForm()"
                 ></p-button>
               </form>
 
@@ -171,11 +172,7 @@ export class SigninComponent {
     public readonly router: Router
   ) {}
 
-  log(thing: any) {
-    console.log(thing);
-  }
-
-  async signin() {
+  async submitForm() {
     if (this.form.invalid) {
       return;
     }
