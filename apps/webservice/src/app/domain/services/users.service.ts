@@ -1,8 +1,7 @@
 import { environment } from './../../../environments/environment';
-import { RegisterRequest, SigninRequest } from '@workspace/common/requests';
-import { SigninResponseDto } from '@workspace/common/responses';
+import { CreateUserRequest, SigninRequest } from '@workspace/common/requests';
+import { SigninResponse } from '@workspace/common/responses';
 import {
-  BadRequestException,
   ConflictException,
   InternalServerErrorException,
   Injectable,
@@ -15,6 +14,10 @@ import * as bcrypt from 'bcrypt';
 import { EmailTemplateEnumeration } from '../enumerations/email-template.emumeration';
 import { EmailsService } from './emails.service';
 import { TokenPayload } from '../models/token-payload.model';
+import { UnkownUserError } from '../errors/unkown-user.error';
+import { MismatchingHashesError } from '../errors/mismatching-hashes.error';
+import { RightEnumeration } from '@workspace/common/enumerations';
+import { UnabilityToSendEmailError } from '../errors/unability-to-send-email.error';
 
 @Injectable()
 export class UsersService {
@@ -25,17 +28,20 @@ export class UsersService {
     private readonly emailsService: EmailsService
   ) {}
 
-  async signin(command: SigninRequest): Promise<SigninResponseDto> {
+  async signin(command: SigninRequest): Promise<SigninResponse> {
     const user = await this.usersRepository.findOne({ email: command.email });
     if (!user) {
-      throw new BadRequestException();
+      throw new UnkownUserError();
     }
 
     if (!(await bcrypt.compare(command.password, user.password))) {
-      throw new BadRequestException();
+      throw new MismatchingHashesError();
     }
 
-    const payload: TokenPayload = { userId: user.id };
+    const payload: TokenPayload = {
+      userId: user.id,
+      rights: user.rights,
+    };
 
     return {
       token: this.jwtService.sign(payload),
@@ -47,8 +53,16 @@ export class UsersService {
     };
   }
 
-  async register(command: RegisterRequest): Promise<void> {
-    const hashedPassword = await bcrypt.hash(command.password, 10);
+  async create(command: CreateUserRequest): Promise<void> {
+    const hashedPassword = await bcrypt.hash(
+      command.password,
+      environment.passwordHashSalt
+    );
+
+    const rights: RightEnumeration[] = [];
+    if ((await this.usersRepository.count()) < 1) {
+      rights.push(RightEnumeration.Administrate);
+    }
 
     try {
       await this.usersRepository.insert({
@@ -58,10 +72,13 @@ export class UsersService {
           command.firstname.charAt(0).toUpperCase() +
           command.firstname.slice(1),
         lastname: command.lastname.toUpperCase(),
+        rights: rights,
       });
     } catch (error) {
       throw new ConflictException();
     }
+
+
 
     try {
       this.emailsService.send(
@@ -74,8 +91,12 @@ export class UsersService {
           },
         }
       );
-    } catch (error) {
-      throw new InternalServerErrorException();
+    } catch (error: any) {
+      throw new UnabilityToSendEmailError(
+        error.message,
+        command.email,
+        EmailTemplateEnumeration.Welcome
+      );
     }
   }
 }

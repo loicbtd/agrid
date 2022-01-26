@@ -1,4 +1,4 @@
-import { SigninResponseDto } from '@workspace/common/responses';
+import { SigninResponse } from '@workspace/common/responses';
 import { SigninRequest } from '@workspace/common/requests';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { Body, Controller, Post } from '@nestjs/common';
@@ -13,7 +13,7 @@ export class IdentitiesController {
 
   @Post(apiRoutes.identities.signin)
   @ApiOperation({ summary: 'logs a user' })
-  async signin(@Body() command: SigninRequest): Promise<SigninResponseDto> {
+  async signin(@Body() command: SigninRequest): Promise<SigninResponse> {
     return await this.usersService.signin(command);
   }
 

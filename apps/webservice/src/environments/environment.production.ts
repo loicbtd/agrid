@@ -3,6 +3,7 @@ const packageDotJson = require('../../../../package.json');
 
 export const environment = {
   production: true,
+  passwordHashSalt: process.env.WEBSERVICE_PASSWORD_HASH_SALT || 'SALT',
   jwtSecret: process.env.WEBSERVICE_JWT_SECRET || 'secret',
   jwtExpirationTime: process.env.WEBSERVICE_JWT_EXPIRATION_TIME || '48h',
   schema: process.env.WEBSERVICE_SCHEMA || 'https',

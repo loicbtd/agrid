@@ -14,10 +14,9 @@ import { ToastMessageService } from '../../../../global/services/toast-message.s
 import { UndefinedStripePublishableKeyError } from '../../../../global/errors/undefined-stripe-publishable-key.error';
 import { ImpossibleToLoadStripeError } from '../../../../global/errors/impossible-to-load-stripe.error';
 import { UndefinedStripeClientSecretError } from '../../../../global/errors/undefined-stripe-client-secret.error';
-import { PlansService } from 'apps/webapp/src/app/global/services/plans.service';
+import { PlansService } from '../../../../global/services/plans.service';
 
 @Component({
-  selector: 'app-subscription-step-4',
   templateUrl: './subscription-step-4.component.html',
   styleUrls: ['./subscription-step-4.component.scss'],
 })

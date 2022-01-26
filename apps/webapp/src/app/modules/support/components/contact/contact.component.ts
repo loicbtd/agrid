@@ -4,7 +4,6 @@ import { MessageService } from 'primeng/api';
 import { ContactService } from '../../services/contact.service';
 
 @Component({
-  selector: 'app-support-contact',
   templateUrl: './contact.component.html',
   styleUrls: ['./contact.component.scss'],
 })

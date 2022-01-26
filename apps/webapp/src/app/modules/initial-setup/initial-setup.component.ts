@@ -2,9 +2,10 @@ import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ImpossibleToSigninError } from '../../global/errors/impossible-to-signin.error';
-import { SigninService } from './signin.service';
+import { SigninService } from './initial-setup.service';
 
 @Component({
+  selector: 'app-login',
   styles: [
     `
       :host ::ng-deep {

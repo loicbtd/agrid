@@ -1,3 +1,6 @@
+import { RightEnumeration } from "@workspace/common/enumerations";
+
 export class TokenPayload {
-  userId: string;
+  userId?: string;
+  rights?: RightEnumeration[];
 }

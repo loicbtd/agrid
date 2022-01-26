@@ -6,10 +6,8 @@ import { PlansService } from '../../../../global/services/plans.service';
 import { Select } from '@ngxs/store';
 import { PlansState } from '../../../../global/store/state/plans.state';
 import { Observable } from 'rxjs';
-import { ApplicationError } from 'apps/webapp/src/app/global/errors/application.error';
 
 @Component({
-  selector: 'app-subscription-step-1',
   templateUrl: './subscription-step-1.component.html',
   styleUrls: ['./subscription-step-1.component.scss'],
 })

@@ -41,6 +41,7 @@
     "@ngxs/store": "^3.7.3",
     "@stripe/stripe-js": "^1.21.2",
     "@types/accept-language-parser": "^1.5.3",
+    "@types/bcrypt": "^5.0.0",
     "accept-language-parser": "^1.5.0",
     "bcrypt": "^5.0.1",
     "class-transformer": "^0.4.0",
