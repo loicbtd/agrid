@@ -72,7 +72,7 @@ const ENTITIES = [
       password: environment.databasePassword,
       database: environment.databaseName,
       autoLoadEntities: true,
-      synchronize: true,
+      synchronize: false,
       logging: false,
       cache: environment.production,
     }),
