@@ -5,14 +5,15 @@ import { Global, Module } from '@nestjs/common';
 import { HttpModule } from '@nestjs/axios';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import {
-  CompanyTypeEntity,
-  CompanyEntity,
   PlanEntity,
   ServiceIncludedInPlanEntity,
   ServiceEntity,
   SubscriptionEntity,
   SupportTypeEntity,
   UserEntity,
+  OrganizationTypeEntity,
+  OrganizationEntity,
+  GlobalRightOfUserEntity,
 } from '@workspace/common/entities';
 import { PassportModule } from '@nestjs/passport';
 import { JwtStrategy } from './strategies/jwt.strategy';
@@ -38,8 +39,9 @@ const SERVICES = [
 const STRATEGIES = [JwtStrategy];
 
 const ENTITIES = [
-  CompanyTypeEntity,
-  CompanyEntity,
+  GlobalRightOfUserEntity,
+  OrganizationTypeEntity,
+  OrganizationEntity,
   PlanEntity,
   ServiceIncludedInPlanEntity,
   ServiceEntity,
