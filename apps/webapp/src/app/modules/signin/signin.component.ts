@@ -129,6 +129,7 @@ import { SigninService } from './signin.service';
                   label="Connexion"
                   styleClass="w-full mt-5"
                   (click)="submitForm()"
+                  [disabled]="form.invalid"
                 ></p-button>
               </form>
 

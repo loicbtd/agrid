@@ -1,21 +1,30 @@
-import { SigninResponse } from '@workspace/common/responses';
-import { SigninRequest } from '@workspace/common/requests';
-import { Body, Injectable } from '@nestjs/common';
+import { PerformInitialSetupRequest } from '@workspace/common/requests';
+import { Injectable } from '@nestjs/common';
 import { UsersService } from './users.service';
+import { AlreadyExistingUserError } from '../errors/already-existing-user.error';
+import { GlobalRoleEnumeration } from '@workspace/common/enumerations';
 
 @Injectable()
 export class InitialSetupService {
   constructor(private readonly usersService: UsersService) {}
 
   async isPermitted(): Promise<boolean> {
-    if (await this.usersService.isThereAtLeastOneAdministrator()) {
-      return false;
-    }
-
-    return true;
+    return !(await this.usersService.isThereAtLeastOneAdministrator());
   }
 
-  async initialize(@Body() command: SigninRequest): Promise<SigninResponse> {
-    return new SigninResponse();
+  async perform(command: PerformInitialSetupRequest): Promise<void> {
+    if (await this.usersService.doesItAlreadyExist({ email: command.email })) {
+      throw new AlreadyExistingUserError();
+    }
+
+    await this.usersService.create(
+      {
+        email: command.email,
+        password: command.password,
+        firstname: 'admin',
+        lastname: 'admin',
+      },
+      { globalRoles: [GlobalRoleEnumeration.Administrator] }
+    );
   }
 }

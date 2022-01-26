@@ -13,7 +13,7 @@ import {
   UserEntity,
   OrganizationTypeEntity,
   OrganizationEntity,
-  GlobalRightOfUserEntity,
+  GlobalRoleOfUserEntity,
 } from '@workspace/common/entities';
 import { PassportModule } from '@nestjs/passport';
 import { JwtStrategy } from './strategies/jwt.strategy';
@@ -39,7 +39,7 @@ const SERVICES = [
 const STRATEGIES = [JwtStrategy];
 
 const ENTITIES = [
-  GlobalRightOfUserEntity,
+  GlobalRoleOfUserEntity,
   OrganizationTypeEntity,
   OrganizationEntity,
   PlanEntity,
@@ -72,7 +72,7 @@ const ENTITIES = [
       password: environment.databasePassword,
       database: environment.databaseName,
       autoLoadEntities: true,
-      synchronize: true,
+      synchronize: false,
       logging: false,
       cache: environment.production,
     }),

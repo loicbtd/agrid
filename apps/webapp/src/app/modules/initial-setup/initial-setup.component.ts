@@ -1,8 +1,12 @@
-import { Component } from '@angular/core';
+import { AfterViewInit, Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ImpossibleToSigninError } from '../../global/errors/impossible-to-signin.error';
+import { Select, Store } from '@ngxs/store';
+import { mediumStrengthPassword } from '@workspace/common/regexp';
+import { Observable } from 'rxjs';
+import { ToastMessageService } from '../../global/services/toast-message.service';
 import { InitialSetupService } from './initial-setup.service';
+import { IsInitialSetupPermittedState } from './is-initial-setup-permitted.state';
 
 @Component({
   styles: [
@@ -28,6 +32,7 @@ import { InitialSetupService } from './initial-setup.service';
       class="surface-card flex align-items-center justify-content-center min-h-screen min-w-screen overflow-hidden"
     >
       <div
+        *ngIf="isInitialSetupPermitted$ | async; else loading"
         class="grid justify-content-center p-2 lg:p-0"
         style="min-width: 80%"
       >
@@ -105,14 +110,27 @@ import { InitialSetupService } from './initial-setup.service';
                       inputId="password"
                       formControlName="password"
                       [toggleMask]="true"
-                      [feedback]="false"
+                      [feedback]="true"
+                      promptLabel="Entrez un mot de passe"
+                      weakLabel="Faible"
+                      mediumLabel="Moyen"
+                      strongLabel="Fort"
                       styleClass="w-full"
                       [ngClass]="{
                         'ng-invalid ng-dirty':
                           form.controls.password.touched &&
                           form.controls.password.invalid
                       }"
-                    ></p-password>
+                    >
+                      <ng-template pTemplate="footer">
+                        <ul class="pl-2 ml-2 mt-0" style="line-height: 1.5">
+                          <li>Au moins 1 minuscule</li>
+                          <li>Au moins 1 majuscule</li>
+                          <li>Au moins 1 chiffre</li>
+                          <li>Au moins 8 caractères</li>
+                        </ul>
+                      </ng-template>
+                    </p-password>
                     <label for="password">Mot de passe</label>
                   </span>
                   <small
@@ -124,12 +142,22 @@ import { InitialSetupService } from './initial-setup.service';
                   >
                     Le mot de passe est requis
                   </small>
+                  <small
+                    class="p-error"
+                    *ngIf="
+                      form.controls.password.touched &&
+                      form.controls.password.errors?.pattern
+                    "
+                  >
+                    La force du mot de passe est trop faible
+                  </small>
                 </div>
 
                 <p-button
                   pRipple
                   label="Générer le compte administrateur"
                   styleClass="w-full mt-5"
+                  [disabled]="form.invalid"
                   (click)="submitForm()"
                 ></p-button>
               </form>
@@ -138,33 +166,61 @@ import { InitialSetupService } from './initial-setup.service';
         </div>
       </div>
     </div>
+
+    <ng-template #loading>
+      <workspace-progress-spinner></workspace-progress-spinner>
+    </ng-template>
   `,
 })
-export class InitialSetupComponent {
+export class InitialSetupComponent implements AfterViewInit {
   form = this.fb.group({
     email: ['', [Validators.required, Validators.email]],
-    password: ['', [Validators.required]],
+    password: [
+      '',
+      [Validators.required, Validators.pattern(mediumStrengthPassword)],
+    ],
   });
+
+  @Select(IsInitialSetupPermittedState)
+  isInitialSetupPermitted$: Observable<boolean>;
 
   constructor(
     private readonly initialSetupService: InitialSetupService,
     private readonly fb: FormBuilder,
-    public readonly router: Router
+    private readonly store: Store,
+    public readonly router: Router,
+    public readonly toastMessageService: ToastMessageService
   ) {}
+
+  async ngAfterViewInit(): Promise<void> {
+    await this.initialSetupService.refreshIfInitialSetupIsPermitted();
+
+    if (!this.store.selectSnapshot<boolean>(IsInitialSetupPermittedState)) {
+      this.router.navigate(['/']);
+      this.toastMessageService.showError(
+        "Il n'est pas permis d'initialiser la solution"
+      );
+    }
+  }
 
   async submitForm() {
     if (this.form.invalid) {
       return;
     }
 
-    try {
-      await this.initialSetupService.initialize({
-        email: this.form.get('email')?.value,
-      });
+    const success = await this.initialSetupService.performInitialSetup({
+      email: this.form.get('email')?.value,
+      password: this.form.get('password')?.value,
+    });
 
-      this.router.navigate(['/']);
-    } catch (error) {
-      throw new ImpossibleToSigninError();
+    if (!success) {
+      return;
     }
+
+    this.router.navigate(['/']);
+
+    this.toastMessageService.showSuccess(
+      'La configuration initiale a été correctement effectuée'
+    );
   }
 }
