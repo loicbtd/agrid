@@ -5,18 +5,26 @@ import { AppComponent } from './app.component';
 import { RouterModule } from '@angular/router';
 import { SharedModule } from './shared.module';
 import { AppRoute } from './global/constants/app-route.constant';
-import { NgxsModule } from '@ngxs/store';
+import { NgxsModule, Store } from '@ngxs/store';
 import { NgxsStoragePluginModule } from '@ngxs/storage-plugin';
 import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
 import { environment } from '../environments/environment';
 import { StripeConfigurationState } from './global/store/state/stripe-configuration.state';
-import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
-import { HttpClient } from '@angular/common/http';
+import {
+  TranslateModule,
+  TranslateLoader,
+  TranslateService,
+} from '@ngx-translate/core';
+import { HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { ErrorsHandler } from './global/handlers/errors.handler';
 import { PlansState } from './global/store/state/plans.state';
+import { MyProfileState } from './global/store/state/my-profile.state';
+import { JwtState } from './global/store/state/jwt.state';
+import { JwtInterceptor } from './global/interceptors/jwt.interceptor';
+import { ToastMessageService } from './global/services/toast-message.service';
 
-const states = [StripeConfigurationState, PlansState];
+const states = [JwtState, MyProfileState, PlansState, StripeConfigurationState];
 
 export function createTranslateLoader(httpClient: HttpClient) {
   return new TranslateHttpLoader(
@@ -26,8 +34,15 @@ export function createTranslateLoader(httpClient: HttpClient) {
   );
 }
 
-export function createErrorsHandler(injector: Injector) {
-  return new ErrorsHandler(injector);
+export function createErrorsHandler(
+  toastMessageService: ToastMessageService,
+  translateService: TranslateService
+) {
+  return new ErrorsHandler(toastMessageService, translateService);
+}
+
+export function createJwtInterceptor(store: Store) {
+  return new JwtInterceptor(store);
 }
 
 @NgModule({
@@ -61,7 +76,16 @@ export function createErrorsHandler(injector: Injector) {
         {
           path: AppRoute.signin,
           loadChildren: () =>
-            import('./modules/login/login.module').then((m) => m.LoginModule),
+            import('./modules/signin/signin.module').then(
+              (m) => m.SigninModule
+            ),
+        },
+        {
+          path: AppRoute.initialSetup,
+          loadChildren: () =>
+            import('./modules/initial-setup/initial-setup.module').then(
+              (m) => m.InitialSetupModule
+            ),
         },
         {
           path: AppRoute.administration,
@@ -97,7 +121,13 @@ export function createErrorsHandler(injector: Injector) {
     {
       provide: ErrorHandler,
       useFactory: createErrorsHandler,
-      deps: [Injector],
+      deps: [ToastMessageService, TranslateService],
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useFactory: createJwtInterceptor,
+      deps: [Store],
+      multi: true,
     },
   ],
 })

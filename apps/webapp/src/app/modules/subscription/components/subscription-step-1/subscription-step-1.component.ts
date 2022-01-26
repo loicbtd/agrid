@@ -8,7 +8,6 @@ import { PlansState } from '../../../../global/store/state/plans.state';
 import { Observable } from 'rxjs';
 
 @Component({
-  selector: 'app-subscription-step-1',
   templateUrl: './subscription-step-1.component.html',
   styleUrls: ['./subscription-step-1.component.scss'],
 })

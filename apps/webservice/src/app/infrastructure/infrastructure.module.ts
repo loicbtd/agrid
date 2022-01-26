@@ -1,5 +1,4 @@
-import { EmailsService } from '../domain/services/emails.service';
-import { Global, Logger, Module } from '@nestjs/common';
+import { Global, Module } from '@nestjs/common';
 import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
 import { MailerModule } from '@nestjs-modules/mailer';
 import { ServeStaticModule } from '@nestjs/serve-static';
@@ -8,7 +7,6 @@ import { join } from 'path';
 
 @Global()
 @Module({
-  providers: [Logger],
   imports: [
     ServeStaticModule.forRoot({
       serveRoot: '/images',

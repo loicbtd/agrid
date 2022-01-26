@@ -1,12 +1,8 @@
-import { Global, Logger, Module, Scope } from '@nestjs/common';
+import { Global, Module } from '@nestjs/common';
 import { IdentitiesController } from '../api/controllers/identities.controller';
 import { PlansController } from './controllers/plans.controller';
 import { SupportController } from './controllers/support.controller';
 import { SubscriptionsController } from './controllers/subscriptions.controller';
-import { FASTIFY_ADAPTER } from './constants/provider-names.constant';
-import { ErrorsFilter } from './filters/errors.filter';
-import { APP_FILTER } from '@nestjs/core';
-import { FastifyAdapter } from '@nestjs/platform-fastify';
 import {
   AcceptLanguageResolver,
   I18nJsonParser,
@@ -16,6 +12,8 @@ import { environment } from '../../environments/environment';
 import { join } from 'path';
 import { StripeController } from './controllers/stripe.controller';
 import { StatisticsController } from './controllers/statistics.controller';
+import { ProfilesController } from './controllers/profiles.controller';
+import { InitialSetupController } from './controllers/initial-setup.controller';
 
 @Global()
 @Module({
@@ -37,24 +35,13 @@ import { StatisticsController } from './controllers/statistics.controller';
   ],
   controllers: [
     IdentitiesController,
+    InitialSetupController,
     PlansController,
+    ProfilesController,
     StripeController,
     SubscriptionsController,
     SupportController,
     StatisticsController,
-  ],
-  providers: [
-    Logger,
-    {
-      provide: APP_FILTER,
-      useClass: ErrorsFilter,
-      scope: Scope.REQUEST,
-    },
-    {
-      provide: FASTIFY_ADAPTER,
-      useClass: FastifyAdapter,
-      scope: Scope.DEFAULT,
-    },
   ],
 })
 export class ApiModule {}

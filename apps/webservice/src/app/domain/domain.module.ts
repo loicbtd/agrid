@@ -1,7 +1,7 @@
 import { EmailsService } from './services/emails.service';
 import { PlansService } from './services/plans.service';
 import { JwtModule } from '@nestjs/jwt';
-import { Global, Logger, Module } from '@nestjs/common';
+import { Global, Module } from '@nestjs/common';
 import { HttpModule } from '@nestjs/axios';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import {
@@ -21,10 +21,14 @@ import { UsersService } from './services/users.service';
 import { StripeService } from './services/stripe.service';
 import { SupportService } from './services/support.service';
 import { SubscriptionService } from './services/subscriptions.service';
+import { ProfilesService } from './services/profiles.service';
+import { InitialSetupService } from './services/initial-setup.service';
 
 const SERVICES = [
   EmailsService,
+  InitialSetupService,
   PlansService,
+  ProfilesService,
   StripeService,
   SubscriptionService,
   SupportService,
@@ -72,7 +76,7 @@ const ENTITIES = [
     }),
     TypeOrmModule.forFeature([...ENTITIES]),
   ],
-  providers: [...SERVICES, ...STRATEGIES, Logger],
+  providers: [...SERVICES, ...STRATEGIES],
   exports: [
     ...SERVICES,
     ...STRATEGIES,

@@ -5,9 +5,9 @@ export class SigninRequest {
   @ApiProperty()
   @IsNotEmpty()
   @IsEmail()
-  email!: string;
+  email?: string;
 
   @ApiProperty()
   @IsNotEmpty()
-  password!: string;
+  password?: string;
 }

@@ -49,7 +49,7 @@ export class EmailsService {
         replyTo: options.replyto,
       });
     } catch (error) {
-      throw new UnabilityToSendEmailError(error.message, to, subject);
+      throw new UnabilityToSendEmailError(error.message, to, template);
     }
   }
 }

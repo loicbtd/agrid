@@ -1,16 +1,7 @@
 import { environment } from './../../../environments/environment';
-import { RegisterRequest, SigninRequest } from '@workspace/common/requests';
-import {
-  DateStatisticsResponseDto,
-  SigninResponseDto,
-  WhoamiResponseDto,
-} from '@workspace/common/responses';
-import {
-  BadRequestException,
-  ConflictException,
-  InternalServerErrorException,
-  Injectable,
-} from '@nestjs/common';
+import { CreateUserRequest, SigninRequest } from '@workspace/common/requests';
+import { DateStatisticsResponseDto, SigninResponse } from '@workspace/common/responses';
+import { ConflictException, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { UserEntity } from '@workspace/common/entities';
 import { Repository } from 'typeorm';
@@ -20,6 +11,10 @@ import { EmailTemplateEnumeration } from '../enumerations/email-template.emumera
 import { EmailsService } from './emails.service';
 import { TokenPayload } from '../models/token-payload.model';
 import { DateFormatPostgreSQL } from '../enumerations/date-format-postgresql.enumeration';
+import { UnkownUserError } from '../errors/unkown-user.error';
+import { MismatchingHashesError } from '../errors/mismatching-hashes.error';
+import { UnabilityToSendEmailError } from '../errors/unability-to-send-email.error';
+import { GlobalRoleEnumeration } from '@workspace/common/enumerations';
 
 @Injectable()
 export class UsersService {
@@ -30,21 +25,24 @@ export class UsersService {
     private readonly emailsService: EmailsService
   ) {}
 
-  async signin(command: SigninRequest): Promise<SigninResponseDto> {
+  async signin(command: SigninRequest): Promise<SigninResponse> {
     const user = await this.usersRepository.findOne({ email: command.email });
     if (!user) {
-      throw new BadRequestException();
+      throw new UnkownUserError();
     }
 
     if (!(await bcrypt.compare(command.password, user.password))) {
-      throw new BadRequestException();
+      throw new MismatchingHashesError();
     }
 
-    const payload: TokenPayload = { userId: user.id };
+    const payload: TokenPayload = {
+      userId: user.id,
+      //globalRoles: user.rights,
+    };
 
     return {
       token: this.jwtService.sign(payload),
-      whoami: {
+      profile: {
         email: user.email,
         firstname: user.firstname,
         lastname: user.lastname,
@@ -52,8 +50,11 @@ export class UsersService {
     };
   }
 
-  async register(command: RegisterRequest): Promise<void> {
-    const hashedPassword = await bcrypt.hash(command.password, 10);
+  async create(command: CreateUserRequest): Promise<void> {
+    const hashedPassword = await bcrypt.hash(
+      command.password,
+      environment.passwordHashSalt
+    );
 
     try {
       await this.usersRepository.insert({
@@ -79,22 +80,21 @@ export class UsersService {
           },
         }
       );
-    } catch (error) {
-      throw new InternalServerErrorException();
+    } catch (error: any) {
+      throw new UnabilityToSendEmailError(
+        error.message,
+        command.email,
+        EmailTemplateEnumeration.Welcome
+      );
     }
   }
 
-  async whoami(userId: string): Promise<WhoamiResponseDto> {
-    const user = await this.usersRepository.findOne(userId);
-    if (!user) {
-      throw new BadRequestException();
-    }
+  async isThereAtLeastOneAdministrator(): Promise<boolean> {
+    const administrators = await this.usersRepository.find({});
 
-    return {
-      email: user.email,
-      firstname: user.firstname,
-      lastname: user.lastname,
-    };
+    console.log(administrators);
+
+    return false;
   }
 
   async retrieveCount(filter: string): Promise<DateStatisticsResponseDto[]> {

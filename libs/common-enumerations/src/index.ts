@@ -1,1 +1,1 @@
-export * from './lib/right.enumeration';
+export * from './lib/global-role.enumeration';

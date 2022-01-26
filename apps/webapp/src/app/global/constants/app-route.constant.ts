@@ -4,4 +4,5 @@ export const AppRoute = {
   subscription: 'subscription',
   signin: 'signin',
   administration: 'administration',
+  initialSetup: 'initial-setup',
 };

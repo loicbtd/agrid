@@ -40,7 +40,7 @@ export class ErrorsFilter implements ExceptionFilter {
     } else {
       httpStatusCode = HttpStatus.INTERNAL_SERVER_ERROR;
       httpMessage = await this.retrieveErrorTranslation('Unkown');
-      this._logger.error(JSON.stringify(exception), exception);
+      this._logger.error((exception as any).message, exception);
     }
 
     this._fastifyAdapter.reply(
@@ -57,8 +57,6 @@ export class ErrorsFilter implements ExceptionFilter {
       translation = await this._i18nRequestScopeService.translate(
         `errors.${errorName}`
       );
-
-      return '';
     } catch (error) {
       return 'Error translation not available';
     }

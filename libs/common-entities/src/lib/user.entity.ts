@@ -1,4 +1,4 @@
-import { CompanyEntity } from './company.entity';
+import { OrganizationEntity } from './organization.entity';
 import {
   Column,
   CreateDateColumn,
@@ -6,7 +6,6 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { RightEnumeration } from '@workspace/common/enumerations';
 
 @Entity('user')
 export class UserEntity {
@@ -22,22 +21,16 @@ export class UserEntity {
   @Column({ default: true })
   mustDefinePassword?: boolean;
 
-  @Column({
-    type: 'enum',
-    enum: RightEnumeration,
-    array: true,
-    default: [],
-  })
-  rights?: RightEnumeration[];
-
   @Column()
   firstname?: string;
 
   @Column()
   lastname?: string;
 
-  @ManyToOne(() => CompanyEntity, (company) => company.id, { nullable: true })
-  company?: CompanyEntity;
+  @ManyToOne(() => OrganizationEntity, (organization) => organization.id, {
+    nullable: true,
+  })
+  company?: OrganizationEntity;
 
   @CreateDateColumn()
   createdAt?: Date;

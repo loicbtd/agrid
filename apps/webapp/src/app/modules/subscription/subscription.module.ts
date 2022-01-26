@@ -50,6 +50,5 @@ import { SubscribeState } from './store/state/subscribe.state';
     ]),
     NgxsModule.forFeature([SubscribeState]),
   ],
-  exports: [],
 })
 export class SubsriptionModule {}
