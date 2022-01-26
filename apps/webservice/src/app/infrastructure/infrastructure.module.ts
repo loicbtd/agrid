@@ -4,6 +4,11 @@ import { MailerModule } from '@nestjs-modules/mailer';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { environment } from '../../environments/environment';
 import { join } from 'path';
+import { UsersPostgresqlAdapter } from './adapters/users-postgresql.adapter';
+
+const ADAPTERS = [
+  UsersPostgresqlAdapter
+];
 
 @Global()
 @Module({
@@ -36,5 +41,7 @@ import { join } from 'path';
       },
     }),
   ],
+  providers: [...ADAPTERS],
+  exports: [...ADAPTERS],
 })
 export class InfrastructureModule {}

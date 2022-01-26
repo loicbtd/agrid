@@ -14,7 +14,6 @@ import { DateFormatPostgreSQL } from '../enumerations/date-format-postgresql.enu
 import { UnkownUserError } from '../errors/unkown-user.error';
 import { MismatchingHashesError } from '../errors/mismatching-hashes.error';
 import { UnabilityToSendEmailError } from '../errors/unability-to-send-email.error';
-import { GlobalRoleEnumeration } from '@workspace/common/enumerations';
 
 @Injectable()
 export class UsersService {
@@ -26,18 +25,23 @@ export class UsersService {
   ) {}
 
   async signin(command: SigninRequest): Promise<SigninResponse> {
-    const user = await this.usersRepository.findOne({ email: command.email });
-    if (!user) {
-      throw new UnkownUserError();
+    let user: UserEntity;
+    try {
+      user = await this.usersRepository.findOneOrFail({ email: command.email  });
+    } catch(error: any) {
+      throw new UnkownUserError(error.message);
     }
 
     if (!(await bcrypt.compare(command.password, user.password))) {
       throw new MismatchingHashesError();
     }
 
+    // let globalRight: = 
+
+
     const payload: TokenPayload = {
       userId: user.id,
-      //globalRoles: user.rights,
+      // globalRoles: user.,
     };
 
     return {
