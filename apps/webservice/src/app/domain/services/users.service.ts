@@ -15,6 +15,7 @@ import { IncorrectPasswordError } from '../errors/incorrect-password.error';
 import { UnabilityToSendEmailError } from '../errors/unability-to-send-email.error';
 import { GlobalRoleEnumeration } from '@workspace/common/enumerations';
 import { UnabilityToRetrieveGlobalRolesOfUserError } from '../errors/unability-to-retrieve-global-roles-of-user.error';
+import { UnabilityToCountExistingUsersWithRoleError } from '../errors/unability-to-count-existing-users-with-role.error';
 
 @Injectable()
 export class UsersService {
@@ -45,7 +46,7 @@ export class UsersService {
         await this.globalRoleOfUserRepository.find({
           user: { id: user.id },
         })
-      ).map((globalRoleOfUser) => globalRoleOfUser.role);
+      ).map((globalRoleOfUser) => globalRoleOfUser.globalRole);
     } catch (error: any) {
       throw new UnabilityToRetrieveGlobalRolesOfUserError(
         error.message,
@@ -108,10 +109,14 @@ export class UsersService {
   }
 
   async isThereAtLeastOneAdministrator(): Promise<boolean> {
-    const administrators = await this.usersRepository.find({});
-
-    console.log(administrators);
-
-    return false;
+    try {
+      return (
+        (await this.globalRoleOfUserRepository.count({
+          globalRole: GlobalRoleEnumeration.Administrator,
+        })) > 1
+      );
+    } catch (error: any) {
+      throw new UnabilityToCountExistingUsersWithRoleError(error.message);
+    }
   }
 }

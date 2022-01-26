@@ -7,7 +7,7 @@ export const apiRoutes = {
   initialSetup: {
     root: 'initialSetup',
     isPermitted: 'isPermitted',
-    initialize: 'initialize',
+    perform: 'perform',
   },
   plans: {
     root: 'plans',

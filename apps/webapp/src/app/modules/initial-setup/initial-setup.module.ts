@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { SharedModule } from '../../shared.module';
 import { InitialSetupComponent } from './initial-setup.component';
 import { RouterModule } from '@angular/router';
+import { NgxsModule } from '@ngxs/store';
+import { IsInitialSetupPermittedState } from './is-initial-setup-permitted.state';
 
 @NgModule({
   declarations: [InitialSetupComponent],
@@ -15,6 +17,7 @@ import { RouterModule } from '@angular/router';
       },
       { path: '**', redirectTo: '' },
     ]),
+    NgxsModule.forFeature([IsInitialSetupPermittedState]),
   ],
 })
 export class InitialSetupModule {}

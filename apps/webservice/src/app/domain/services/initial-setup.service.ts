@@ -1,6 +1,5 @@
-import { SigninResponse } from '@workspace/common/responses';
-import { SigninRequest } from '@workspace/common/requests';
-import { Body, Injectable } from '@nestjs/common';
+import { PerformInitialSetupRequest } from '@workspace/common/requests';
+import { Injectable } from '@nestjs/common';
 import { UsersService } from './users.service';
 
 @Injectable()
@@ -15,7 +14,7 @@ export class InitialSetupService {
     return true;
   }
 
-  async initialize(@Body() command: SigninRequest): Promise<SigninResponse> {
-    return new SigninResponse();
+  async perform(command: PerformInitialSetupRequest): Promise<void> {
+    return;
   }
 }

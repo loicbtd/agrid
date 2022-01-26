@@ -1,8 +1,12 @@
-import { Component } from '@angular/core';
+import { AfterViewInit, Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Select } from '@ngxs/store';
+import { mediumStrengthPassword } from '@workspace/common/regexp';
+import { Observable } from 'rxjs';
 import { ImpossibleToSigninError } from '../../global/errors/impossible-to-signin.error';
 import { InitialSetupService } from './initial-setup.service';
+import { IsInitialSetupPermittedState } from './is-initial-setup-permitted.state';
 
 @Component({
   styles: [
@@ -105,14 +109,27 @@ import { InitialSetupService } from './initial-setup.service';
                       inputId="password"
                       formControlName="password"
                       [toggleMask]="true"
-                      [feedback]="false"
+                      [feedback]="true"
+                      promptLabel="Entrez un mot de passe"
+                      weakLabel="Faible"
+                      mediumLabel="Moyen"
+                      strongLabel="Fort"
                       styleClass="w-full"
                       [ngClass]="{
                         'ng-invalid ng-dirty':
                           form.controls.password.touched &&
                           form.controls.password.invalid
                       }"
-                    ></p-password>
+                    >
+                      <ng-template pTemplate="footer">
+                        <ul class="pl-2 ml-2 mt-0" style="line-height: 1.5">
+                          <li>Au moins 1 minuscule</li>
+                          <li>Au moins 1 majuscule</li>
+                          <li>Au moins 1 chiffre</li>
+                          <li>Au moins 8 caractères</li>
+                        </ul>
+                      </ng-template>
+                    </p-password>
                     <label for="password">Mot de passe</label>
                   </span>
                   <small
@@ -123,6 +140,15 @@ import { InitialSetupService } from './initial-setup.service';
                     "
                   >
                     Le mot de passe est requis
+                  </small>
+                  <small
+                    class="p-error"
+                    *ngIf="
+                      form.controls.password.touched &&
+                      form.controls.password.errors?.pattern
+                    "
+                  >
+                    La force du mot de passe est trop faible
                   </small>
                 </div>
 
@@ -140,11 +166,17 @@ import { InitialSetupService } from './initial-setup.service';
     </div>
   `,
 })
-export class InitialSetupComponent {
+export class InitialSetupComponent implements AfterViewInit {
   form = this.fb.group({
     email: ['', [Validators.required, Validators.email]],
-    password: ['', [Validators.required]],
+    password: [
+      '',
+      [Validators.required, Validators.pattern(mediumStrengthPassword)],
+    ],
   });
+
+  @Select(IsInitialSetupPermittedState)
+  isInitialSetupPermitted$: Observable<boolean>;
 
   constructor(
     private readonly initialSetupService: InitialSetupService,
@@ -152,19 +184,20 @@ export class InitialSetupComponent {
     public readonly router: Router
   ) {}
 
+  async ngAfterViewInit(): Promise<void> {
+    await this.initialSetupService.refreshIfInitialSetupIsPermitted();
+  }
+
   async submitForm() {
     if (this.form.invalid) {
       return;
     }
 
-    try {
-      await this.initialSetupService.initialize({
-        email: this.form.get('email')?.value,
-      });
+    await this.initialSetupService.performInitialSetup({
+      email: this.form.get('email')?.value,
+      password: this.form.get('password')?.value,
+    });
 
-      this.router.navigate(['/']);
-    } catch (error) {
-      throw new ImpossibleToSigninError();
-    }
+    this.router.navigate(['/']);
   }
 }

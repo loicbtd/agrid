@@ -1,5 +1,4 @@
-import { SigninResponse } from '@workspace/common/responses';
-import { SigninRequest } from '@workspace/common/requests';
+import { PerformInitialSetupRequest } from '@workspace/common/requests';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { Body, Controller, Get, Post } from '@nestjs/common';
 import { apiRoutes } from '@workspace/common/constants';
@@ -16,9 +15,9 @@ export class InitialSetupController {
     return await this.initialSetupService.isPermitted();
   }
 
-  @Post(apiRoutes.initialSetup.initialize)
+  @Post(apiRoutes.initialSetup.perform)
   @ApiOperation({ summary: 'performs initial setup' })
-  async initialize(@Body() command: SigninRequest): Promise<SigninResponse> {
-    return await this.initialSetupService.initialize(command);
+  async perform(@Body() command: PerformInitialSetupRequest): Promise<void> {
+    return await this.initialSetupService.perform(command);
   }
 }

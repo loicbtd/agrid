@@ -14,5 +14,5 @@ export class GlobalRoleOfUserEntity {
     type: 'enum',
     enum: GlobalRoleEnumeration,
   })
-  role?: GlobalRoleEnumeration;
+  globalRole?: GlobalRoleEnumeration;
 }

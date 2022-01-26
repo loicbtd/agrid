@@ -1,5 +1,4 @@
-import { IsEmail, IsNotEmpty, Matches } from 'class-validator';
-import { passwordRegexp } from '@workspace/common/regexp';
+import { IsEmail, IsNotEmpty} from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateUserRequest {
@@ -8,7 +7,6 @@ export class CreateUserRequest {
   email?: string;
 
   @ApiProperty()
-  @Matches(passwordRegexp, { message: 'Password too weak' })
   @IsNotEmpty()
   password?: string;
 
