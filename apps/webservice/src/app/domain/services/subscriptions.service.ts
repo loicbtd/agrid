@@ -14,6 +14,8 @@ import { UnabilityToChargePaymentMethodWithStripeError } from '../errors/unabili
 import { PaymentMethodChargeIsNotAuthorizedByStripeError } from '../errors/payment-method-charge-is-not-authorized-by-stripe.error';
 import { UnabilityToCreateUserError } from '../errors/unability-to-create-user.error';
 import { UnabilityToCreateSubscriptionError } from '../errors/unability-to-create-subscription.error';
+import { DateFormatPostgreSQL } from '../enumerations/date-format-postgresql.enumeration';
+import { DateStatisticsResponseDto } from '@workspace/common/responses';
 
 @Injectable()
 export class SubscriptionService {
@@ -85,5 +87,49 @@ export class SubscriptionService {
     }
 
     return subscription;
+  }
+
+  async retrieveCount(filter: string): Promise<DateStatisticsResponseDto[]> {
+    let format: string;
+    switch (filter.toUpperCase()) {
+      case 'DAY':
+        format = DateFormatPostgreSQL.DAY;
+        break;
+      case 'MONTH':
+        format = DateFormatPostgreSQL.MONTH;
+        break;
+      default:
+        format = DateFormatPostgreSQL.YEAR;
+        break;
+    }
+    return await this.subscriptionsRepository
+      .createQueryBuilder('subscription')
+      .select('COUNT(subscription.id) AS number')
+      .addSelect(`to_char(date(subscription.creationDate),'${format}') as date`)
+      .groupBy('date')
+      .orderBy('date')
+      .execute();
+  }
+
+  async retreiveSalesCount(
+    filter: string
+  ): Promise<DateStatisticsResponseDto[]> {
+    let format: string;
+    switch (filter.toUpperCase()) {
+      case 'MONTH':
+        format = DateFormatPostgreSQL.MONTH;
+        break;
+      default:
+        format = DateFormatPostgreSQL.YEAR;
+        break;
+    }
+    return await this.subscriptionsRepository
+      .createQueryBuilder('subscription')
+      .select('SUM(plan.price) AS number')
+      .addSelect(`to_char(date(subscription.creationDate),'${format}') as date`)
+      .innerJoin('subscription.plan', 'plan')
+      .groupBy('date')
+      .orderBy('date')
+      .execute();
   }
 }

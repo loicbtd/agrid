@@ -64,6 +64,13 @@ export function createErrorsHandler(injector: Injector) {
             import('./modules/login/login.module').then((m) => m.LoginModule),
         },
         {
+          path: AppRoute.administration,
+          loadChildren: () =>
+            import('./modules/administration/administration.module').then(
+              (m) => m.AdministrationModule
+            ),
+        },
+        {
           path: '**',
           redirectTo: AppRoute.showcase,
         },

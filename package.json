@@ -43,6 +43,7 @@
     "@types/accept-language-parser": "^1.5.3",
     "accept-language-parser": "^1.5.0",
     "bcrypt": "^5.0.1",
+    "chart.js": "^3.7.0",
     "class-transformer": "^0.4.0",
     "class-validator": "^0.12.2",
     "cross-env": "^7.0.3",

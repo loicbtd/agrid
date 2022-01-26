@@ -1,6 +1,7 @@
 import { environment } from './../../../environments/environment';
 import { RegisterRequest, SigninRequest } from '@workspace/common/requests';
 import {
+  DateStatisticsResponseDto,
   SigninResponseDto,
   WhoamiResponseDto,
 } from '@workspace/common/responses';
@@ -18,6 +19,7 @@ import * as bcrypt from 'bcrypt';
 import { EmailTemplateEnumeration } from '../enumerations/email-template.emumeration';
 import { EmailsService } from './emails.service';
 import { TokenPayload } from '../models/token-payload.model';
+import { DateFormatPostgreSQL } from '../enumerations/date-format-postgresql.enumeration';
 
 @Injectable()
 export class UsersService {
@@ -93,5 +95,39 @@ export class UsersService {
       firstname: user.firstname,
       lastname: user.lastname,
     };
+  }
+
+  async retrieveCount(filter: string): Promise<DateStatisticsResponseDto[]> {
+    let format: string;
+    switch (filter.toUpperCase()) {
+      case 'DAY':
+        format = DateFormatPostgreSQL.DAY;
+        break;
+      case 'MONTH':
+        format = DateFormatPostgreSQL.MONTH;
+        break;
+      default:
+        format = DateFormatPostgreSQL.YEAR;
+        break;
+    }
+    return await this.usersRepository
+      .createQueryBuilder('user')
+      .select('COUNT(user.id) AS number')
+      .addSelect(`to_char(date(user.createdAt),'${format}') as date`)
+      .groupBy('date')
+      .orderBy('date')
+      .execute();
+  }
+
+  async retrieveCountOnCurrentMonth(): Promise<DateStatisticsResponseDto[]> {
+    return await this.usersRepository
+      .createQueryBuilder('user')
+      .select('COUNT(user.id) AS number')
+      .addSelect(`CURRENT_DATE as date`)
+      .where(
+        `to_char(date(user.createdAt),'${DateFormatPostgreSQL.MONTH}') = to_char(date(CURRENT_DATE), '${DateFormatPostgreSQL.MONTH}')`
+      )
+      .groupBy(`to_char(date(user.createdAt),'${DateFormatPostgreSQL.MONTH}')`)
+      .execute();
   }
 }

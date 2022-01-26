@@ -1,5 +1,11 @@
 import { CompanyEntity } from './company.entity';
-import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { RightEnumeration } from '@workspace/common/enumerations';
 
 @Entity('user')
