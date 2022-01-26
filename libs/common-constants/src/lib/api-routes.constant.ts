@@ -4,10 +4,15 @@ export const apiRoutes = {
     signin: 'signin',
     register: 'register',
   },
+  initialSetup: {
+    root: 'initialSetup',
+    isPermitted: 'isPermitted',
+    initialize: 'initialize',
+  },
   plans: {
-    root: 'root',
+    root: 'plans',
     create: 'create',
-    retrieve: 'create',
+    retrieve: 'retrieve',
   },
   profiles: {
     root: 'profiles',
