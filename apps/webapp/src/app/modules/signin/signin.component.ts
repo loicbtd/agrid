@@ -1,24 +1,35 @@
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ImpossibleToSigninError } from '../../global/errors/impossible-to-signin.error';
 import { SigninService } from './signin.service';
 
 @Component({
   selector: 'app-login',
   styles: [
     `
-      :host ::ng-deep .p-password input {
-        width: 100%;
-        padding: 1rem;
+      :host ::ng-deep {
+        .p-inputtext {
+          width: 100%;
+          padding-right: 2.5rem;
+        }
+
+        i {
+          right: 0.75rem;
+          color: #58480e;
+          position: absolute;
+          top: 50%;
+          margin-top: -0.5rem;
+        }
       }
-      :host ::ng-deep .pi-eye {
+      /* :host ::ng-deep .pi-eye {
         transform: scale(1.6);
         margin-right: 1rem;
       }
       :host ::ng-deep .pi-eye-slash {
         transform: scale(1.6);
         margin-right: 1rem;
-      }
+      } */
     `,
   ],
   template: `
@@ -50,38 +61,71 @@ import { SigninService } from './signin.service';
           >
             <div class="text-center mb-5">
               <div class="text-900 text-3xl font-medium mb-3">Bienvenue !</div>
-              <span class="text-600 font-medium"
-                >Connectez-vous pour continuer</span
-              >
+              <span class="text-600 font-medium">
+                Connectez-vous pour continuer
+              </span>
             </div>
 
             <div class="w-full md:w-10 mx-auto">
-              <div class="form-group">
-                <div class="p-field">
+              <form [formGroup]="form" novalidate class="form-group">
+                <div class="p-field mt-5">
                   <span class="p-float-label w-full">
-                    <input type="text" id="email" pInputText />
-                    <label for="inputtext">Courriel</label>
-                  </span>
-                </div>
-
-                <div class="p-field">
-                  <span class="p-float-label w-full">
-                    <p-password
-                      inputId="password"
-                      [toggleMask]="true"
-                      [feedback]="false"
+                    <input
+                      id="email"
+                      formControlName="email"
+                      type="email"
+                      pInputText
+                      class="w-full"
                       [ngClass]="{
                         'ng-invalid ng-dirty':
-                          form.controls.password.dirty &&
+                          form.controls.email.touched &&
+                          form.controls.email.invalid
+                      }"
+                    />
+                    <label for="email">Courriel</label>
+                  </span>
+                  <div class="p-d-flex p-flex-column">
+                    <small
+                      class="p-error"
+                      *ngIf="
+                        form.controls.email.touched &&
+                        form.controls.email.errors?.required
+                      "
+                    >
+                      Le courriel est requis
+                    </small>
+                    <small
+                      class="p-error"
+                      *ngIf="
+                        form.controls.email.touched &&
+                        form.controls.email.errors?.email
+                      "
+                    >
+                      Le courriel n'est pas valide
+                    </small>
+                  </div>
+                </div>
+
+                <div class="p-field mt-5">
+                  <span class="p-float-label">
+                    <p-password
+                      inputId="password"
+                      formControlName="password"
+                      [toggleMask]="true"
+                      [feedback]="false"
+                      styleClass="w-full"
+                      [ngClass]="{
+                        'ng-invalid ng-dirty':
+                          form.controls.password.touched &&
                           form.controls.password.invalid
                       }"
                     ></p-password>
                     <label for="password">Mot de passe</label>
                   </span>
                   <small
-                    class="p-invalid"
+                    class="p-error"
                     *ngIf="
-                      form.controls.password.dirty &&
+                      form.controls.password.touched &&
                       form.controls.password.errors?.required
                     "
                   >
@@ -89,42 +133,33 @@ import { SigninService } from './signin.service';
                   </small>
                 </div>
 
-                <button
-                  pButton
+                <p-button
                   pRipple
                   label="Connexion"
-                  class="w-full p-3 text-xl"
-                ></button>
-              </div>
+                  styleClass="w-full mt-3"
+                ></p-button>
+              </form>
 
               <div
                 class="w-full md:w-10 mx-auto mt-4"
                 style="text-align: center"
               >
-                <button
-                  pbutton=""
-                  pripple=""
-                  label="Login"
-                  class="p-ripple p-element p-button-text p-button-rounded border-none font-light line-height-2 text-500 p-button p-component"
-                  [routerLink]="['/']"
+                <p-button
+                  pbutton
+                  pripple
+                  styleClass="p-button-text p-button-rounded"
+                  label="Accueil"
                 >
-                  <span class="p-ink"></span>
-                  <span class="p-button-label" style="color: #4bc714"
-                    >Accueil</span
-                  >
-                </button>
-                <button
-                  pbutton=""
-                  pripple=""
-                  label="Login"
-                  class="p-ripple p-element p-button-text p-button-rounded border-none font-light line-height-2 text-500 p-button p-component"
-                  [routerLink]="['/subscription']"
+                </p-button>
+
+                <p-button
+                  pbutton
+                  pripple
+                  styleClass="p-button-text p-button-rounded p-button-secondary"
+                  label="Pas encore inscrit ?"
+                  [routerLink]="['subscription']"
                 >
-                  <span class="p-ink"></span>
-                  <span class="p-button-label" style="color: #e8be28"
-                    >Pas encore inscrit ?</span
-                  >
-                </button>
+                </p-button>
               </div>
             </div>
           </div>
@@ -140,10 +175,29 @@ export class SigninComponent {
   });
 
   constructor(
-    private signinService: SigninService,
-    private fb: FormBuilder,
-    public router: Router
+    private readonly signinService: SigninService,
+    private readonly fb: FormBuilder,
+    public readonly router: Router
   ) {}
 
-  password: string;
+  log(thing: any) {
+    console.log(thing);
+  }
+
+  async signin() {
+    if (this.form.invalid) {
+      return;
+    }
+
+    try {
+      await this.signinService.signin({
+        email: this.form.get('email')?.value,
+        password: this.form.get('password')?.value,
+      });
+
+      this.router.navigate(['/']);
+    } catch (error) {
+      throw new ImpossibleToSigninError();
+    }
+  }
 }
