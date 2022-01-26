@@ -3,7 +3,7 @@ import { CreateUserRequest, SigninRequest } from '@workspace/common/requests';
 import { SigninResponse } from '@workspace/common/responses';
 import { ConflictException, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { UserEntity } from '@workspace/common/entities';
+import { GlobalRoleOfUserEntity, UserEntity } from '@workspace/common/entities';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import * as bcrypt from 'bcrypt';
@@ -11,14 +11,18 @@ import { EmailTemplateEnumeration } from '../enumerations/email-template.emumera
 import { EmailsService } from './emails.service';
 import { TokenPayload } from '../models/token-payload.model';
 import { UnkownUserError } from '../errors/unkown-user.error';
-import { MismatchingHashesError } from '../errors/mismatching-hashes.error';
+import { IncorrectPasswordError } from '../errors/incorrect-password.error';
 import { UnabilityToSendEmailError } from '../errors/unability-to-send-email.error';
+import { GlobalRoleEnumeration } from '@workspace/common/enumerations';
+import { UnabilityToRetrieveGlobalRolesOfUserError } from '../errors/unability-to-retrieve-global-roles-of-user.error';
 
 @Injectable()
 export class UsersService {
   constructor(
     @InjectRepository(UserEntity)
     private readonly usersRepository: Repository<UserEntity>,
+    @InjectRepository(GlobalRoleOfUserEntity)
+    private readonly globalRoleOfUserRepository: Repository<GlobalRoleOfUserEntity>,
     private readonly jwtService: JwtService,
     private readonly emailsService: EmailsService
   ) {}
@@ -26,21 +30,32 @@ export class UsersService {
   async signin(command: SigninRequest): Promise<SigninResponse> {
     let user: UserEntity;
     try {
-      user = await this.usersRepository.findOneOrFail({ email: command.email  });
-    } catch(error: any) {
+      user = await this.usersRepository.findOneOrFail({ email: command.email });
+    } catch (error: any) {
       throw new UnkownUserError(error.message);
     }
 
     if (!(await bcrypt.compare(command.password, user.password))) {
-      throw new MismatchingHashesError();
+      throw new IncorrectPasswordError();
     }
 
-    // let globalRight: = 
-
+    let globalRoles: GlobalRoleEnumeration[] = [];
+    try {
+      globalRoles = (
+        await this.globalRoleOfUserRepository.find({
+          user: { id: user.id },
+        })
+      ).map((globalRoleOfUser) => globalRoleOfUser.role);
+    } catch (error: any) {
+      throw new UnabilityToRetrieveGlobalRolesOfUserError(
+        error.message,
+        user.id
+      );
+    }
 
     const payload: TokenPayload = {
       userId: user.id,
-      // globalRoles: user.,
+      globalRoles: globalRoles,
     };
 
     return {
