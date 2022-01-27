@@ -1,7 +1,8 @@
-import { Controller, Get, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Param, Put, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { apiRoutes } from '@workspace/common/constants';
-import { MyProfileModel } from '@workspace/common/models';
+import { MyProfileModel, UserProfileModel } from '@workspace/common/models';
+import { UpdateProfileRequest } from '@workspace/common/requests';
 import { TokenPayload } from '../../domain/models/token-payload.model';
 import { ProfilesService } from '../../domain/services/profiles.service';
 import { JwtPayload } from '../decorators/jwt-payload.decorator';
@@ -20,5 +21,24 @@ export class ProfilesController {
     @JwtPayload() payload: TokenPayload
   ): Promise<MyProfileModel> {
     return await this.profilesService.retrieveMyProfile(payload.userId);
+  }
+
+  @ApiBearerAuth()
+  @UseGuards(JwtGuard)
+  @Get(apiRoutes.profiles.retrieveAllProfiles)
+  @ApiOperation({ summary: "retrieves alls users' profile" })
+  async retrieveAllProfile(): Promise<UserProfileModel[]> {
+    return await this.profilesService.retrieveAllProfile();
+  }
+
+  @ApiBearerAuth()
+  @UseGuards(JwtGuard)
+  @Put(':id')
+  @ApiOperation({ summary: "update users' profile" })
+  async updateProfile(
+    @Param('id') id: string,
+    @Body() command: UpdateProfileRequest
+  ): Promise<UserProfileModel> {
+    return await this.profilesService.updateProfile(id, command);
   }
 }

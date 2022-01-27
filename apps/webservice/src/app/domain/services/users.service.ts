@@ -21,7 +21,6 @@ import { GlobalRoleEnumeration } from '@workspace/common/enumerations';
 import { UnabilityToRetrieveGlobalRolesOfUserError } from '../errors/unability-to-retrieve-global-roles-of-user.error';
 import { UnabilityToCountExistingUsersWithRoleError } from '../errors/unability-to-count-existing-users-with-role.error';
 import { UnabilityRetrieveUsersError } from '../errors/unability-to-retrieve-users.error';
-import { StatisticsController } from '../../api/controllers/statistics.controller';
 
 @Injectable()
 export class UsersService {

@@ -1,5 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { UserProfileModel } from '@workspace/common/models';
 import { DateStatisticsResponseDto } from '@workspace/common/responses';
+import { ToastMessageService } from '../../../../global/services/toast-message.service';
+import { ProfileService } from '../../services/profile.service';
 import { StatisticsService } from '../../services/statistics.service';
 
 @Component({
@@ -33,10 +36,20 @@ export class DashboardComponent implements OnInit {
   ];
   activeStep = this.steps[0];
 
-  constructor(private _statisticsController: StatisticsService) {}
+  users!: UserProfileModel[];
+  userSelected!: UserProfileModel;
+  clonedProducts: { [s: string]: UserProfileModel } = {};
+  pageLoaded = 0;
+
+  constructor(
+    private readonly _statisticsController: StatisticsService,
+    private readonly _profileService: ProfileService,
+    private readonly _toastMessage: ToastMessageService
+  ) {}
 
   ngOnInit(): void {
     this.updateCharts();
+    this.getAllUsers();
   }
 
   updateCharts() {
@@ -68,6 +81,7 @@ export class DashboardComponent implements OnInit {
             },
           ],
         };
+        this.pageLoaded++;
       });
   }
 
@@ -93,6 +107,7 @@ export class DashboardComponent implements OnInit {
             },
           ],
         };
+        this.pageLoaded++;
       });
   }
 
@@ -106,6 +121,7 @@ export class DashboardComponent implements OnInit {
       .retrieveUserCountOnCurrentMonth()
       .subscribe((res: DateStatisticsResponseDto[]) => {
         this.countUserOnCurrentMonth = res[0];
+        this.pageLoaded++;
       });
   }
 
@@ -131,6 +147,39 @@ export class DashboardComponent implements OnInit {
             },
           ],
         };
+        this.pageLoaded++;
       });
+  }
+
+  getAllUsers() {
+    this._profileService
+      .retrieveAllProfiles()
+      .subscribe((users: UserProfileModel[]) => {
+        this.users = users;
+      });
+  }
+
+  onRowEditInit(user: UserProfileModel) {
+    this.userSelected = user;
+    this.clonedProducts[user.id] = { ...user };
+  }
+
+  onRowEditSave(user: UserProfileModel) {
+    console.log(user);
+    delete this.clonedProducts[user.id];
+    this._profileService
+      .updateProfile(user.id, {
+        firstname: user.firstname,
+        lastname: user.lastname,
+      })
+      .subscribe((profile: UserProfileModel) => {
+        this.users[this.users.indexOf(user)] = profile;
+        this._toastMessage.showSuccess('Profil mit à jour');
+      });
+  }
+
+  onRowEditCancel(user: UserProfileModel, index: number) {
+    this.users[index] = this.clonedProducts[user.id];
+    delete this.clonedProducts[user.id];
   }
 }

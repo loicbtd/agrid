@@ -17,6 +17,7 @@ export const apiRoutes = {
   profiles: {
     root: 'profiles',
     retrieveMyProfile: 'retrieveMyProfile',
+    retrieveAllProfiles: 'retrieveAllProfiles',
   },
   stripe: {
     root: 'stripe',
