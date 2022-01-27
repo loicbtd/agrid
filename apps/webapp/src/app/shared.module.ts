@@ -46,6 +46,7 @@ import { CarouselModule } from 'primeng/carousel';
 import { DividerModule } from 'primeng/divider';
 import { TranslateModule } from '@ngx-translate/core';
 import { AngularComponentsProgressSpinnerModule } from '@workspace/angular/components/progress-spinner';
+import { ChartModule } from 'primeng/chart';
 
 const importedAndExportedModules = [
   CommonModule,
@@ -93,6 +94,7 @@ const importedAndExportedModules = [
   CarouselModule,
   DividerModule,
   AngularComponentsProgressSpinnerModule,
+  ChartModule,
 ];
 
 @NgModule({

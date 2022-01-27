@@ -88,6 +88,13 @@ export function createJwtInterceptor(store: Store) {
             ),
         },
         {
+          path: AppRoute.administration,
+          loadChildren: () =>
+            import('./modules/administration/administration.module').then(
+              (m) => m.AdministrationModule
+            ),
+        },
+        {
           path: '**',
           redirectTo: AppRoute.showcase,
         },

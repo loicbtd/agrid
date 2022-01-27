@@ -1,6 +1,9 @@
 import { environment } from './../../../environments/environment';
 import { CreateUserRequest, SigninRequest } from '@workspace/common/requests';
-import { SigninResponse } from '@workspace/common/responses';
+import {
+  DateStatisticsResponseDto,
+  SigninResponse,
+} from '@workspace/common/responses';
 import { ConflictException, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { GlobalRoleOfUserEntity, UserEntity } from '@workspace/common/entities';
@@ -10,6 +13,7 @@ import * as bcrypt from 'bcrypt';
 import { EmailTemplateEnumeration } from '../enumerations/email-template.emumeration';
 import { EmailsService } from './emails.service';
 import { TokenPayload } from '../models/token-payload.model';
+import { DateFormatPostgreSQL } from '../enumerations/date-format-postgresql.enumeration';
 import { UnkownUserError } from '../errors/unkown-user.error';
 import { IncorrectPasswordError } from '../errors/incorrect-password.error';
 import { UnabilityToSendEmailError } from '../errors/unability-to-send-email.error';
@@ -17,6 +21,7 @@ import { GlobalRoleEnumeration } from '@workspace/common/enumerations';
 import { UnabilityToRetrieveGlobalRolesOfUserError } from '../errors/unability-to-retrieve-global-roles-of-user.error';
 import { UnabilityToCountExistingUsersWithRoleError } from '../errors/unability-to-count-existing-users-with-role.error';
 import { UnabilityRetrieveUsersError } from '../errors/unability-to-retrieve-users.error';
+import { StatisticsController } from '../../api/controllers/statistics.controller';
 
 @Injectable()
 export class UsersService {
@@ -148,5 +153,39 @@ export class UsersService {
     } catch (error: any) {
       throw new UnabilityToCountExistingUsersWithRoleError(error.message);
     }
+  }
+
+  async retrieveCount(filter: string): Promise<DateStatisticsResponseDto[]> {
+    let format: string;
+    switch (filter.toUpperCase()) {
+      case 'DAY':
+        format = DateFormatPostgreSQL.DAY;
+        break;
+      case 'MONTH':
+        format = DateFormatPostgreSQL.MONTH;
+        break;
+      default:
+        format = DateFormatPostgreSQL.YEAR;
+        break;
+    }
+    return await this.usersRepository
+      .createQueryBuilder('user')
+      .select('COUNT(user.id) AS number')
+      .addSelect(`to_char(date(user.createdAt),'${format}') as date`)
+      .groupBy('date')
+      .orderBy('date')
+      .execute();
+  }
+
+  async retrieveCountOnCurrentMonth(): Promise<DateStatisticsResponseDto[]> {
+    return await this.usersRepository
+      .createQueryBuilder('user')
+      .select('COUNT(user.id) AS number')
+      .addSelect(`CURRENT_DATE as date`)
+      .where(
+        `to_char(date(user.createdAt),'${DateFormatPostgreSQL.MONTH}') = to_char(date(CURRENT_DATE), '${DateFormatPostgreSQL.MONTH}')`
+      )
+      .groupBy(`to_char(date(user.createdAt),'${DateFormatPostgreSQL.MONTH}')`)
+      .execute();
   }
 }

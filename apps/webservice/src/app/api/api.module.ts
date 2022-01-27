@@ -11,6 +11,7 @@ import {
 import { environment } from '../../environments/environment';
 import { join } from 'path';
 import { StripeController } from './controllers/stripe.controller';
+import { StatisticsController } from './controllers/statistics.controller';
 import { ProfilesController } from './controllers/profiles.controller';
 import { InitialSetupController } from './controllers/initial-setup.controller';
 
@@ -40,6 +41,7 @@ import { InitialSetupController } from './controllers/initial-setup.controller';
     StripeController,
     SubscriptionsController,
     SupportController,
+    StatisticsController,
   ],
 })
 export class ApiModule {}

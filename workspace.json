@@ -269,7 +269,7 @@
             "inlineStyleLanguage": "scss",
             "assets": ["apps/webapp/src/favicon.ico", "apps/webapp/src/assets"],
             "styles": ["apps/webapp/src/styles.scss"],
-            "scripts": [],
+            "scripts": ["node_modules/chart.js/dist/Chart.js"],
             "outputHashing": "none"
           },
           "configurations": {

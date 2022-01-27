@@ -14,6 +14,8 @@ import { UnabilityToChargePaymentMethodWithStripeError } from '../errors/unabili
 import { PaymentMethodChargeIsNotAuthorizedByStripeError } from '../errors/payment-method-charge-is-not-authorized-by-stripe.error';
 import { UnabilityToCreateUserError } from '../errors/unability-to-create-user.error';
 import { UnabilityToCreateSubscriptionError } from '../errors/unability-to-create-subscription.error';
+import { DateFormatPostgreSQL } from '../enumerations/date-format-postgresql.enumeration';
+import { DateStatisticsResponseDto } from '@workspace/common/responses';
 
 @Injectable()
 export class SubscriptionService {
@@ -85,5 +87,64 @@ export class SubscriptionService {
     }
 
     return subscription;
+  }
+
+  async retrieveCount(filter: string): Promise<DateStatisticsResponseDto[]> {
+    let format: string;
+    switch (filter.toUpperCase()) {
+      case 'DAY':
+        format = DateFormatPostgreSQL.DAY;
+        break;
+      case 'MONTH':
+        format = DateFormatPostgreSQL.MONTH;
+        break;
+      default:
+        format = DateFormatPostgreSQL.YEAR;
+        break;
+    }
+    return await this.subscriptionsRepository
+      .createQueryBuilder('subscription')
+      .select('COUNT(subscription.id) AS number')
+      .addSelect(`to_char(date(subscription.creationDate),'${format}') as date`)
+      .groupBy('date')
+      .orderBy('date')
+      .execute();
+  }
+
+  async retreiveMinDate(): Promise<DateStatisticsResponseDto[]> {
+    return await this.subscriptionsRepository
+      .createQueryBuilder('subscription')
+      .select('MIN(subscription.creationDate)::date')
+      .getRawOne();
+  }
+
+  async retreiveSalesCount(
+    filter: string
+  ): Promise<DateStatisticsResponseDto[]> {
+    let format: string;
+    switch (filter.toUpperCase()) {
+      case 'MONTH':
+        format = DateFormatPostgreSQL.MONTH;
+        filter = 'month';
+        break;
+      default:
+        format = DateFormatPostgreSQL.YEAR;
+        filter = 'year';
+        break;
+    }
+    return await this.subscriptionsRepository
+      .createQueryBuilder('subscription')
+      .select(
+        `to_char(generate_series(subscription.creationDate, NOW(), interval  '1 ${filter}')::date,'${format}') as date`
+      )
+      .addSelect('sum(p.price) as number')
+      .innerJoin('subscription.plan', 'p')
+      .groupBy(
+        `to_char(generate_series(subscription.creationDate, NOW(), interval  '1 ${filter}')::date,'${format}')`
+      )
+      .orderBy(
+        `to_char(generate_series(subscription.creationDate, NOW(), interval  '1 ${filter}')::date,'${format}')`
+      )
+      .execute();
   }
 }
