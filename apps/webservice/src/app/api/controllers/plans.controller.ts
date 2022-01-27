@@ -24,8 +24,6 @@ export class PlansController {
     });
   }
 
-  @ApiBearerAuth()
-  @UseGuards(JwtGuard)
   @Get(apiRoutes.plans.retrieve)
   @ApiOperation({ summary: 'retrieves plans' })
   async retrieve(): Promise<PlanEntity[]> {
