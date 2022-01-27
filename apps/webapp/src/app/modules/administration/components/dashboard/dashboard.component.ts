@@ -11,7 +11,7 @@ export class DashboardComponent implements OnInit {
   @ViewChild('menuItems') menu: any;
   userChart = {};
   subscriptionChart = {};
-  revenuesChart = {};
+  salesChart = {};
   countUserOnCurrentMonth!: DateStatisticsResponseDto;
   colorCss = '#4bc714';
   steps = [
@@ -22,7 +22,7 @@ export class DashboardComponent implements OnInit {
     },
     {
       label: 'Mois',
-      value: 'MONTh',
+      value: 'MONTH',
       icon: 'pi pi-fw pi-calendar',
     },
     {
@@ -43,6 +43,7 @@ export class DashboardComponent implements OnInit {
     this.updateUserChart();
     this.updateSubscriptionChart();
     this.updateCountCurrentMonth();
+    this.updateSalesChart();
   }
 
   updateUserChart() {
@@ -94,6 +95,7 @@ export class DashboardComponent implements OnInit {
         };
       });
   }
+
   activateMenu() {
     this.activeStep = this.menu.activeItem;
     this.updateCharts();
@@ -104,6 +106,31 @@ export class DashboardComponent implements OnInit {
       .retrieveUserCountOnCurrentMonth()
       .subscribe((res: DateStatisticsResponseDto[]) => {
         this.countUserOnCurrentMonth = res[0];
+      });
+  }
+
+  updateSalesChart() {
+    this._statisticsController
+      .retrieveSalesCountOverTime(this.activeStep.value)
+      .subscribe((res: DateStatisticsResponseDto[]) => {
+        const labels = [];
+        const data = [];
+        for (let index = 0; index < res.length; index++) {
+          const stat = res[index];
+          labels.push(stat.date);
+          data.push(stat.number);
+        }
+        this.salesChart = {
+          labels: labels,
+          datasets: [
+            {
+              label: "Chiffre d'affaires",
+              backgroundColor: this.colorCss,
+              borderColor: this.colorCss,
+              data: data,
+            },
+          ],
+        };
       });
   }
 }

@@ -31,4 +31,11 @@ export const apiRoutes = {
     root: 'support',
     request: 'request',
   },
+  statistics: {
+    root: 'statistics',
+    retrieveUsersCountOverTime: 'retrieveUsersCountOverTime',
+    retrieveSubscriptionsCountOverTime: 'retrieveSubscriptionsCountOverTime',
+    retrieveUserCountOnCurrentMonth: 'retrieveUserCountOnCurrentMonth',
+    retrieveSalesCountOverTime: 'retrieveSalesCountOverTime',
+  },
 };

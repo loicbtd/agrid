@@ -111,6 +111,13 @@ export class SubscriptionService {
       .execute();
   }
 
+  async retreiveMinDate(): Promise<DateStatisticsResponseDto[]> {
+    return await this.subscriptionsRepository
+      .createQueryBuilder('subscription')
+      .select('MIN(subscription.creationDate)::date')
+      .getRawOne();
+  }
+
   async retreiveSalesCount(
     filter: string
   ): Promise<DateStatisticsResponseDto[]> {
@@ -118,18 +125,26 @@ export class SubscriptionService {
     switch (filter.toUpperCase()) {
       case 'MONTH':
         format = DateFormatPostgreSQL.MONTH;
+        filter = 'month';
         break;
       default:
         format = DateFormatPostgreSQL.YEAR;
+        filter = 'year';
         break;
     }
     return await this.subscriptionsRepository
       .createQueryBuilder('subscription')
-      .select('SUM(plan.price) AS number')
-      .addSelect(`to_char(date(subscription.creationDate),'${format}') as date`)
-      .innerJoin('subscription.plan', 'plan')
-      .groupBy('date')
-      .orderBy('date')
+      .select(
+        `to_char(generate_series(subscription.creationDate, NOW(), interval  '1 ${filter}')::date,'${format}') as date`
+      )
+      .addSelect('sum(p.price) as number')
+      .innerJoin('subscription.plan', 'p')
+      .groupBy(
+        `to_char(generate_series(subscription.creationDate, NOW(), interval  '1 ${filter}')::date,'${format}')`
+      )
+      .orderBy(
+        `to_char(generate_series(subscription.creationDate, NOW(), interval  '1 ${filter}')::date,'${format}')`
+      )
       .execute();
   }
 }

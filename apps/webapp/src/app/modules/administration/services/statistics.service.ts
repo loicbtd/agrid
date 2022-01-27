@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { apiRoutes } from '@workspace/common/constants';
 import { DateStatisticsResponseDto } from '@workspace/common/responses';
 import { environment } from '../../../../environments/environment';
 
@@ -11,19 +12,25 @@ export class StatisticsService {
 
   retrieveUsersCountOverTime(step: string) {
     return this._httpClient.get<DateStatisticsResponseDto[]>(
-      `${environment.webserviceOrigin}/statistics/retrieveUsersCountOverTime?step=${step}`
+      `${environment.webserviceOrigin}/${apiRoutes.statistics.root}/${apiRoutes.statistics.retrieveUsersCountOverTime}?step=${step}`
     );
   }
 
   retrieveSubscriptionCountOverTime(step: string) {
     return this._httpClient.get<DateStatisticsResponseDto[]>(
-      `${environment.webserviceOrigin}/statistics/retrieveSubscriptionsCountOverTime?step=${step}`
+      `${environment.webserviceOrigin}/${apiRoutes.statistics.root}/${apiRoutes.statistics.retrieveSubscriptionsCountOverTime}?step=${step}`
     );
   }
 
   retrieveUserCountOnCurrentMonth() {
     return this._httpClient.get<DateStatisticsResponseDto[]>(
-      `${environment.webserviceOrigin}/statistics/retrieveUserCountOnCurrentMonth`
+      `${environment.webserviceOrigin}/${apiRoutes.statistics.root}/${apiRoutes.statistics.retrieveUserCountOnCurrentMonth}`
+    );
+  }
+
+  retrieveSalesCountOverTime(step: string) {
+    return this._httpClient.get<DateStatisticsResponseDto[]>(
+      `${environment.webserviceOrigin}/${apiRoutes.statistics.root}/${apiRoutes.statistics.retrieveSalesCountOverTime}?step=${step}`
     );
   }
 }
