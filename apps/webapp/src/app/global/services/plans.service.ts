@@ -5,6 +5,7 @@ import { Injectable } from '@angular/core';
 import { Store } from '@ngxs/store';
 import { PlanEntity } from '@workspace/common/entities';
 import { Refresh } from '../store/actions/plans.actions';
+import { apiRoutes } from '@workspace/common/constants';
 
 @Injectable({
   providedIn: 'root',
@@ -18,7 +19,7 @@ export class PlansService {
   async refresh(): Promise<void> {
     const plans = await lastValueFrom(
       this.httpClient.get<PlanEntity[]>(
-        `${environment.webserviceOrigin}/plans/retrieve`
+        `${environment.webserviceOrigin}/${apiRoutes.plans.root}/${apiRoutes.plans.retrieve}`
       )
     );
 
