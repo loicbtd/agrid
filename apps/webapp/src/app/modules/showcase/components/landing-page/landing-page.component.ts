@@ -1,17 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-landing',
   templateUrl: './landing-page.component.html',
   styles: [
     `
-    .footer-section {
-      background: radial-gradient(
-        77.36% 256.97% at 77.36% 57.52%,
-        #4BC714 0%,
-        #E8BE28 100%,
-      );
-    }
+      .footer-section {
+        background: radial-gradient(
+          77.36% 256.97% at 77.36% 57.52%,
+          #4bc714 0%,
+          #e8be28 100%
+        );
+      }
       #hero {
         background: linear-gradient(
             0deg,
@@ -20,8 +20,8 @@ import { Component, OnInit } from '@angular/core';
           ),
           radial-gradient(
             77.36% 256.97% at 77.36% 57.52%,
-            #4BC714 0%,
-            #E8BE28 100%,
+            #4bc714 0%,
+            #e8be28 100%
           );
         height: 700px;
         overflow: hidden;
@@ -62,15 +62,8 @@ import { Component, OnInit } from '@angular/core';
   ],
   styleUrls: ['./landing-page.component.scss'],
 })
-export class LandingPageComponent implements OnInit {
+export class LandingPageComponent {
   displayMobileMenu = false;
 
   themeElement: any;
-
-  //   constructor() {}
-
-  ngOnInit(): void {
-    this.displayMobileMenu = false;
-  }
-
 }

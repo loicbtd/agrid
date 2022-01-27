@@ -16,17 +16,22 @@ export class SubscriptionStep1Component implements OnInit {
 
   responsiveOptions = [
     {
-      breakpoint: '1024px',
+      breakpoint: '10000px',
+      numVisible: 4,
+      numScroll: 1,
+    },
+    {
+      breakpoint: '900px',
       numVisible: 3,
-      numScroll: 3,
+      numScroll: 1,
     },
     {
-      breakpoint: '768px',
+      breakpoint: '760px',
       numVisible: 2,
-      numScroll: 2,
+      numScroll: 1,
     },
     {
-      breakpoint: '560px',
+      breakpoint: '500px',
       numVisible: 1,
       numScroll: 1,
     },

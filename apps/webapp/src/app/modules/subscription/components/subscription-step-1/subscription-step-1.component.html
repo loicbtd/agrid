@@ -1,6 +1,37 @@
 <p-card styleClass="mt-2 mx-2">
+  <p-carousel
+    *ngIf="plans$ | async as plan; else loading"
+    [value]="plan"
+    [numVisible]="3"
+    [numScroll]="3"
+    [circular]="false"
+    [responsiveOptions]="responsiveOptions"
+    styleClass="mt-2"
+  >
+    <ng-template let-plan pTemplate="item">
+      <div class="plan-item select-none" (click)="select(plan)">
+        <div
+          class="plan-item-content flex flex-column"
+          [class]="{ active: plan === selectedPlan }"
+        >
+          <div class="m-auto">
+            <div class="font-semibold">{{ plan.name }}</div>
+            <div>{{ plan.price / 100 }}€/mois</div>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+  </p-carousel>
+  <div class="flex flex-row">
+    <a [routerLink]="['/showcase']" class="m-auto text-green-600 no-underline"
+      >En savoir plus</a
+    >
+  </div>
+</p-card>
+
+<ng-template #loading>
   <div class="flex w-100">
     <workspace-progress-spinner class="w-100 m-auto">
     </workspace-progress-spinner>
   </div>
-</p-card>
+</ng-template>
