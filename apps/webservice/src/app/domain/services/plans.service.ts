@@ -32,6 +32,6 @@ export class PlansService {
       throw new EntityNotFoundError(error.message, PlanEntity.constructor.name);
     }
 
-    return plans;
+    return plans.sort((planA, planB) => planA.price - planB.price);
   }
 }

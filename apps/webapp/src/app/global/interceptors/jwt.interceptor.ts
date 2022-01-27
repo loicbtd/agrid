@@ -4,7 +4,7 @@ import {
   HttpInterceptor,
   HttpRequest,
 } from '@angular/common/http';
-import { Injectable, Injector } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Store } from '@ngxs/store';
 import { environment } from '../../../environments/environment';
 import { Observable } from 'rxjs';

@@ -1,6 +1,15 @@
-import { SubscribeRequest } from "@workspace/common/requests";
+export class UpdateSelectedPlanId {
+  static readonly type = '[Subscribe] Update Selected Plan Id';
+  constructor(public planId: string) {}
+}
 
-export class Refresh {
-  static readonly type = '[Subscribe Request] Refresh';
-  constructor(public subscribeRequest: SubscribeRequest) {}
+export class UpdateUserInformation {
+  static readonly type = '[Subscribe] Update User Information';
+  constructor(
+    public information: {
+      firstname?: string;
+      lastname?: string;
+      email?: string;
+    }
+  ) {}
 }

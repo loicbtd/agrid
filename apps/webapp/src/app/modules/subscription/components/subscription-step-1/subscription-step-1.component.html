@@ -1,22 +1,20 @@
 <p-card styleClass="mt-2 mx-2">
   <p-carousel
-    *ngIf="plans$ | async as plan; else loading"
-    [value]="plan"
-    [numVisible]="3"
-    [numScroll]="3"
-    [circular]="false"
+    *ngIf="plans$ | async as plans; else loading"
+    [value]="plans"
+    [circular]="true"
     [responsiveOptions]="responsiveOptions"
     styleClass="mt-2"
   >
     <ng-template let-plan pTemplate="item">
-      <div class="plan-item select-none" (click)="select(plan)">
+      <div class="plan-item select-none" (click)="selectPlan(plan)">
         <div
           class="plan-item-content flex flex-column"
-          [class]="{ active: plan === selectedPlan }"
+          [class]="{ active: plan?.id === (subscribeState$ | async)?.planId }"
         >
           <div class="m-auto">
             <div class="font-semibold">{{ plan.name }}</div>
-            <div>{{ plan.price / 100 }}€/mois</div>
+            <small>{{ plan.price / 100 }} € par mois</small>
           </div>
         </div>
       </div>

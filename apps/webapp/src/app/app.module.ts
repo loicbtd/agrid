@@ -105,7 +105,7 @@ export function createJwtInterceptor(store: Store) {
     NgxsModule.forRoot(states, {
       developmentMode: !environment.production,
     }),
-    NgxsStoragePluginModule.forRoot(),
+    NgxsStoragePluginModule.forRoot({ key: [JwtState] }),
     NgxsReduxDevtoolsPluginModule.forRoot({ disabled: environment.production }),
     TranslateModule.forRoot({
       loader: {

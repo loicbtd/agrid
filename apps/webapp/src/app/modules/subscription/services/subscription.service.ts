@@ -7,8 +7,6 @@ import { PlanEntity } from '@workspace/common/entities';
   providedIn: 'root',
 })
 export class SubscriptionService {
-  selectedPlan: PlanEntity;
-
   constructor(
     private readonly httpClient: HttpClient,
     private readonly store: Store

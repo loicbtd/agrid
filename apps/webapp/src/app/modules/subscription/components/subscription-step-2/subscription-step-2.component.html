@@ -1,45 +1,109 @@
 <p-card styleClass="m-2">
-  <div class="flex flex-row">
-    <p-button
-      routerLink="../step-2"
-      label="Suivant"
-      icon="pi pi-chevron-right"
-      iconPos="right"
-      class="ml-auto mb-auto"
-    >
-    </p-button>
-  </div>
   <div class="flex flex-column">
-    <span class="p-float-label w-full">
-      <p-dropdown
-        inputId="database-type"
-        styleClass="w-full"
-        [autoDisplayFirst]="false"
-      ></p-dropdown>
-      <label for="database-type">Offre</label>
-    </span>
-    <ng-container>
-      <span class="p-float-label w-full mt-4">
-        <input id="database-username" type="text" pInputText class="w-full" />
-        <label for="database-username">Last</label>
-      </span>
-      <span class="p-float-label w-full mt-4">
-        <p-password
-          inputId="database-password"
-          styleClass="w-full"
-          [feedback]="false"
-          [toggleMask]="true"
-        ></p-password>
-        <label for="database-password">Password</label>
-      </span>
-    </ng-container>
-    <span class="p-float-label w-full mt-4">
-      <input id="database-server" type="text" pInputText class="w-full" />
-      <label for="database-server">Server</label>
-    </span>
-    <span class="p-float-label w-full mt-4">
-      <input id="database-database" type="text" pInputText class="w-full" />
-      <label for="database-database">Database</label>
-    </span>
+    <form [formGroup]="form" novalidate class="form-group grid formgrid">
+      <div class="field col-12">
+        <span class="p-float-label w-full">
+          <input
+            id="email"
+            formControlName="email"
+            type="email"
+            pInputText
+            class="w-full"
+            [ngClass]="{
+              'ng-invalid ng-dirty':
+                form.controls.email.touched && form.controls.email.invalid
+            }"
+          />
+          <label for="email">Courriel</label>
+        </span>
+        <div class="flex p-flex-column">
+          <small
+            class="p-error"
+            *ngIf="
+              form.controls.email.touched &&
+              form.controls.email.errors?.required
+            "
+          >
+            Le courriel est requis
+          </small>
+          <small
+            class="p-error"
+            *ngIf="
+              form.controls.email.touched && form.controls.email.errors?.email
+            "
+          >
+            Le courriel n'est pas valide
+          </small>
+        </div>
+      </div>
+
+      <div class="field col-12 md:col-6">
+        <span class="p-float-label w-full mt-3">
+          <input
+            id="lastname"
+            formControlName="lastname"
+            type="text"
+            pInputText
+            class="w-full"
+            [ngClass]="{
+              'ng-invalid ng-dirty':
+                form.controls.lastname.touched && form.controls.lastname.invalid
+            }"
+          />
+          <label for="lastname">Nom</label>
+        </span>
+        <div class="flex flex-column">
+          <small
+            class="p-error"
+            *ngIf="
+              form.controls.lastname.touched &&
+              form.controls.lastname.errors?.required
+            "
+          >
+            Le nom est requis
+          </small>
+        </div>
+      </div>
+
+      <div class="field col-12 md:col-6">
+        <span class="p-float-label w-full mt-3">
+          <input
+            id="firstname"
+            formControlName="firstname"
+            type="text"
+            pInputText
+            class="w-full"
+            [ngClass]="{
+              'ng-invalid ng-dirty':
+                form.controls.firstname.touched &&
+                form.controls.firstname.invalid
+            }"
+          />
+          <label for="firstname">Prénom</label>
+        </span>
+        <div class="flex flex-column">
+          <small
+            class="p-error"
+            *ngIf="
+              form.controls.firstname.touched &&
+              form.controls.firstname.errors?.required
+            "
+          >
+            Le prénom est requis
+          </small>
+        </div>
+      </div>
+
+      <div class="field col-12 flex mt-3">
+        <p-button
+          pRipple
+          label="Suivant"
+          class="w-full"
+          styleClass="w-full m-auto"
+          [disabled]="form.invalid"
+          (click)="saveInformation()"
+        ></p-button>
+      </div>
+    </form>
   </div>
 </p-card>

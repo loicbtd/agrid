@@ -8,6 +8,8 @@ import { SubscriptionStep3Component } from './components/subscription-step-3/sub
 import { SubscriptionStep4Component } from './components/subscription-step-4/subscription-step-4.component';
 import { NgxsModule } from '@ngxs/store';
 import { SubscribeState } from './store/state/subscribe.state';
+import { PlanMustBeSelectedGuard } from './guards/plan-must-be-selected.guard';
+import { UserInformationMustBeCompletedGuard } from './guards/user-information-must-be-completed.guard';
 
 @NgModule({
   declarations: [
@@ -32,14 +34,23 @@ import { SubscribeState } from './store/state/subscribe.state';
           {
             path: 'step-2',
             component: SubscriptionStep2Component,
+            canActivate: [PlanMustBeSelectedGuard],
           },
           {
             path: 'step-3',
             component: SubscriptionStep3Component,
+            canActivate: [
+              PlanMustBeSelectedGuard,
+              UserInformationMustBeCompletedGuard,
+            ],
           },
           {
             path: 'step-4',
             component: SubscriptionStep4Component,
+            canActivate: [
+              PlanMustBeSelectedGuard,
+              UserInformationMustBeCompletedGuard,
+            ],
           },
           {
             path: '**',

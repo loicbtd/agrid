@@ -4,7 +4,6 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Store } from '@ngxs/store';
 import { Refresh } from '../store/actions/stripe-configuration.actions';
-import { StripeConfigurationState } from '../store/state/stripe-configuration.state';
 import { StripeConfigurationModel } from '@workspace/common/models';
 
 @Injectable({

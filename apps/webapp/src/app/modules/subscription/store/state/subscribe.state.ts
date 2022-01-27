@@ -1,8 +1,10 @@
 import { Action, State, StateContext } from '@ngxs/store';
 import { Injectable } from '@angular/core';
-import { StripeConfigurationModel } from '@workspace/common/models';
-import { Refresh } from '../actions/subscribe.actions';
 import { SubscribeRequest } from '@workspace/common/requests';
+import {
+  UpdateSelectedPlanId,
+  UpdateUserInformation,
+} from '../actions/subscribe.actions';
 
 @State<SubscribeRequest>({
   name: SubscribeState.name,
@@ -16,8 +18,24 @@ import { SubscribeRequest } from '@workspace/common/requests';
 })
 @Injectable()
 export class SubscribeState {
-  @Action(Refresh)
-  refresh(context: StateContext<SubscribeRequest>, action: Refresh) {
-    context.setState(action.subscribeRequest);
+  @Action(UpdateSelectedPlanId)
+  updateSelectedPlanId(
+    context: StateContext<SubscribeRequest>,
+    action: UpdateSelectedPlanId
+  ) {
+    context.setState({ ...context.getState(), planId: action.planId });
+  }
+
+  @Action(UpdateUserInformation)
+  updateUserInformation(
+    context: StateContext<SubscribeRequest>,
+    action: UpdateUserInformation
+  ) {
+    context.setState({
+      ...context.getState(),
+      email: action.information.email,
+      firstname: action.information.firstname,
+      lastname: action.information.lastname,
+    });
   }
 }
