@@ -5,3 +5,4 @@ export * from './lib/perform-initial-setup.request';
 export * from './lib/signin.request';
 export * from './lib/subscribe.request';
 export * from './lib/support.request';
+export * from './lib/update-profile.request';
