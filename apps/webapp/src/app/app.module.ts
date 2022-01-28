@@ -60,6 +60,13 @@ export function createJwtInterceptor(store: Store) {
             ),
         },
         {
+          path: AppRoute.legal,
+          loadChildren: () =>
+            import('./modules/legal/legal.module').then(
+              (m) => m.LegalModule
+            ),
+        },
+        {
           path: AppRoute.support,
           loadChildren: () =>
             import('./modules/support/support.module').then(
