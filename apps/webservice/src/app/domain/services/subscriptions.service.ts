@@ -111,13 +111,6 @@ export class SubscriptionService {
       .execute();
   }
 
-  async retreiveMinDate(): Promise<DateStatisticsResponseDto[]> {
-    return await this.subscriptionsRepository
-      .createQueryBuilder('subscription')
-      .select('MIN(subscription.creationDate)::date')
-      .getRawOne();
-  }
-
   async retreiveSalesCount(
     filter: string
   ): Promise<DateStatisticsResponseDto[]> {
@@ -146,5 +139,14 @@ export class SubscriptionService {
         `to_char(generate_series(subscription.creationDate, NOW(), interval  '1 ${filter}')::date,'${format}')`
       )
       .execute();
+  }
+
+  async retrieveMySubscriptions(userId: string): Promise<SubscriptionEntity[]> {
+    return await this.subscriptionsRepository.find({
+      relations: ['plan'],
+      where: {
+        user: { id: userId },
+      },
+    });
   }
 }

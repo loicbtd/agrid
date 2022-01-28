@@ -1,16 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Store } from '@ngxs/store';
-import { PlanEntity } from '@workspace/common/entities';
+import { apiRoutes } from '@workspace/common/constants';
+import { PlanEntity, SubscriptionEntity } from '@workspace/common/entities';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SubscriptionService {
-  constructor(
-    private readonly httpClient: HttpClient,
-    private readonly store: Store
-  ) {}
+  constructor(private readonly httpClient: HttpClient) {}
 
   async getAvailablePlans(): Promise<PlanEntity[]> {
     return [
@@ -33,5 +31,10 @@ export class SubscriptionService {
         supportType: { id: '1', name: 'Premium +' },
       },
     ];
+  }
+  retrieveMySubscriptions() {
+    return this.httpClient.get<SubscriptionEntity[]>(
+      `${environment.webserviceOrigin}/${apiRoutes.subscriptions.root}/${apiRoutes.subscriptions.retrieveMySubscriptions}`
+    );
   }
 }

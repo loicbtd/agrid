@@ -1,6 +1,5 @@
 import { PlanEntity } from '@workspace/common/entities';
 import { Component, OnInit } from '@angular/core';
-import { SubscriptionService } from '../../services/subscription.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PlansService } from '../../../../global/services/plans.service';
 import { Select, Store } from '@ngxs/store';
@@ -9,6 +8,7 @@ import { lastValueFrom, Observable } from 'rxjs';
 import { UpdateSelectedPlanId } from '../../store/actions/subscribe.actions';
 import { SubscribeState } from '../../store/state/subscribe.state';
 import { SubscribeRequest } from '@workspace/common/requests';
+import { SubscriptionService } from '../../../../global/services/subscription.service';
 
 @Component({
   templateUrl: './subscription-step-1.component.html',

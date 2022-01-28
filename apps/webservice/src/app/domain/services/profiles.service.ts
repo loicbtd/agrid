@@ -52,7 +52,7 @@ export class ProfilesService {
     }
     user.firstname =
       command.firstname.charAt(0).toUpperCase() + command.firstname.slice(1);
-    user.lastname = command.lastname;
+    user.lastname = command.lastname.toUpperCase();
     await this.usersRepository.save(user);
     return {
       id: user.id,

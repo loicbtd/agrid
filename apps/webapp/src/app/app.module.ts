@@ -95,6 +95,13 @@ export function createJwtInterceptor(store: Store) {
             ),
         },
         {
+          path: AppRoute.myProfile,
+          loadChildren: () =>
+            import('./modules/my-profile/my-profile.module').then(
+              (m) => m.MyProfileModule
+            ),
+        },
+        {
           path: '**',
           redirectTo: AppRoute.showcase,
         },
@@ -105,7 +112,7 @@ export function createJwtInterceptor(store: Store) {
     NgxsModule.forRoot(states, {
       developmentMode: !environment.production,
     }),
-    NgxsStoragePluginModule.forRoot({ key: [JwtState] }),
+    NgxsStoragePluginModule.forRoot({ key: [JwtState, MyProfileState] }),
     NgxsReduxDevtoolsPluginModule.forRoot({ disabled: environment.production }),
     TranslateModule.forRoot({
       loader: {
