@@ -1,4 +1,4 @@
-import { ErrorHandler, Injector, NgModule } from '@angular/core';
+import { ErrorHandler, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppComponent } from './app.component';
@@ -92,6 +92,13 @@ export function createJwtInterceptor(store: Store) {
           loadChildren: () =>
             import('./modules/administration/administration.module').then(
               (m) => m.AdministrationModule
+            ),
+        },
+        {
+          path: AppRoute.errors,
+          loadChildren: () =>
+            import('./modules/errors/errors.module').then(
+              (m) => m.ErrorsModule
             ),
         },
         {

@@ -1,13 +1,14 @@
 import { NgModule } from '@angular/core';
 import { SharedModule } from '../../shared.module';
 import { RouterModule } from '@angular/router';
-import { ErrorPagesComponent } from './error-pages.component';
 import { AccessDeniedComponent } from './components/access-denied/access-denied.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
+import { ErrorsRoute } from './constants/errors-route.constant';
+import { ErrorPagesComponent } from './errors.component';
 
 @NgModule({
   declarations: [ErrorPagesComponent, AccessDeniedComponent, NotFoundComponent],
-  providers: [ErrorPagesModule],
+  providers: [ErrorsModule],
   imports: [
     SharedModule,
     RouterModule.forChild([
@@ -16,20 +17,20 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
         component: ErrorPagesComponent,
         children: [
           {
-            path: 'access-denied',
-            component: NotFoundComponent,
+            path: ErrorsRoute.accessDenied,
+            component: AccessDeniedComponent,
           },
           {
-            path: 'not-found',
+            path: ErrorsRoute.notFound,
             component: NotFoundComponent,
           },
           {
             path: '**',
-            redirectTo: 'not-found',
+            redirectTo: ErrorsRoute.notFound,
           },
         ],
       },
     ]),
   ],
 })
-export class ErrorPagesModule {}
+export class ErrorsModule {}
