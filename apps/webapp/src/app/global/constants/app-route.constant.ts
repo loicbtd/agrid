@@ -5,4 +5,5 @@ export const AppRoute = {
   signin: 'signin',
   administration: 'administration',
   initialSetup: 'initial-setup',
+  legal: 'legal',
 };
