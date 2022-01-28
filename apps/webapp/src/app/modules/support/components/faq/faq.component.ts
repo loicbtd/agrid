@@ -3,7 +3,6 @@ import { Faq } from '../../models/faq.models';
 import { FaqService } from '../../services/faq.service';
 
 @Component({
-  selector: 'app-support-faq',
   templateUrl: './faq.component.html',
   styleUrls: ['./faq.component.scss'],
 })

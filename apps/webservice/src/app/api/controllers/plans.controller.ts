@@ -5,15 +5,16 @@ import { UseGuards, Get, Body } from '@nestjs/common/decorators';
 import { JwtGuard } from '../../api/guards/jwt.guard';
 import { PlanEntity } from '@workspace/common/entities';
 import { CreatePlanRequest } from '@workspace/common/requests';
+import { apiRoutes } from '@workspace/common/constants';
 
-@ApiTags('plans')
-@Controller('plans')
+@ApiTags(apiRoutes.plans.root)
+@Controller(apiRoutes.plans.root)
 export class PlansController {
   constructor(private readonly plansService: PlansService) {}
 
   @ApiBearerAuth()
   @UseGuards(JwtGuard)
-  @Post('create')
+  @Post(apiRoutes.plans.create)
   @ApiOperation({ summary: 'creates a plan' })
   async create(@Body() command: CreatePlanRequest): Promise<PlanEntity> {
     return this.plansService.create({
@@ -23,9 +24,7 @@ export class PlansController {
     });
   }
 
-  @ApiBearerAuth()
-  @UseGuards(JwtGuard)
-  @Get('retrieve')
+  @Get(apiRoutes.plans.retrieve)
   @ApiOperation({ summary: 'retrieves plans' })
   async retrieve(): Promise<PlanEntity[]> {
     return this.plansService.retrieve();

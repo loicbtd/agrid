@@ -1,4 +1,4 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { PlanEntity } from '@workspace/common/entities';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -8,15 +8,14 @@ import { EntityNotFoundError } from '../errors/entity-not-found.error';
 export class PlansService {
   constructor(
     @InjectRepository(PlanEntity)
-    private readonly plansRepository: Repository<PlanEntity>,
-    private readonly logger: Logger
+    private readonly plansRepository: Repository<PlanEntity>
   ) {}
 
   async create(plan: PlanEntity): Promise<PlanEntity> {
     let newPlan: PlanEntity;
 
     try {
-      newPlan = await this.plansRepository.create(plan);
+      newPlan = this.plansRepository.create(plan);
     } catch (error: any) {
       throw new EntityNotFoundError(error.message, PlanEntity.constructor.name);
     }
@@ -33,6 +32,6 @@ export class PlansService {
       throw new EntityNotFoundError(error.message, PlanEntity.constructor.name);
     }
 
-    return plans;
+    return plans.sort((planA, planB) => planA.price - planB.price);
   }
 }

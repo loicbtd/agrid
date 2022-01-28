@@ -24,7 +24,7 @@ export class SupportService {
       throw new UnabilityToSendEmailError(
         error.message,
         environment.supportEmailAddress,
-        command.subject
+        EmailTemplateEnumeration.Contact
       );
     }
   }

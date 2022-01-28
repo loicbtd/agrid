@@ -6,7 +6,6 @@ declare global {
   }
 }
 @Component({
-  selector: 'app-support-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
 })

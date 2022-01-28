@@ -1,14 +1,16 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Store } from '@ngxs/store';
 import { PlanEntity } from '@workspace/common/entities';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SubscriptionService {
-  selectedPlan: PlanEntity;
-
-  constructor(private readonly _httpClient: HttpClient) {}
+  constructor(
+    private readonly httpClient: HttpClient,
+    private readonly store: Store
+  ) {}
 
   async getAvailablePlans(): Promise<PlanEntity[]> {
     return [

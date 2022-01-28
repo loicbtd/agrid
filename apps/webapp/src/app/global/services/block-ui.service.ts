@@ -5,17 +5,17 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root',
 })
 export class BlockUiService {
-  private readonly _uiBlocked = new BehaviorSubject<boolean>(false);
+  private readonly uiBlocked = new BehaviorSubject<boolean>(false);
 
   public get $uiBlocked() {
-    return this._uiBlocked.asObservable();
+    return this.uiBlocked.asObservable();
   }
 
   public blockUi() {
-    this._uiBlocked.next(true);
+    this.uiBlocked.next(true);
   }
 
   public unBlockUi() {
-    this._uiBlocked.next(false);
+    this.uiBlocked.next(false);
   }
 }

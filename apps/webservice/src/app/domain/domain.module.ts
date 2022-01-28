@@ -1,18 +1,19 @@
 import { EmailsService } from './services/emails.service';
 import { PlansService } from './services/plans.service';
 import { JwtModule } from '@nestjs/jwt';
-import { Global, Logger, Module } from '@nestjs/common';
+import { Global, Module } from '@nestjs/common';
 import { HttpModule } from '@nestjs/axios';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import {
-  CompanyTypeEntity,
-  CompanyEntity,
   PlanEntity,
   ServiceIncludedInPlanEntity,
   ServiceEntity,
   SubscriptionEntity,
   SupportTypeEntity,
   UserEntity,
+  OrganizationTypeEntity,
+  OrganizationEntity,
+  GlobalRoleOfUserEntity,
 } from '@workspace/common/entities';
 import { PassportModule } from '@nestjs/passport';
 import { JwtStrategy } from './strategies/jwt.strategy';
@@ -21,10 +22,14 @@ import { UsersService } from './services/users.service';
 import { StripeService } from './services/stripe.service';
 import { SupportService } from './services/support.service';
 import { SubscriptionService } from './services/subscriptions.service';
+import { ProfilesService } from './services/profiles.service';
+import { InitialSetupService } from './services/initial-setup.service';
 
 const SERVICES = [
   EmailsService,
+  InitialSetupService,
   PlansService,
+  ProfilesService,
   StripeService,
   SubscriptionService,
   SupportService,
@@ -34,8 +39,9 @@ const SERVICES = [
 const STRATEGIES = [JwtStrategy];
 
 const ENTITIES = [
-  CompanyTypeEntity,
-  CompanyEntity,
+  GlobalRoleOfUserEntity,
+  OrganizationTypeEntity,
+  OrganizationEntity,
   PlanEntity,
   ServiceIncludedInPlanEntity,
   ServiceEntity,
@@ -66,13 +72,13 @@ const ENTITIES = [
       password: environment.databasePassword,
       database: environment.databaseName,
       autoLoadEntities: true,
-      synchronize: true,
+      synchronize: false,
       logging: false,
       cache: environment.production,
     }),
     TypeOrmModule.forFeature([...ENTITIES]),
   ],
-  providers: [...SERVICES, ...STRATEGIES, Logger],
+  providers: [...SERVICES, ...STRATEGIES],
   exports: [
     ...SERVICES,
     ...STRATEGIES,

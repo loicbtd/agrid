@@ -1,14 +1,17 @@
-import { EmailsService } from '../domain/services/emails.service';
-import { Global, Logger, Module } from '@nestjs/common';
+import { Global, Module } from '@nestjs/common';
 import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
 import { MailerModule } from '@nestjs-modules/mailer';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { environment } from '../../environments/environment';
 import { join } from 'path';
+import { UsersPostgresqlAdapter } from './adapters/users-postgresql.adapter';
+
+const ADAPTERS = [
+  UsersPostgresqlAdapter
+];
 
 @Global()
 @Module({
-  providers: [Logger],
   imports: [
     ServeStaticModule.forRoot({
       serveRoot: '/images',
@@ -38,5 +41,7 @@ import { join } from 'path';
       },
     }),
   ],
+  providers: [...ADAPTERS],
+  exports: [...ADAPTERS],
 })
 export class InfrastructureModule {}

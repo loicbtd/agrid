@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { environment } from '../environments/environment';
+import { ApplicationError } from './global/errors/application.error';
+import { UndefinedStripePublishableKeyError } from './global/errors/undefined-stripe-publishable-key.error';
 import { BlockUiService } from './global/services/block-ui.service';
 
 @Component({

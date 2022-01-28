@@ -24,20 +24,20 @@ Steps to handle an issue :
     "type": "postgres",
     "host": "host",
     "port": 5432,
+    "database": "database",
     "username": "username",
     "password": "password",
-    "database": "database",
     "entities": ["libs/common-entities/src/lib/*.entity.ts"],
-    "migrations": ["migration/*.ts"],
+    "migrations": ["migrations/*.ts"],
     "cli": {
-      "migrationsDir": "migration",
+      "migrationsDir": "migrations",
       "entitiesDir": "libs/common-entities/src/lib"
     }
   }
 ]
 ```
 
-### Generate migration after the model has changed
+### Generate the migration after the model has changed
 
 Execute `npm run typeorm migration:generate -- -n <MigrationName>`
 
@@ -45,19 +45,10 @@ Execute `npm run typeorm migration:generate -- -n <MigrationName>`
 
 Execute `npm run typeorm migration:create -- -n <MigrationName>`
 
-### Run a migration
+### Run migrations
 
 Execute `npm run typeorm migration:run`
 
-### Revert a migration
+### Revert the last migration
 
-Execute `npm run typeorm migration:revert
-
-## Update github pages
-
-After you have had new or modified existing documentation to the `docs/`, execute the following command to update the online page :
-
-```shell
-git commit -m 'rebuild pages' --allow-empty
-git push <remote name> <branch name>
-```
+Execute `npm run typeorm migration:revert`
