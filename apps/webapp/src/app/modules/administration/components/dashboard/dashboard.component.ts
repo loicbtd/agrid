@@ -1,8 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { UserProfileModel } from '@workspace/common/models';
 import { DateStatisticsResponseDto } from '@workspace/common/responses';
+import { ProfileService } from '../../../../global/services/profile.service';
 import { ToastMessageService } from '../../../../global/services/toast-message.service';
-import { ProfileService } from '../../services/profile.service';
 import { StatisticsService } from '../../services/statistics.service';
 
 @Component({
@@ -165,7 +165,6 @@ export class DashboardComponent implements OnInit {
   }
 
   onRowEditSave(user: UserProfileModel) {
-    console.log(user);
     delete this.clonedProducts[user.id];
     this._profileService
       .updateProfile(user.id, {

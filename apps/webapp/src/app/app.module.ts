@@ -62,9 +62,7 @@ export function createJwtInterceptor(store: Store) {
         {
           path: AppRoute.legal,
           loadChildren: () =>
-            import('./modules/legal/legal.module').then(
-              (m) => m.LegalModule
-            ),
+            import('./modules/legal/legal.module').then((m) => m.LegalModule),
         },
         {
           path: AppRoute.support,
@@ -102,6 +100,13 @@ export function createJwtInterceptor(store: Store) {
             ),
         },
         {
+          path: AppRoute.myProfile,
+          loadChildren: () =>
+            import('./modules/my-profile/my-profile.module').then(
+              (m) => m.MyProfileModule
+            ),
+        },
+        {
           path: AppRoute.errors,
           loadChildren: () =>
             import('./modules/errors/errors.module').then(
@@ -119,7 +124,7 @@ export function createJwtInterceptor(store: Store) {
     NgxsModule.forRoot(states, {
       developmentMode: !environment.production,
     }),
-    NgxsStoragePluginModule.forRoot({ key: [JwtState] }),
+    NgxsStoragePluginModule.forRoot({ key: [JwtState, MyProfileState] }),
     NgxsReduxDevtoolsPluginModule.forRoot({ disabled: environment.production }),
     TranslateModule.forRoot({
       loader: {

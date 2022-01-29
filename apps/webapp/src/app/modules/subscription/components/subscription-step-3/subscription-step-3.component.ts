@@ -13,7 +13,7 @@ import { loadStripe } from '@stripe/stripe-js';
 import { UndefinedStripePublishableKeyError } from '../../../../global/errors/undefined-stripe-publishable-key.error';
 import { ImpossibleToLoadStripeError } from '../../../../global/errors/impossible-to-load-stripe.error';
 import { SubscribeState } from '../../store/state/subscribe.state';
-import { SubscriptionService } from '../../services/subscription.service';
+import { SubscriptionService } from '../../../../global/services/subscription.service';
 
 @Component({
   templateUrl: './subscription-step-3.component.html',

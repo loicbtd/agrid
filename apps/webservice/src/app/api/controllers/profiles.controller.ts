@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Param, Put, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Post,
+  Put,
+  UseGuards,
+} from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { apiRoutes } from '@workspace/common/constants';
 import { MyProfileModel, UserProfileModel } from '@workspace/common/models';
@@ -40,5 +48,16 @@ export class ProfilesController {
     @Body() command: UpdateProfileRequest
   ): Promise<UserProfileModel> {
     return await this.profilesService.updateProfile(id, command);
+  }
+
+  @ApiBearerAuth()
+  @UseGuards(JwtGuard)
+  @Post(apiRoutes.profiles.updateMyProfile)
+  @ApiOperation({ summary: 'update my profile' })
+  async updateMyProfile(
+    @JwtPayload() payload: TokenPayload,
+    @Body() command: UpdateProfileRequest
+  ): Promise<void> {
+    await this.profilesService.updateProfile(payload.userId, command);
   }
 }

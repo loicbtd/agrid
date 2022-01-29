@@ -18,6 +18,7 @@ export const apiRoutes = {
     root: 'profiles',
     retrieveMyProfile: 'retrieveMyProfile',
     retrieveAllProfiles: 'retrieveAllProfiles',
+    updateMyProfile: 'updateMyProfile',
   },
   stripe: {
     root: 'stripe',
@@ -28,6 +29,7 @@ export const apiRoutes = {
   subscriptions: {
     root: 'subscriptions',
     subscribe: 'subscribe',
+    retrieveMySubscriptions: 'retrieveMySubscriptions',
   },
   support: {
     root: 'support',
