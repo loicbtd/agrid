@@ -12,14 +12,29 @@ import { StripeConfigurationState } from '../../../../global/store/state/stripe-
 import { loadStripe } from '@stripe/stripe-js';
 import { UndefinedStripePublishableKeyError } from '../../../../global/errors/undefined-stripe-publishable-key.error';
 import { ImpossibleToLoadStripeError } from '../../../../global/errors/impossible-to-load-stripe.error';
-import { SubscribeState } from '../../store/state/subscribe.state';
+import { SubscriptionState } from '../../store/state/subscription.state';
 import { SubscriptionService } from '../../../../global/services/subscription.service';
 
 @Component({
-  templateUrl: './subscription-step-3.component.html',
-  styleUrls: ['./subscription-step-3.component.scss'],
+  template: `
+    <p-card styleClass="mt-2 mx-2">
+      <div id="payment-element"></div>
+
+      <div *ngIf="!paymentElement" class="flex w-100">
+        <workspace-progress-spinner class="w-100 m-auto">
+        </workspace-progress-spinner>
+      </div>
+
+      <p-button
+        *ngIf="paymentElement"
+        styleClass="w-full mt-4"
+        (click)="pay()"
+        label="Payer"
+      ></p-button>
+    </p-card>
+  `,
 })
-export class SubscriptionStep3Component implements OnInit {
+export class SubscriptionStepPaymentComponent implements OnInit {
   paymentElement: StripePaymentElement;
 
   private stripe: Stripe | null;
@@ -51,7 +66,7 @@ export class SubscriptionStep3Component implements OnInit {
     }
 
     const planId =
-      this.store.selectSnapshot<SubscribeRequest>(SubscribeState).planId;
+      this.store.selectSnapshot<SubscribeRequest>(SubscriptionState).planId;
 
     if (!planId) {
       return;
@@ -68,9 +83,9 @@ export class SubscriptionStep3Component implements OnInit {
     });
 
     this.paymentElement = this.stripeElements.create('payment');
-    
+
     this.paymentElement.mount('#payment-element');
-    
+
     this.changeDetectorRef.detectChanges();
   }
 

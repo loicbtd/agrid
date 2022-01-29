@@ -1,27 +1,27 @@
 import { Action, State, StateContext } from '@ngxs/store';
 import { Injectable } from '@angular/core';
-import { SubscribeRequest } from '@workspace/common/requests';
 import {
-  UpdatePaymentIntentId,
+  UpdateLegalConditionsAcceptation,
   UpdateSelectedPlanId,
   UpdateUserInformation,
-} from '../actions/subscribe.actions';
+} from '../actions/subscription.actions';
+import { SubscriptionModel } from '../../models/subscription.model';
 
-@State<SubscribeRequest>({
-  name: SubscribeState.name,
+@State<SubscriptionModel>({
+  name: SubscriptionState.name,
   defaults: {
     email: 'test@test.fr',
     firstname: 'test',
     lastname: 'test',
     planId: 'ec6095b6-eb64-4e66-85a6-4589cee561bd',
-    paymentIntendId: '',
+    legalConditionsAccepted: false,
   },
 })
 @Injectable()
-export class SubscribeState {
+export class SubscriptionState {
   @Action(UpdateSelectedPlanId)
   updateSelectedPlanId(
-    context: StateContext<SubscribeRequest>,
+    context: StateContext<SubscriptionModel>,
     action: UpdateSelectedPlanId
   ) {
     context.setState({ ...context.getState(), planId: action.planId });
@@ -29,7 +29,7 @@ export class SubscribeState {
 
   @Action(UpdateUserInformation)
   updateUserInformation(
-    context: StateContext<SubscribeRequest>,
+    context: StateContext<SubscriptionModel>,
     action: UpdateUserInformation
   ) {
     context.setState({
@@ -40,14 +40,14 @@ export class SubscribeState {
     });
   }
 
-  @Action(UpdatePaymentIntentId)
-  updatePaymentIntentId(
-    context: StateContext<SubscribeRequest>,
-    action: UpdatePaymentIntentId
+  @Action(UpdateLegalConditionsAcceptation)
+  updateLegalConditionsAcceptation(
+    context: StateContext<SubscriptionModel>,
+    action: UpdateLegalConditionsAcceptation
   ) {
     context.setState({
       ...context.getState(),
-      paymentIntendId: action.paymentIntendId,
+      legalConditionsAccepted: action.accepted,
     });
   }
 }

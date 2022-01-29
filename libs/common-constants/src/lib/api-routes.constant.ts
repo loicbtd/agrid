@@ -28,7 +28,7 @@ export const apiRoutes = {
   },
   subscriptions: {
     root: 'subscriptions',
-    subscribe: 'subscribe',
+    initiateSubscription: 'initiateSubscription',
     retrieveMySubscriptions: 'retrieveMySubscriptions',
   },
   support: {

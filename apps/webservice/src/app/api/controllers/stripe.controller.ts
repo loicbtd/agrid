@@ -20,15 +20,6 @@ export class StripeController {
     return await this.stripeService.retrieveConfiguration();
   }
 
-  @Post(apiRoutes.stripe.createPaymentIntentForPlan)
-  @ApiOperation({ summary: 'creates a payment intent for a plan' })
-  async createPaymentIntentForPlan(
-    @Body()
-    command: CreatePaymentIntentForPlanRequest
-  ): Promise<Stripe.PaymentIntent> {
-    return await this.stripeService.createPaymentIntentForPlan(command);
-  }
-
   @Post(apiRoutes.stripe.listenWebhook)
   @HttpCode(HttpStatus.OK)
   @ApiOperation({ summary: 'listens Stripe webhook' })

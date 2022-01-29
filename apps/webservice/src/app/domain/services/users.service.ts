@@ -20,7 +20,7 @@ import { UnabilityToSendEmailError } from '../errors/unability-to-send-email.err
 import { GlobalRoleEnumeration } from '@workspace/common/enumerations';
 import { UnabilityToRetrieveGlobalRolesOfUserError } from '../errors/unability-to-retrieve-global-roles-of-user.error';
 import { UnabilityToCountExistingUsersWithRoleError } from '../errors/unability-to-count-existing-users-with-role.error';
-import { UnabilityRetrieveUsersError } from '../errors/unability-to-retrieve-users.error';
+import { UnabilityToRetrieveUsersError } from '../errors/unability-to-retrieve-users.error';
 
 @Injectable()
 export class UsersService {
@@ -82,7 +82,7 @@ export class UsersService {
         })) > 0
       );
     } catch (error: any) {
-      throw new UnabilityRetrieveUsersError(error.message);
+      throw new UnabilityToRetrieveUsersError(error.message);
     }
   }
 

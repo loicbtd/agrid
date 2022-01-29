@@ -1,5 +1,4 @@
-import { environment } from './../../../environments/environment';
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import {
   PlanEntity,
   SubscriptionEntity,
@@ -8,14 +7,17 @@ import {
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Stripe } from 'stripe';
-import { SubscribeRequest } from '@workspace/common/requests';
-import { UnkownPlanError } from '../errors/unkown-plan.error';
-import { UnabilityToChargePaymentMethodWithStripeError } from '../errors/unability-to-charge-payment-method-with-stripe.error';
-import { PaymentMethodChargeIsNotAuthorizedByStripeError } from '../errors/payment-method-charge-is-not-authorized-by-stripe.error';
+import { InitiateSubscriptionRequest } from '@workspace/common/requests';
+import { UnabilityToRetrievePlans } from '../errors/unability-to-retrieve-plans.error';
 import { UnabilityToCreateUserError } from '../errors/unability-to-create-user.error';
-import { UnabilityToCreateSubscriptionError } from '../errors/unability-to-create-subscription.error';
 import { DateFormatPostgreSQL } from '../enumerations/date-format-postgresql.enumeration';
-import { DateStatisticsResponseDto } from '@workspace/common/responses';
+import {
+  DateStatisticsResponseDto,
+  InitiateSubscriptionResponse,
+} from '@workspace/common/responses';
+import { STRIPE } from '../constants/provider-names.constant';
+import { StripeError } from '../errors/stripe.error';
+import { UnabilityToRetrieveUsersError } from '../errors/unability-to-retrieve-users.error';
 
 @Injectable()
 export class SubscriptionService {
@@ -23,70 +25,82 @@ export class SubscriptionService {
     @InjectRepository(SubscriptionEntity)
     private readonly subscriptionsRepository: Repository<SubscriptionEntity>,
     @InjectRepository(UserEntity)
-    private readonly usersRepository: Repository<SubscriptionEntity>,
+    private readonly usersRepository: Repository<UserEntity>,
     @InjectRepository(PlanEntity)
-    private readonly plansRepository: Repository<PlanEntity>
+    private readonly plansRepository: Repository<PlanEntity>,
+    @Inject(STRIPE)
+    private readonly stripe: Stripe
   ) {}
 
-  async subscribe(
-    subscriptionRequest: SubscribeRequest
-  ): Promise<SubscriptionEntity> {
-    let user: UserEntity = {
-      email: subscriptionRequest.email,
-      firstname: subscriptionRequest.firstname,
-      lastname: subscriptionRequest.lastname,
-    };
-
+  async initiateSubscription(
+    command: InitiateSubscriptionRequest
+  ): Promise<InitiateSubscriptionResponse> {
     let plan: PlanEntity;
     try {
-      plan = await this.plansRepository.findOneOrFail(
-        subscriptionRequest.planId
+      plan = await this.plansRepository.findOneOrFail(command.planId);
+    } catch (error: any) {
+      throw new UnabilityToRetrievePlans(error.message);
+    }
+
+    let stripePrice: Stripe.Price;
+    try {
+      stripePrice = await this.stripe.prices.retrieve(
+        plan.stripeProductPriceId
       );
-    } catch (error) {
-      throw new UnkownPlanError();
+    } catch (error: any) {
+      throw new StripeError(error.message);
     }
 
-    let charge: Stripe.Response<Stripe.Charge>;
+    let user: UserEntity;
+    if ((await this.usersRepository.count({ email: user.email })) == 0) {
+      try {
+        await this.usersRepository.insert({
+          email: command.email,
+          firstname: command.firstname,
+          lastname: command.lastname,
+        });
+      } catch (error: any) {
+        throw new UnabilityToCreateUserError(error.message);
+      }
+    }
+
     try {
-      charge = await new Stripe(
-        environment.stripeSecretKey,
-        null
-      ).charges.create({
-        amount: plan.price,
-        currency: 'EUR',
-        source: subscriptionRequest.paymentIntendId,
-        metadata: {
-          email: subscriptionRequest.email,
-          planId: subscriptionRequest.planId,
-        },
+      user = await this.usersRepository.findOneOrFail({ email: command.email });
+    } catch (error: any) {
+      throw new UnabilityToRetrieveUsersError(error.message);
+    }
+
+    let stripeCustomer: Stripe.Customer;
+    try {
+      stripeCustomer = await this.stripe.customers.create({
+        email: command.email,
       });
-    } catch (error) {
-      throw new UnabilityToChargePaymentMethodWithStripeError(error.message);
+    } catch (error: any) {
+      throw new StripeError(error.message);
     }
 
-    if (charge.outcome.type !== 'authorized') {
-      throw new PaymentMethodChargeIsNotAuthorizedByStripeError();
-    }
-
+    let subscription: Stripe.Subscription;
     try {
-      user = await this.usersRepository.create(user);
-    } catch (error) {
-      throw new UnabilityToCreateUserError(error.message);
+      subscription = await this.stripe.subscriptions.create({
+        customer: stripeCustomer.id,
+        items: [
+          {
+            price: stripePrice.id,
+          },
+        ],
+        payment_behavior: 'default_incomplete',
+        expand: ['latest_invoice.payment_intent'],
+      });
+    } catch (error: any) {
+      throw new StripeError(error.message);
     }
 
-    let subscription: SubscriptionEntity = {
-      user: user,
-      plan: plan,
-      creationDate: new Date(),
+    return {
+      clientSecret: (
+        (subscription.latest_invoice as Stripe.Invoice)
+          .payment_intent as Stripe.PaymentIntent
+      ).client_secret,
     };
-
-    try {
-      subscription = await this.subscriptionsRepository.create(subscription);
-    } catch (error) {
-      throw new UnabilityToCreateSubscriptionError(error.message);
-    }
-
-    return subscription;
   }
 
   async retrieveCount(filter: string): Promise<DateStatisticsResponseDto[]> {

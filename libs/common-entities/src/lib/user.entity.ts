@@ -4,10 +4,8 @@ import {
   CreateDateColumn,
   Entity,
   ManyToOne,
-  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { GlobalRoleOfUserEntity } from '..';
 
 @Entity('user')
 export class UserEntity {
