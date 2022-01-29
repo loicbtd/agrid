@@ -1,0 +1,165 @@
+<div class="flex flex-column align-items-center p-2" *ngIf="!currentProfile">
+  <workspace-progress-spinner class="w-100 m-auto">
+  </workspace-progress-spinner>
+</div>
+<div class="flex flex-column align-items-center p-2" *ngIf="currentProfile">
+  <h1 style="color: var(--primary-color)">
+    {{ currentProfile.firstname }} {{ currentProfile.lastname }}
+  </h1>
+  <p-divider [align]="'center'" class="w-full">
+    <div class="inline-flex align-items-center">
+      <h2 style="color: var(--text-color-secondary)">
+        <i class="mr-2 pi pi-id-card text-xl"></i>Informations Générales
+      </h2>
+    </div>
+  </p-divider>
+  <form [formGroup]="form" novalidate class="flex flex-column">
+    <div class="grid mt-1">
+      <div class="col-6"><h3>Nom :</h3></div>
+      <div class="col-6">
+        <h3
+          *ngIf="!isEditing"
+          [innerText]="currentProfile.lastname"
+          class="font-normal"
+        ></h3>
+        <input
+          *ngIf="isEditing"
+          type="text"
+          pInputText
+          formControlName="lastname"
+        />
+      </div>
+      <div class="w-full">
+        <div class="flex flex-column align-items-center">
+          <small
+            class="p-error"
+            *ngIf="
+              form.controls.lastname.touched &&
+              form.controls.lastname.errors?.required
+            "
+          >
+            Le nom est requis
+          </small>
+        </div>
+      </div>
+    </div>
+    <div class="grid mt-1">
+      <div class="col-6"><h3>Prénom :</h3></div>
+      <div class="col-6">
+        <h3
+          *ngIf="!isEditing"
+          [innerText]="currentProfile.firstname"
+          class="font-normal"
+        ></h3>
+        <input
+          *ngIf="isEditing"
+          type="text"
+          pInputText
+          formControlName="firstname"
+        />
+      </div>
+      <div class="w-full">
+        <div class="flex flex-column align-items-center">
+          <small
+            class="p-error"
+            *ngIf="
+              form.controls.firstname.touched &&
+              form.controls.firstname.errors?.required
+            "
+          >
+            Le prénom est requis
+          </small>
+        </div>
+      </div>
+    </div>
+    <div class="grid mt-1">
+      <div class="col-6"><h3>Email :</h3></div>
+      <div class="col-6">
+        <h3
+          *ngIf="!isEditing"
+          [innerText]="currentProfile.email"
+          class="font-normal"
+        ></h3>
+        <input
+          *ngIf="isEditing"
+          type="text"
+          pInputText
+          [disabled]="true"
+          [value]="currentProfile.email"
+        />
+      </div>
+    </div>
+    <div class="flex flex-row justify-content-around">
+      <button
+        *ngIf="!isEditing"
+        pButton
+        pRipple
+        type="button"
+        label="Mettre à jour"
+        class="p-button-outlined p-button-rounded p-button-help mb-2"
+        (click)="enableEditing()"
+      ></button>
+      <button
+        *ngIf="isEditing"
+        pButton
+        pRipple
+        [disabled]="form.invalid"
+        [loading]="isUploadingData"
+        type="button"
+        label="Valider les changements"
+        class="p-button-outlined p-button-rounded p-button-success mb-2"
+        (click)="validateChanges()"
+      ></button>
+      <button
+        *ngIf="isEditing"
+        pButton
+        pRipple
+        [disabled]="isUploadingData"
+        type="button"
+        label="Annuler"
+        class="ml-2 p-button-outlined p-button-rounded p-button-danger mb-2"
+        (click)="disabledEditing()"
+      ></button>
+    </div>
+  </form>
+  <p-divider [align]="'center'" class="w-full">
+    <div class="inline-flex align-items-center my-2">
+      <h2 style="color: var(--text-color-secondary)">
+        <i class="mr-2 pi pi-list text-xl"></i> Mes souscriptions
+      </h2>
+    </div>
+  </p-divider>
+  <div class="flex flex-row flex-wrap justify-content-between">
+    <p-card
+      class="card-width text-center mx-2"
+      *ngFor="let subscription of subscriptions"
+    >
+      <h2 class="mt-0" [innerText]="subscription.plan?.name"></h2>
+      <div class="m-auto">
+        <span [innerText]="getPrice(subscription.plan?.price)"></span>
+        <span>€ par mois</span>
+      </div>
+      <div class="mt-2">
+        Date de souscription :
+        {{ subscription.creationDate | date: 'dd/MM/YYYY' }}
+      </div>
+    </p-card>
+  </div>
+  <div
+    *ngIf="!noSubscriptions"
+    class="p-card p-component text-center card-width p-3"
+  >
+    <h3>Pas encore de souscriptions</h3>
+    <p></p>
+    <button
+      [routerLink]="['/subscription']"
+      pbutton
+      pripple
+      type="button"
+      class="p-ripple p-element text-xl bg-500 font-normal line-height-3 px-3 p-button p-component p-button-outlined p-button-rounded"
+    >
+      <span class="p-ink"></span
+      ><span class="p-button-label">Souscrire à une offre</span>
+    </button>
+  </div>
+</div>

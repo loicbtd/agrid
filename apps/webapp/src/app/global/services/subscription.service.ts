@@ -1,22 +1,17 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Store } from '@ngxs/store';
-import { PaymentIntent } from '@stripe/stripe-js';
 import { apiRoutes } from '@workspace/common/constants';
+import { environment } from '../../../environments/environment';
+import { PaymentIntent } from '@stripe/stripe-js';
 import { CreatePaymentIntentForPlanRequest } from '@workspace/common/requests';
-import { environment } from '../../../../environments/environment';
 import { lastValueFrom } from 'rxjs';
-import { UndefinedStripeClientSecretError } from '../../../global/errors/undefined-stripe-client-secret.error';
-import { UpdatePaymentIntentId } from '../store/actions/subscribe.actions';
+import { UndefinedStripeClientSecretError } from '../errors/undefined-stripe-client-secret.error';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SubscriptionService {
-  constructor(
-    private readonly httpClient: HttpClient,
-    private readonly store: Store
-  ) {}
+  constructor(private readonly httpClient: HttpClient) {}
 
   async createPaymentIntentForPlanAndRetrieveClientSecre(planId: string): Promise<string> {
     const paymentIntent = await lastValueFrom(
@@ -40,4 +35,5 @@ export class SubscriptionService {
   async subscribe() {
     return;
   }
+  
 }
