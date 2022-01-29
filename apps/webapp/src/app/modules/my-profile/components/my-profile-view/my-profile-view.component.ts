@@ -3,11 +3,11 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { Store } from '@ngxs/store';
 import { SubscriptionEntity } from '@workspace/common/entities';
 import { MyProfileModel } from '@workspace/common/models';
-import { ProfileService } from '../../../global/services/profile.service';
-import { ToastMessageService } from '../../../global/services/toast-message.service';
-import { MyProfileState } from '../../../global/store/state/my-profile.state';
-import { SubscriptionService } from '../../../global/services/subscription.service';
+import { ProfileService } from '../../../../global/services/profile.service';
+import { ToastMessageService } from '../../../../global/services/toast-message.service';
+import { MyProfileState } from '../../../../global/store/state/my-profile.state';
 import { Router } from '@angular/router';
+import { SubscriptionService } from '../../services/subscription.service';
 
 @Component({
   selector: 'app-my-profile-view',
@@ -87,5 +87,9 @@ export class MyProfileViewComponent implements OnInit {
         this.isUploadingData = false;
         this.disabledEditing();
       });
+  }
+  
+  getPrice(price: number | undefined): string {
+    return price ? price / 100 + '' : '?';
   }
 }

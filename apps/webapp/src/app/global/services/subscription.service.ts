@@ -1,14 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { apiRoutes } from '@workspace/common/constants';
-import { PlanEntity, SubscriptionEntity } from '@workspace/common/entities';
 import { environment } from '../../../environments/environment';
-import { Store } from '@ngxs/store';
 import { PaymentIntent } from '@stripe/stripe-js';
 import { CreatePaymentIntentForPlanRequest } from '@workspace/common/requests';
 import { lastValueFrom } from 'rxjs';
-import { UndefinedStripeClientSecretError } from '../../../global/errors/undefined-stripe-client-secret.error';
-import { UpdatePaymentIntentId } from '../store/actions/subscribe.actions';
+import { UndefinedStripeClientSecretError } from '../errors/undefined-stripe-client-secret.error';
 
 @Injectable({
   providedIn: 'root',
