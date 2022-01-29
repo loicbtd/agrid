@@ -1,0 +1,315 @@
+<div class="surface-card overflow-hidden" id="home-return">
+  
+  <div
+    class="py-4 px-4 mx-0 md:mx-6 lg:mx-8 lg:px-8 flex align-items-center justify-content-between relative lg:static"
+  >
+    <a class="flex align-items-center"
+      ><img
+        src="/assets/logo-agrid.svg"
+        alt="Agrid Logo"
+        class="mr-0 lg:mr-2"
+        height="50"
+      />
+    </a>
+    <a
+      pRipple
+      enterclass="hidden"
+      leavetoclass="hidden"
+      class="p-ripple p-element cursor-pointer block lg:hidden text-700"
+      (click)="displayMobileMenu = !displayMobileMenu"
+      ><i class="pi pi-bars text-4xl"></i><span class="p-ink"></span>
+    </a>
+    <div
+      class="align-items-center flex-grow-1 justify-content-between lg:flex absolute lg:static w-full surface-overlay left-0 px-6 lg:px-0 z-2 hidden"
+      style="top: 92%"
+      [ngClass]="{ hidden: displayMobileMenu }"
+    >
+      <ul
+        class="list-none p-0 m-0 flex lg:align-items-center select-none flex-column lg:flex-row cursor-pointer"
+      >
+        <li>
+          <a
+            pripple
+            class="p-ripple p-element flex m-0 md:ml-5 px-0 py-3 text-gray-900 font-medium line-height-3 menu-link"
+            [routerLink]="['/showcase']"
+            ><span>Accueil</span><span class="p-ink"></span
+          ></a>
+        </li>
+        <li>
+          <a
+            pripple
+            class="p-ripple p-element flex m-0 md:ml-5 px-0 py-3 text-gray-900 font-medium line-height-3 menu-link"
+            [routerLink]="['/showcase#about-section']"
+            ><span>À Propos</span><span class="p-ink"></span
+          ></a>
+        </li>
+        <li>
+          <a
+            pripple
+            class="p-ripple p-element flex m-0 md:ml-5 px-0 py-3 text-gray-900 font-medium line-height-3 menu-link"
+            [routerLink]="['/showcase#pricing-section']"
+            ><span>Nos Prix</span><span class="p-ink"></span
+          ></a>
+        </li>
+        <li>
+          <a
+            pripple
+            class="p-ripple p-element flex m-0 md:ml-5 px-0 py-3 text-gray-900 font-medium line-height-3 menu-link"
+            href="mailto:contact@agrid.ml"
+            ><span>Contact</span><span class="p-ink"></span
+          ></a>
+        </li>
+      </ul>
+      <div
+        class="flex justify-content-between lg:block border-top-1 lg:border-top-none surface-border py-3 lg:py-0 mt-3 lg:mt-0"
+      >
+        <button
+          pbutton
+          pripple
+          label="Login"
+          class="p-ripple p-element p-button-text p-button-rounded border-none font-light line-height-2 text-500 p-button p-component"
+          [routerLink]="['/signin']"
+        >
+          <span class="p-ink"></span
+          ><span class="p-button-label" style="color: #4bc714">Connexion</span>
+        </button>
+        <button
+          [routerLink]="['/subscription']"
+          pbutton
+          pripple
+          label="Register"
+          class="p-ripple p-element p-button-rounded border-none ml-5 font-light line-height-2 bg-500 p-button p-component"
+        >
+          <span class="p-ink"></span
+          ><span class="p-button-label">Inscription</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="py-4 px-4 mx-0 md:mx-10 lg:mx-8 lg:px-8 align-items-center justify-content-between relative lg:static">
+
+    <h2>Conditions Générales d'Utilisation et de Vente</h2>
+    <p>
+      Les présentes conditions générales de vente s'appliquent à toutes les ventes conclues
+      sur le site internet AGRID, sous réserve des conditions particulières indiquées dans la presentation des produits.
+    </p><br>
+
+    <h3>Article 1 : Mentions obligatoires</h3>
+    <p>
+      Le site internet AGRID est un service de :     
+    </p>
+    <ul>
+      <li>Raison sociale ;</li>
+      <li>4 rue Edouard Branly, Belfort, Territoire de Belfort, Franche-Comté, France ;</li>
+      <li>Numero Registre du Commerce et des Societes ;</li>
+      <li>Numero Individuel d'identification fiscal ;</li>
+      <li>contact@agrid.ml ;</li>
+      <li>Telephone ;</li>
+    </ul>
+    <h3>Article 2 : Caractéristiques essentielles des services vendus</h3>
+    <p>
+      Le site internet AGRID vend des préstations de services informatiques de mise en ligne et de solution de gestion.
+    </p>
+    <p>
+      Le client déclare avoir pris connaissance et avoir accepté les
+      conditions générales de vente antérieurement à la passation de sa
+      commande. La validation de votre commande vaut donc pour acceptation
+      des conditions générales de vente.
+    </p>
+    <h3>Article 3 : Prix</h3>
+    <p>
+      Les prix de nos produits sont indiqués en euros et HT car dans le cadre du B2B la TVA ne s'applique pas.
+    </p>
+    <h3>Article 4 : Délais de disponibilite des services</h3>
+    <p>
+      Nos services sont disponibles dès le paiement.
+    </p>
+    <h3>Article 5 : Commande</h3>
+    <p>
+      Vous avez la possibilité de commander nos produtis directement sur notre site internet 24h/24, 7j/7.
+    </p>
+    <p>
+      Si vous possédez déjà un compte client sur notre site, veuillez
+      vous identifier. <br>
+      Si vous ne possédez pas de compte client sur notre site, veuillez
+      en créer un.
+    </p>
+    <p>
+      Vous recevrez un e-mail de confirmation de votre commande sur
+      l'adresse mail que vous avez indiquée lors de la création de votre
+      compte client.
+    </p>
+    <p>
+      Le transfert de propriété du produit n'aura lieu qu'au paiement
+      complet de votre commande.
+    </p>
+    <h3>Article 6 : Modalités de paiement</h3>
+    <p>
+      Nous acceptons les paiements par carte bancaire.
+      Lors de votre paiement en
+      ligne, indiquez le numéro de votre carte bancaire, sa date
+      d'expiration et les 3 chiffres inscrits au dos de celle-ci. Le
+      paiement en ligne est sécurisé.
+    </p>
+    <p>
+      Nous exigeons un paiement intégral de la commande.
+    </p>
+    <h3>Article 7 : Droit de rétractation</h3>
+    <p>
+      Dès réception du produit ou au jour de l'acceptation de l'offre,
+      vous disposez d'un droit de rétractation de 15 jours calendaires,
+      soit 8 jours de plus que ce que prévoit la législation française.
+    </p>
+    <h3>Article 8 : Réclamations du consommateur</h3>
+    <p>
+      Toute réclamation du consommateur est à adresser par courrier
+      postal à l'adresse mentionnée ci-contre 4 rue Edouard Branly, Belfort, Territoire de Belfort, Franche-Comté, France ou par voie électronique à contact@agrid.ml.
+    </p>
+    <h3>Article 9 : Propriété intellectuelle</h3>
+    <p>
+      Tous les commentaires, images, illustrations de notre site nous sont
+      exclusivement réservés. Au titre de la propriété intellectuelle
+      et du droit d'auteur, toute utilisation est prohibée sauf à usage
+      privé.
+    </p>
+    <p>
+      Sans autorisation préalable, toute reproduction de notre site,
+      qu'elle soit partielle ou totale, est strictement interdite.
+    </p>
+    <h3>Article 10 : Responsabilité</h3>
+    <p>
+      Conformément à l'article 1147 du Code civil, nous engageons notre
+      responsabilité contractuelle de plein droit à votre égard en cas
+      d'inexécution ou de mauvaise exécution du contrat conclu.
+    </p>
+    <p>
+      Toutefois, notre responsabilité contractuelle ne peut être engagée
+      dans les situations mentionnées ci-dessous :
+    </p>
+    <ul>
+      <li>cas de la force majeure ;</li>
+      <li>fait étranger qui ne peut nous être imputable.</li>
+    </ul>
+    <p>
+      Les photographies, illustrations et images
+      de notre site n'ont aucune valeur contractuelle. Elles ne sauraient
+      donc engager notre responsabilité.
+    </p>
+    
+    <h3>Article 11 : Données a caractère personnel</h3>
+    <p>
+      Le site assure au client une collecte et un traitement d'informations
+      personnelles dans le respect de la vie privée conformément à la
+      loi n°78-17 du 6 janvier 1978 relative à l'informatique, aux
+      fichiers et aux libertés. Le site est déclaré à la CNIL sous le
+      numéro XXXXXXX
+    </p>
+    <p>
+      En vertu des articles 39 et 40 de la loi en date du 6 janvier 1978,
+      le client dispose d'un droit d'accès, de rectification, de
+      suppression et d'opposition de ses données personnelles. Le client
+      exerce ce droit via :
+    </p>
+    <ul>
+      <li>son espace personnel ;</li>
+      <li>un formulaire de contact ;</li>
+      <li>par mail à l'adresse contcat@agrid.ml.</li>
+    </ul>
+    
+    <h3>Article 12 : Juridiction compétente et droit applicable</h3>
+    <p>
+      En cas de litige entre le client consommateur et notre société, le
+      droit applicable est le droit français.
+    </p>
+
+  </div>
+
+
+  <div class="py-4 px-4 mx-0 mt-8 footer-section">
+    <div class="grid justify-content-between">
+      <div class="col-12 md:col-2" style="margin-top: -1.5rem">
+        <div
+          class="flex flex-wrap align-items-center justify-content-center md:justify-content-start md:mb-0 mb-3"
+        >
+          <img
+            src="/assets/logo-agrid.svg"
+            alt="footer sections"
+            class="mr-2 footer-logo"
+            width="50"
+            height="50"
+          />
+        </div>
+      </div>
+      <div class="col-12 md:col-7">
+        <div class="grid text-center md:text-left">
+          <div class="col-12 md:col-3">
+            <h4 class="font-medium text-2xl line-height-3 mb-3 text-gray-900">
+              Navigation
+            </h4>
+            <a
+              class="line-height-3 text-xl block cursor-pointer mb-2 text-gray-700 menu-link"
+              [routerLink]="['/showcase#home-return']"
+              >Accueil</a
+            ><a
+              class="line-height-3 text-xl block cursor-pointer mb-2 text-gray-700 menu-link"
+              [routerLink]="['/showcase#about-section']"
+              >À propos</a
+            ><a
+              class="line-height-3 text-xl block cursor-pointer mb-2 text-gray-700 menu-link"
+              [routerLink]="['/showcase#pricing-section']"
+              >Nos Prix</a
+            ><a
+              class="line-height-3 text-xl block cursor-pointer mb-2 text-gray-700 menu-link"
+              href="mailto:contact@agrid.ml"
+              >Contact</a
+            >
+          </div>
+
+          <div class="col-12 md:col-3">
+            <h4 class="font-medium text-2xl line-height-3 mb-3 text-gray-900">
+              Informations
+            </h4>
+            <a
+              class="line-height-3 text-xl block cursor-pointer mb-2 text-gray-700 menu-link"
+              [routerLink]="['/support/faq']"
+              >F.A.Q.</a
+            ><a
+              class="line-height-3 text-xl block cursor-pointer mb-2 text-gray-700 menu-link"
+              href="mailto:contact@agrid.ml"
+              >Contact</a
+            >
+          </div>
+
+          <div class="col-12 md:col-3 mt-4 md:mt-0">
+            <h4 class="font-medium text-2xl line-height-3 mb-3 text-gray-900">
+              Profil
+            </h4>
+            <a
+              [routerLink]="['/subscription']"
+              class="line-height-3 text-xl block cursor-pointer mb-2 text-gray-700 menu-link"
+              >Inscription</a
+            >
+            <a
+              [routerLink]="['/signin']"
+              class="line-height-3 text-xl block cursor-pointer mb-2 text-gray-700 menu-link"
+              >Connexion</a
+            >
+          </div>
+
+          <div class="col-12 md:col-3 mt-4 md:mt-0">
+            <h4 class="font-medium text-2xl line-height-3 mb-3 text-gray-900">
+              Légal
+            </h4>
+            <a
+              class="line-height-3 text-xl block cursor-pointer mb-2 text-gray-700 menu-link"
+              >Mentions légale</a
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

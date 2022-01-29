@@ -7,5 +7,6 @@
   "UnabilityToCreateUserError": "Impossible de créer un utilisateur",
   "UnabilityToSendEmailError": "Impossible d'envoyer un courriel",
   "UnkownPlanError": "Plan inconnu",
-  "Unkown": "Erreur inconnue"
+  "Unkown": "Erreur inconnue",
+  "Unauthorized": "Cette action n'est pas permise"
 }

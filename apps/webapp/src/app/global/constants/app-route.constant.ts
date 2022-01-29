@@ -1,9 +1,11 @@
 export const AppRoute = {
-  showcase: 'showcase',
-  support: 'support',
-  subscription: 'subscription',
-  signin: 'signin',
   administration: 'administration',
+  errors: 'errors',
   initialSetup: 'initial-setup',
   myProfile: 'my-profile',
+  legal: 'legal',
+  showcase: 'showcase',
+  signin: 'signin',
+  subscription: 'subscription',
+  support: 'support',
 };

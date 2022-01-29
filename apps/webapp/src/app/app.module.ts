@@ -1,4 +1,4 @@
-import { ErrorHandler, Injector, NgModule } from '@angular/core';
+import { ErrorHandler, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppComponent } from './app.component';
@@ -60,6 +60,11 @@ export function createJwtInterceptor(store: Store) {
             ),
         },
         {
+          path: AppRoute.legal,
+          loadChildren: () =>
+            import('./modules/legal/legal.module').then((m) => m.LegalModule),
+        },
+        {
           path: AppRoute.support,
           loadChildren: () =>
             import('./modules/support/support.module').then(
@@ -99,6 +104,13 @@ export function createJwtInterceptor(store: Store) {
           loadChildren: () =>
             import('./modules/my-profile/my-profile.module').then(
               (m) => m.MyProfileModule
+            ),
+        },
+        {
+          path: AppRoute.errors,
+          loadChildren: () =>
+            import('./modules/errors/errors.module').then(
+              (m) => m.ErrorsModule
             ),
         },
         {

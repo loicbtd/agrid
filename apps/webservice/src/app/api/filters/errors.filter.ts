@@ -8,6 +8,7 @@ import {
   ArgumentsHost,
   HttpStatus,
   Inject,
+  UnauthorizedException,
 } from '@nestjs/common';
 import { FastifyAdapter } from '@nestjs/platform-fastify';
 import { I18nRequestScopeService } from 'nestjs-i18n';
@@ -37,6 +38,9 @@ export class ErrorsFilter implements ExceptionFilter {
         exception.constructor.name
       );
       this._logger.error(exception.message, exception);
+    } else if (exception instanceof UnauthorizedException) {
+       httpStatusCode = HttpStatus.UNAUTHORIZED;
+       httpMessage = await this.retrieveErrorTranslation('Unauthorized');
     } else {
       httpStatusCode = HttpStatus.INTERNAL_SERVER_ERROR;
       httpMessage = await this.retrieveErrorTranslation('Unkown');
