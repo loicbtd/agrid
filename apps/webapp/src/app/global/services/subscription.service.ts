@@ -30,7 +30,7 @@ export class SubscriptionService {
       throw new UndefinedStripeClientSecretError();
     }
 
-    this.store.dispatch(new UpdatePaymentIntentId(paymentIntent.))
+    // this.store.dispatch(new UpdatePaymentIntentId(paymentIntent.))
 
     return paymentIntent.client_secret;
   }
