@@ -23,6 +23,7 @@ export const apiRoutes = {
     root: 'stripe',
     retrieveConfiguration: 'retrieveConfiguration',
     createPaymentIntentForPlan: 'createPaymentIntentForPlan',
+    listenWebhook: 'listenWebhook',
   },
   subscriptions: {
     root: 'subscriptions',

@@ -7,7 +7,6 @@ import { CreatePaymentIntentForPlanRequest } from '@workspace/common/requests';
 import { environment } from '../../../../environments/environment';
 import { lastValueFrom } from 'rxjs';
 import { UndefinedStripeClientSecretError } from '../../../global/errors/undefined-stripe-client-secret.error';
-import { UpdatePaymentIntentId } from '../store/actions/subscribe.actions';
 
 @Injectable({
   providedIn: 'root',

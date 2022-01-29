@@ -13,7 +13,7 @@ import {
     email: 'test@test.fr',
     firstname: 'test',
     lastname: 'test',
-    planId: '84325ed4-d1db-4472-8d94-cac8ca844978',
+    planId: 'ec6095b6-eb64-4e66-85a6-4589cee561bd',
     paymentIntendId: '',
   },
 })

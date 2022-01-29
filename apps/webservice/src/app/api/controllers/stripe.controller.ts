@@ -1,6 +1,6 @@
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
-import { Controller } from '@nestjs/common';
-import { Body, Get, Post } from '@nestjs/common/decorators';
+import { Controller, HttpStatus, Headers } from '@nestjs/common';
+import { Body, Get, HttpCode, Post } from '@nestjs/common/decorators';
 import { Stripe } from 'stripe';
 import { CreatePaymentIntentForPlanRequest } from '@workspace/common/requests';
 import { StripeConfigurationModel } from '@workspace/common/models';
@@ -25,5 +25,15 @@ export class StripeController {
     command: CreatePaymentIntentForPlanRequest
   ): Promise<Stripe.PaymentIntent> {
     return await this.stripeService.createPaymentIntentForPlan(command);
+  }
+
+  @Post(apiRoutes.stripe.listenWebhook)
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({ summary: 'listens Stripe webhook' })
+  async listenWebhook(
+    @Headers('stripe-signature') stripeSignature: any,
+    @Body() paymentIntent: Stripe.PaymentIntent
+  ): Promise<void> {
+    await this.stripeService.listenWebhook(stripeSignature, paymentIntent);
   }
 }

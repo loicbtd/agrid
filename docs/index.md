@@ -52,3 +52,16 @@ Execute `npm run typeorm migration:run`
 ### Revert the last migration
 
 Execute `npm run typeorm migration:revert`
+
+## Stripe integration and testing
+
+1. Navigate to [Webhook settings](https://dashboard.stripe.com/webhooks) on your Stripe Dashboard
+
+2. Click on "Test in a local environment" and follow the instructions to listen and send webhook events through the Stripe CLI
+
+> ⚠️ Please note that you need to adapt some elements ⚠️
+>
+> 1. Change the forward-to port and route according your API when you execute the Stripe CLI command
+> 2. Retrieve the webhook signin secret `whesc_*` returned by the forward-to command
+> 3. Put the secret in the `WEBSERVICE_STRIPE_WEBHOOK_SECRET` environment variable of the .env file before launching the webservice
+> 4. Launch the webservice
