@@ -10,6 +10,9 @@ import { Repository } from 'typeorm';
 import { UnkownPlanError } from '../errors/unkown-plan.error';
 import { UnabilityToCreatePaymentIntentWithStripeError } from '../errors/unability-to-create-payment-intent-with-stripe.error';
 import { STRIPE } from '../constants/provider-names.constant';
+import { StripeWebhookDataModel } from '../models/stripe-webhook-data.model';
+import { WebhookError } from '../errors/webhook.error';
+import { UnhandledStripeEventError } from '../errors/unhandled-stripe-event.error';
 
 @Injectable()
 export class StripeService {
@@ -58,19 +61,28 @@ export class StripeService {
   }
 
   async listenWebhook(
-    stripeSignature: unknown,
-    paymentIntent: unknown
+    stripeWebhookData: StripeWebhookDataModel
   ): Promise<void> {
-    console.log(this.stripe);
-
     let event: Stripe.Event;
 
-    // try {
-    //   event = this.stripe.webhooks.constructEvent(paymentIntent, sig, endpointSecret);
-    // } catch (err) {
-    //   response.status(400).send(`Webhook Error: ${err.message}`);
-    //   return;
-    // }
+    try {
+      event = this.stripe.webhooks.constructEvent(
+        stripeWebhookData.payload,
+        stripeWebhookData.signature,
+        environment.stripeWebhookSecret
+      );
+    } catch (error: any) {
+      throw new WebhookError(error.message);
+    }
+
+    switch (event.type) {
+      case 'payment_intent.succeeded':
+        const paymentIntent = event.data.object;
+        // Then define and call a function to handle the event payment_intent.succeeded
+        break;
+      default:
+       throw new UnhandledStripeEventError()
+    }
 
     // // console.log(paymentIntent);
     // console.log(stripeSignature);

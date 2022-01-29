@@ -36,7 +36,6 @@ export class PlansController {
     });
   }
 
-  @Authorize()
   @Get(apiRoutes.plans.retrieve)
   @ApiOperation({ summary: 'retrieves plans' })
   async retrieve(): Promise<PlanEntity[]> {

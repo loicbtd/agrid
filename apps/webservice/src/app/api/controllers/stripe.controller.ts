@@ -6,6 +6,8 @@ import { CreatePaymentIntentForPlanRequest } from '@workspace/common/requests';
 import { StripeConfigurationModel } from '@workspace/common/models';
 import { StripeService } from '../../domain/services/stripe.service';
 import { apiRoutes } from '@workspace/common/constants';
+import { StripeWebhookData } from '../decorators/stripe-webhook-data.decorator';
+import { StripeWebhookDataModel } from '../../domain/models/stripe-webhook-data.model';
 
 @ApiTags(apiRoutes.stripe.root)
 @Controller(apiRoutes.stripe.root)
@@ -31,9 +33,8 @@ export class StripeController {
   @HttpCode(HttpStatus.OK)
   @ApiOperation({ summary: 'listens Stripe webhook' })
   async listenWebhook(
-    @Headers('stripe-signature') stripeSignature: any,
-    @Body() paymentIntent: Stripe.PaymentIntent
+    @StripeWebhookData() stripeWebookData: StripeWebhookDataModel
   ): Promise<void> {
-    await this.stripeService.listenWebhook(stripeSignature, paymentIntent);
+    await this.stripeService.listenWebhook(stripeWebookData);
   }
 }
