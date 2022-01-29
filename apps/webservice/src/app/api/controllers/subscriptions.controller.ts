@@ -7,7 +7,7 @@ import { SubscriptionService } from '../../domain/services/subscriptions.service
 import { apiRoutes } from '@workspace/common/constants';
 import { JwtGuard } from '../guards/jwt.guard';
 import { JwtPayload } from '../decorators/jwt-payload.decorator';
-import { TokenPayload } from '../../domain/models/token-payload.model';
+import { TokenPayloadModel } from '../../domain/models/token-payload.model';
 
 @ApiTags(apiRoutes.subscriptions.root)
 @Controller(apiRoutes.subscriptions.root)
@@ -27,7 +27,7 @@ export class SubscriptionsController {
   @Get(apiRoutes.subscriptions.retrieveMySubscriptions)
   @ApiOperation({ summary: 'retrieve my subscriptions' })
   async retrieveMySubscription(
-    @JwtPayload() payload: TokenPayload
+    @JwtPayload() payload: TokenPayloadModel
   ): Promise<SubscriptionEntity[]> {
     return await this.subscriptionService.retrieveMySubscriptions(
       payload.userId

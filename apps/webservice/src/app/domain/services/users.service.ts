@@ -12,7 +12,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import * as bcrypt from 'bcrypt';
 import { EmailTemplateEnumeration } from '../enumerations/email-template.emumeration';
 import { EmailsService } from './emails.service';
-import { TokenPayload } from '../models/token-payload.model';
+import { TokenPayloadModel } from '../models/token-payload.model';
 import { DateFormatPostgreSQL } from '../enumerations/date-format-postgresql.enumeration';
 import { UnkownUserError } from '../errors/unkown-user.error';
 import { IncorrectPasswordError } from '../errors/incorrect-password.error';
@@ -59,7 +59,7 @@ export class UsersService {
       );
     }
 
-    const payload: TokenPayload = {
+    const payload: TokenPayloadModel = {
       userId: user.id,
       globalRoles: globalRoles,
     };

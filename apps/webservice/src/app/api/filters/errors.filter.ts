@@ -7,17 +7,15 @@ import {
   ExceptionFilter,
   ArgumentsHost,
   HttpStatus,
-  Inject,
   UnauthorizedException,
 } from '@nestjs/common';
-import { FastifyAdapter } from '@nestjs/platform-fastify';
 import { I18nRequestScopeService } from 'nestjs-i18n';
-import { FASTIFY_ADAPTER } from '../constants/provider-names.constant';
+import { HttpAdapterHost } from '@nestjs/core';
 
 @Catch()
 export class ErrorsFilter implements ExceptionFilter {
   constructor(
-    @Inject(FASTIFY_ADAPTER) private readonly _fastifyAdapter: FastifyAdapter,
+    private readonly _httpAdapterHost: HttpAdapterHost,
     private readonly _logger: Logger,
     private readonly _i18nRequestScopeService: I18nRequestScopeService
   ) {}
@@ -39,15 +37,15 @@ export class ErrorsFilter implements ExceptionFilter {
       );
       this._logger.error(exception.message, exception);
     } else if (exception instanceof UnauthorizedException) {
-       httpStatusCode = HttpStatus.UNAUTHORIZED;
-       httpMessage = await this.retrieveErrorTranslation('Unauthorized');
+      httpStatusCode = HttpStatus.UNAUTHORIZED;
+      httpMessage = await this.retrieveErrorTranslation('Unauthorized');
     } else {
       httpStatusCode = HttpStatus.INTERNAL_SERVER_ERROR;
       httpMessage = await this.retrieveErrorTranslation('Unkown');
       this._logger.error((exception as any).message, exception);
     }
 
-    this._fastifyAdapter.reply(
+    this._httpAdapterHost.httpAdapter.reply(
       host.switchToHttp().getResponse(),
       { statusCode: httpStatusCode, message: httpMessage },
       httpStatusCode
