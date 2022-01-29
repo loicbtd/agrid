@@ -13,3 +13,8 @@ export class UpdateUserInformation {
     }
   ) {}
 }
+
+export class UpdatePaymentIntentId {
+  static readonly type = '[Subscribe] Update Payment Intent Id';
+  constructor(public paymentIntendId: string) {}
+}

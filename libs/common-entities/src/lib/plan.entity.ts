@@ -1,5 +1,4 @@
-import { SupportTypeEntity } from './support-type.entity';
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity('plan')
 export class PlanEntity {
@@ -9,9 +8,12 @@ export class PlanEntity {
   @Column()
   name?: string;
 
-  @Column('float')
+  @Column()
   price?: number;
 
-  @ManyToOne(() => SupportTypeEntity, (supportType) => supportType.id)
-  supportType?: SupportTypeEntity;
+  @Column()
+  stripeProductId?: string;
+
+  @Column()
+  stripeProductPriceId?: string;
 }

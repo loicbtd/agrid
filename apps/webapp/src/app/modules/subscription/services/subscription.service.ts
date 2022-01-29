@@ -1,7 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Store } from '@ngxs/store';
-import { PlanEntity } from '@workspace/common/entities';
+import { PaymentIntent } from '@stripe/stripe-js';
+import { apiRoutes } from '@workspace/common/constants';
+import { CreatePaymentIntentForPlanRequest } from '@workspace/common/requests';
+import { environment } from '../../../../environments/environment';
+import { lastValueFrom } from 'rxjs';
+import { UndefinedStripeClientSecretError } from '../../../global/errors/undefined-stripe-client-secret.error';
+import { UpdatePaymentIntentId } from '../store/actions/subscribe.actions';
 
 @Injectable({
   providedIn: 'root',
@@ -12,26 +18,26 @@ export class SubscriptionService {
     private readonly store: Store
   ) {}
 
-  async getAvailablePlans(): Promise<PlanEntity[]> {
-    return [
-      {
-        id: '1',
-        name: 'Basique',
-        price: 2,
-        supportType: { id: '1', name: 'Standard' },
-      },
-      {
-        id: '2',
-        name: 'Premium',
-        price: 8,
-        supportType: { id: '1', name: 'Premium' },
-      },
-      {
-        id: '3',
-        name: 'Premium +',
-        price: 20,
-        supportType: { id: '1', name: 'Premium +' },
-      },
-    ];
+  async createPaymentIntentForPlanAndRetrieveClientSecre(planId: string): Promise<string> {
+    const paymentIntent = await lastValueFrom(
+      this.httpClient.post<PaymentIntent>(
+        `${environment.webserviceOrigin}/${apiRoutes.stripe.root}/${apiRoutes.stripe.createPaymentIntentForPlan}`,
+        {
+          planId: planId,
+        } as CreatePaymentIntentForPlanRequest
+      )
+    );
+
+    if (!paymentIntent.client_secret) {
+      throw new UndefinedStripeClientSecretError();
+    }
+
+    this.store.dispatch(new UpdatePaymentIntentId(paymentIntent.))
+
+    return paymentIntent.client_secret;
+  }
+
+  async subscribe() {
+    return;
   }
 }

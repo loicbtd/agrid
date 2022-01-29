@@ -25,5 +25,5 @@ export class SubscribeRequest {
   @ApiProperty()
   @IsString()
   @IsNotEmpty()
-  stripeCardToken?: string;
+  paymentIntendId?: string;
 }

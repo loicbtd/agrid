@@ -9,6 +9,6 @@ export class SubscriptionComponent {
     { label: 'Offre', routerLink: 'step-1' },
     { label: 'Informations', routerLink: 'step-2' },
     { label: 'Paiement', routerLink: 'step-3' },
-    { label: 'Confirmation', routerLink: 'step-4' },
+    { label: 'Récapitulatif', routerLink: 'step-4' },
   ];
 }

@@ -6,10 +6,7 @@ import { HttpModule } from '@nestjs/axios';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import {
   PlanEntity,
-  ServiceIncludedInPlanEntity,
-  ServiceEntity,
   SubscriptionEntity,
-  SupportTypeEntity,
   UserEntity,
   OrganizationTypeEntity,
   OrganizationEntity,
@@ -43,10 +40,7 @@ const ENTITIES = [
   OrganizationTypeEntity,
   OrganizationEntity,
   PlanEntity,
-  ServiceIncludedInPlanEntity,
-  ServiceEntity,
   SubscriptionEntity,
-  SupportTypeEntity,
   UserEntity,
 ];
 
