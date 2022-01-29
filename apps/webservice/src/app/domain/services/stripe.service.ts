@@ -65,12 +65,12 @@ export class StripeService {
 
     let event: Stripe.Event;
 
-    try {
-      event = this.stripe.webhooks.constructEvent(paymentIntent, sig, endpointSecret);
-    } catch (err) {
-      response.status(400).send(`Webhook Error: ${err.message}`);
-      return;
-    }
+    // try {
+    //   event = this.stripe.webhooks.constructEvent(paymentIntent, sig, endpointSecret);
+    // } catch (err) {
+    //   response.status(400).send(`Webhook Error: ${err.message}`);
+    //   return;
+    // }
 
     // // console.log(paymentIntent);
     // console.log(stripeSignature);
