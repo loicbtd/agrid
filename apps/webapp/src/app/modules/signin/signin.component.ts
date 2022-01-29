@@ -141,6 +141,7 @@ import { SigninService } from './signin.service';
                   pbutton
                   pripple
                   styleClass="p-button-text p-button-rounded"
+                  [routerLink]="['/showcase']"
                   label="Accueil"
                 >
                 </p-button>
@@ -150,7 +151,7 @@ import { SigninService } from './signin.service';
                   pripple
                   styleClass="p-button-text p-button-rounded p-button-secondary"
                   label="Pas encore inscrit ?"
-                  [routerLink]="['subscription']"
+                  [routerLink]="['/subscription']"
                 >
                 </p-button>
               </div>

@@ -5,53 +5,88 @@
   <workspace-progress-spinner class="w-100 m-auto">
   </workspace-progress-spinner>
 </div>
+
 <div
-  class="flex flex-column align-items-center p-2"
+  class="py-4 px-4 mx-0 md:mx-10 lg:mx-8 lg:px-8 align-items-center justify-content-between relative lg:static"
   *ngIf="this.pageLoaded > 3"
 >
-  <p-tabMenu
-    #menuItems
-    [model]="steps"
-    [activeItem]="activeStep"
-    (click)="activateMenu()"
-  ></p-tabMenu>
-  <div class="flex mt-1 w-full justify-content-center">
-    <p-chart
-      class="flex-1"
-      type="line"
-      [data]="userChart"
-      [responsive]="true"
-    ></p-chart>
-    <p-divider layout="vertical"></p-divider>
-    <p-chart
-      class="flex-1"
-      type="line"
-      [data]="subscriptionChart"
-      [responsive]="true"
-    ></p-chart>
+
+<div class="grid justify-content-between mt-8 md:mt-0">
+  <div style="margin-left: 3rem;">
+    <img
+      src="/assets/logo-agrid.svg"
+      alt="Agrid Logo"
+      class="mr-0 lg:mr-2"
+      height="50"
+    />
   </div>
-  <p-divider class="w-full"></p-divider>
-  <div class="flex mt-1 w-full justify-content-center">
-    <p-chart
-      class="w-6 flex-1"
-      type="line"
-      [data]="salesChart"
-      [responsive]="true"
-    ></p-chart>
-    <p-divider layout="vertical"></p-divider>
-    <div
-      *ngIf="countUserOnCurrentMonth"
-      class="w-6 flex-1 text-center flex justify-content-center align-items-center flex-column"
+
+  <div style="margin-right: 3rem;">
+    <button
+      pbutton
+      pripple
+      label="Register"
+      class="p-ripple p-element p-button-rounded border-none ml-5 font-light line-height-2 bg-500 p-button p-component"
     >
-      <h2>Nouveaux visiteurs pour le mois courant :</h2>
-      <h1
-        [innerText]="countUserOnCurrentMonth.number"
-        style="color: var(--primary-color)"
-      ></h1>
-    </div>
+      <span class="p-ink"></span>
+      <span class="p-button-label">Déconnexion</span>
+    </button>
   </div>
-  <p-divider class="w-full"></p-divider>
-  <h3>Liste des utilisateurs :</h3>
+  
+
+</div>
+
+<p-tabView>
+
+  <p-tabPanel header="Graphiques">
+    
+    <p-tabMenu
+      #menuItems
+      [model]="steps"
+      [activeItem]="activeStep"
+      (click)="activateMenu()"
+    ></p-tabMenu>
+    <div class="flex mt-1 w-full justify-content-center">
+      <p-chart
+        class="flex-1"
+        type="line"
+        [data]="userChart"
+        [responsive]="true"
+      ></p-chart>
+      <p-divider layout="vertical"></p-divider>
+      <p-chart
+        class="flex-1"
+        type="line"
+        [data]="subscriptionChart"
+        [responsive]="true"
+      ></p-chart>
+    </div>
+    <p-divider class="w-full"></p-divider>
+    <div class="flex mt-1 w-full justify-content-center">
+      <p-chart
+        class="w-6 flex-1"
+        type="line"
+        [data]="salesChart"
+        [responsive]="true"
+      ></p-chart>
+      <p-divider layout="vertical"></p-divider>
+      <div
+        *ngIf="countUserOnCurrentMonth"
+        class="w-6 flex-1 text-center flex justify-content-center align-items-center flex-column"
+      >
+        <h2>Nouveaux visiteurs pour le mois courant :</h2>
+        <h1
+          [innerText]="countUserOnCurrentMonth.number"
+          style="color: var(--primary-color)"
+        ></h1>
+      </div>
+    </div>
+    <p-divider class="w-full"></p-divider>
+    
+  </p-tabPanel>
+
+  <p-tabPanel header="Liste utilisateurs">
+    <h3>Liste des utilisateurs :</h3>
 
   <p-table
     [value]="users"
@@ -130,4 +165,13 @@
       </tr>
     </ng-template>
   </p-table>
+    
+  </p-tabPanel>
+
+  <p-tabPanel header="Gestion des offres" [disabled]="true"></p-tabPanel>
+
+</p-tabView>
+
+  
+  
 </div>
