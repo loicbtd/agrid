@@ -1,3 +1,15 @@
-<div id="payment-element"></div>
+<p-card styleClass="mt-2 mx-2">
+  <div id="payment-element"></div>
 
-<p-button (click)="confirmPayment()" label="Confirm payment"></p-button>
+  <div *ngIf="!paymentElement" class="flex w-100">
+    <workspace-progress-spinner class="w-100 m-auto">
+    </workspace-progress-spinner>
+  </div>
+
+  <p-button
+    *ngIf="paymentElement"
+    styleClass="w-full mt-4"
+    (click)="pay()"
+    label="Payer"
+  ></p-button>
+</p-card>

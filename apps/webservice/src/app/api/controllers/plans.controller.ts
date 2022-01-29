@@ -21,7 +21,6 @@ export class PlansController {
     return this.plansService.create({
       name: command.name,
       price: command.price,
-      supportType: { id: command.supportTypeId },
     });
   }
 

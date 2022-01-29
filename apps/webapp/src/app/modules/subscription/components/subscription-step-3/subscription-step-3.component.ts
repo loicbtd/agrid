@@ -1,37 +1,36 @@
-import { Component, OnInit } from '@angular/core';
-import { PaymentIntent, Stripe, StripeElements } from '@stripe/stripe-js';
-import { HttpClient } from '@angular/common/http';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import {
+  Stripe,
+  StripeElements,
+  StripePaymentElement,
+} from '@stripe/stripe-js';
 import { StripeConfigurationService } from '../../../../global/services/stripe-configuration.service';
 import { Store } from '@ngxs/store';
-import { FormBuilder } from '@angular/forms';
-import { environment } from '../../../../../environments/environment';
-import { lastValueFrom } from 'rxjs';
-import { CreatePaymentIntentForPlanRequest } from '@workspace/common/requests';
+import { SubscribeRequest } from '@workspace/common/requests';
 import { StripeConfigurationModel } from '@workspace/common/models';
 import { StripeConfigurationState } from '../../../../global/store/state/stripe-configuration.state';
 import { loadStripe } from '@stripe/stripe-js';
-import { ToastMessageService } from '../../../../global/services/toast-message.service';
 import { UndefinedStripePublishableKeyError } from '../../../../global/errors/undefined-stripe-publishable-key.error';
 import { ImpossibleToLoadStripeError } from '../../../../global/errors/impossible-to-load-stripe.error';
-import { UndefinedStripeClientSecretError } from '../../../../global/errors/undefined-stripe-client-secret.error';
-import { PlansService } from '../../../../global/services/plans.service';
+import { SubscribeState } from '../../store/state/subscribe.state';
+import { SubscriptionService } from '../../services/subscription.service';
 
 @Component({
   templateUrl: './subscription-step-3.component.html',
   styleUrls: ['./subscription-step-3.component.scss'],
 })
 export class SubscriptionStep3Component implements OnInit {
+  paymentElement: StripePaymentElement;
+
   private stripe: Stripe | null;
 
   private stripeElements: StripeElements;
 
   constructor(
-    private readonly httpClient: HttpClient,
+    private readonly subscriptionService: SubscriptionService,
     private readonly stripeConfigurationService: StripeConfigurationService,
-    private readonly plansService: PlansService,
     private readonly store: Store,
-    private readonly fb: FormBuilder,
-    private readonly toastMessageService: ToastMessageService
+    private readonly changeDetectorRef: ChangeDetectorRef
   ) {}
 
   async ngOnInit(): Promise<void> {
@@ -46,44 +45,36 @@ export class SubscriptionStep3Component implements OnInit {
     }
 
     this.stripe = await loadStripe(publishableKey);
+
     if (!this.stripe) {
       throw new ImpossibleToLoadStripeError();
     }
 
-    const clientSecret = (
-      await lastValueFrom(
-        this.httpClient.post<PaymentIntent>(
-          `${environment.webserviceOrigin}/stripe/createPaymentIntentForPlan`,
-          {
-            planId: '5e3683fa-f920-4c26-8e23-dde712e8fd8c',
-          } as CreatePaymentIntentForPlanRequest
-        )
-      )
-    ).client_secret;
+    const planId =
+      this.store.selectSnapshot<SubscribeRequest>(SubscribeState).planId;
 
-    if (!clientSecret) {
-      throw new UndefinedStripeClientSecretError();
+    if (!planId) {
+      return;
     }
+
+    const clientSecret =
+      await this.subscriptionService.createPaymentIntentForPlanAndRetrieveClientSecre(
+        planId
+      );
 
     this.stripeElements = this.stripe.elements({
       clientSecret: clientSecret,
-      locale: 'fr',
+      locale: 'auto',
     });
 
-    const paymentElement = this.stripeElements.create('payment', {
-      business: { name: 'Agrid' },
-      fields: {
-        billingDetails: {
-          name: 'auto',
-          email: 'auto',
-        },
-      },
-    });
-
-    paymentElement.mount('#payment-element');
+    this.paymentElement = this.stripeElements.create('payment');
+    
+    this.paymentElement.mount('#payment-element');
+    
+    this.changeDetectorRef.detectChanges();
   }
 
-  async confirmPayment() {
+  async pay() {
     if (!this.stripe) {
       return;
     }
@@ -92,6 +83,10 @@ export class SubscriptionStep3Component implements OnInit {
       elements: this.stripeElements,
       redirect: 'if_required',
     });
+
+    // const a = paymentConfirmation.paymentIntent.;
+
+    await this.subscriptionService.subscribe();
 
     console.log(paymentConfirmation);
   }

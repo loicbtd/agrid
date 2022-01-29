@@ -54,7 +54,7 @@ export class SubscriptionService {
       ).charges.create({
         amount: plan.price,
         currency: 'EUR',
-        source: subscriptionRequest.stripeCardToken,
+        source: subscriptionRequest.paymentIntendId,
         metadata: {
           email: subscriptionRequest.email,
           planId: subscriptionRequest.planId,
