@@ -6,3 +6,4 @@ export * from './lib/signin.request';
 export * from './lib/subscribe.request';
 export * from './lib/support.request';
 export * from './lib/update-profile.request';
+export * from './lib/update-plan.request';

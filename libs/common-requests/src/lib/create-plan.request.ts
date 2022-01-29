@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty, IsUUID, IsNumber, IsString } from 'class-validator';
+import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
 
 export class CreatePlanRequest {
   @ApiProperty()
@@ -13,7 +13,10 @@ export class CreatePlanRequest {
   price: number;
 
   @ApiProperty()
-  @IsUUID()
   @IsNotEmpty()
-  supportTypeId: string;
+  stripeProductId: string;
+
+  @ApiProperty()
+  @IsNotEmpty()
+  stripeProductPriceId: string;
 }
