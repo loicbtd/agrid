@@ -1,8 +1,8 @@
 FROM node:16.13.1-alpine
-COPY . /app
-WORKDIR /app
+COPY . /solution
+WORKDIR /solution
 RUN npm install && npm run postinstall
 RUN npx nx build webservice --configuration=development
-WORKDIR /app/dist/apps/webservice
-EXPOSE 3333
+WORKDIR /solution/dist/apps/webservice
+EXPOSE 80
 CMD node main.js
