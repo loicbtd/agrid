@@ -8,4 +8,6 @@ export class SubscriptionModel {
   planId?: string;
 
   legalConditionsAccepted?: boolean;
+
+  paymentStatus?: unknown;
 }

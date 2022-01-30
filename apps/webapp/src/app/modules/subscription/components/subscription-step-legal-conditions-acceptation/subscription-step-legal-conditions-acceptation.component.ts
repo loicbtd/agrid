@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
-import { subscriptionRoutes } from '../../constants/subscription-route.constant';
+import { SubscriptionRoutes } from '../../constants/subscription-route.constant';
 import { SubscriptionModel } from '../../models/subscription.model';
 import { UpdateLegalConditionsAcceptation } from '../../store/actions/subscription.actions';
 import { SubscriptionState } from '../../store/state/subscription.state';
@@ -35,7 +35,7 @@ import { SubscriptionState } from '../../store/state/subscription.state';
       <p-button
         styleClass="w-full mt-4"
         (click)="goToNextStep()"
-        label="Étape suivante"
+        label="Suivant"
         [disabled]="!(subscription$ | async)?.legalConditionsAccepted"
       ></p-button>
     </p-card>
@@ -64,7 +64,7 @@ export class SubscriptionStepLegalConditionsAcceptationComponent
   }
 
   goToNextStep() {
-    this.router.navigate(['..', subscriptionRoutes.userInformation], {
+    this.router.navigate(['..', SubscriptionRoutes.userInformation], {
       relativeTo: this.activatedRoute,
     });
   }

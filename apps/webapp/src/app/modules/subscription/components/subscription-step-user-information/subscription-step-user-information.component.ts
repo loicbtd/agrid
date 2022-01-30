@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngxs/store';
 import { SubscribeRequest } from '@workspace/common/requests';
 import { lastValueFrom } from 'rxjs';
+import { SubscriptionRoutes } from '../../constants/subscription-route.constant';
 import { UpdateUserInformation } from '../../store/actions/subscription.actions';
 import { SubscriptionState } from '../../store/state/subscription.state';
 
@@ -159,7 +160,7 @@ export class SubscriptionStepUserInformationComponent implements OnInit {
       )
     );
 
-    this.router.navigate(['..', 'step-3'], {
+    this.router.navigate(['..', SubscriptionRoutes.payment], {
       relativeTo: this.activatedRoute,
     });
   }

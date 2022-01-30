@@ -2,6 +2,7 @@ import { Action, State, StateContext } from '@ngxs/store';
 import { Injectable } from '@angular/core';
 import {
   UpdateLegalConditionsAcceptation,
+  UpdatePaymentStatus,
   UpdateSelectedPlanId,
   UpdateUserInformation,
 } from '../actions/subscription.actions';
@@ -48,6 +49,17 @@ export class SubscriptionState {
     context.setState({
       ...context.getState(),
       legalConditionsAccepted: action.accepted,
+    });
+  }
+
+  @Action(UpdatePaymentStatus)
+  updatePaymentStatus(
+    context: StateContext<SubscriptionModel>,
+    action: UpdatePaymentStatus
+  ) {
+    context.setState({
+      ...context.getState(),
+      paymentStatus: action.status,
     });
   }
 }

@@ -42,13 +42,13 @@ export class StripeService {
       throw new WebhookError(error.message);
     }
 
-    switch (event.type) {
-      case 'payment_intent.succeeded':
-        // const paymentIntent = event.data.object;
-        // Then define and call a function to handle the event payment_intent.succeeded
-        break;
-      default:
-        throw new UnhandledStripeEventError();
-    }
+    // switch (event.type) {
+    //   case 'payment_intent.succeeded':
+    //     // const paymentIntent = event.data.object;
+    //     // Then define and call a function to handle the event payment_intent.succeeded
+    //     break;
+    //   default:
+    //     throw new UnhandledStripeEventError();
+    // }
   }
 }

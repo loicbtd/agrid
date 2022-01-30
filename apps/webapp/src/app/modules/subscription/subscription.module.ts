@@ -10,9 +10,10 @@ import { SubscriptionState } from './store/state/subscription.state';
 import { PlanMustBeSelectedGuard } from './guards/plan-must-be-selected.guard';
 import { UserInformationMustBeCompletedGuard } from './guards/user-information-must-be-completed.guard';
 import { SubscriptionStepSummaryComponent } from './components/subscription-step-summary/subscription-step-summary.component';
-import { subscriptionRoutes } from './constants/subscription-route.constant';
+import { SubscriptionRoutes } from './constants/subscription-route.constant';
 import { SubscriptionStepLegalConditionsAcceptationComponent } from './components/subscription-step-legal-conditions-acceptation/subscription-step-legal-conditions-acceptation.component';
 import { LegalConditionsMustBeAcceptedGuard } from './guards/legal-conditions-must-be-accepted.guard';
+import { PaymentStatusMustBeDefinedGuard } from './guards/payment-status-must-be-defined.guard';
 
 @NgModule({
   declarations: [
@@ -32,16 +33,16 @@ import { LegalConditionsMustBeAcceptedGuard } from './guards/legal-conditions-mu
         component: SubscriptionComponent,
         children: [
           {
-            path: subscriptionRoutes.planSelection,
+            path: SubscriptionRoutes.planSelection,
             component: SubscriptionStepPlanSelectionComponent,
           },
           {
-            path: subscriptionRoutes.legal,
+            path: SubscriptionRoutes.legal,
             component: SubscriptionStepLegalConditionsAcceptationComponent,
             canActivate: [PlanMustBeSelectedGuard],
           },
           {
-            path: subscriptionRoutes.userInformation,
+            path: SubscriptionRoutes.userInformation,
             component: SubscriptionStepUserInformationComponent,
             canActivate: [
               PlanMustBeSelectedGuard,
@@ -49,7 +50,7 @@ import { LegalConditionsMustBeAcceptedGuard } from './guards/legal-conditions-mu
             ],
           },
           {
-            path: subscriptionRoutes.payment,
+            path: SubscriptionRoutes.payment,
             component: SubscriptionStepPaymentComponent,
             canActivate: [
               PlanMustBeSelectedGuard,
@@ -58,17 +59,18 @@ import { LegalConditionsMustBeAcceptedGuard } from './guards/legal-conditions-mu
             ],
           },
           {
-            path: subscriptionRoutes.summary,
+            path: SubscriptionRoutes.summary,
             component: SubscriptionStepSummaryComponent,
             canActivate: [
-              PlanMustBeSelectedGuard,
-              LegalConditionsMustBeAcceptedGuard,
-              UserInformationMustBeCompletedGuard,
+              // PlanMustBeSelectedGuard,
+              // LegalConditionsMustBeAcceptedGuard,
+              // UserInformationMustBeCompletedGuard,
+              // PaymentStatusMustBeDefinedGuard,
             ],
           },
           {
             path: '**',
-            redirectTo: subscriptionRoutes.planSelection,
+            redirectTo: SubscriptionRoutes.planSelection,
           },
         ],
       },

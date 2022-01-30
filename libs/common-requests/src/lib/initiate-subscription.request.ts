@@ -5,20 +5,20 @@ export class InitiateSubscriptionRequest {
   @ApiProperty()
   @IsUUID()
   @IsNotEmpty()
-  planId: string;
+  planId?: string;
 
   @ApiProperty()
   @IsEmail()
   @IsNotEmpty()
-  email: string;
+  email?: string;
 
   @ApiProperty()
   @IsString()
   @IsNotEmpty()
-  firstname: string;
+  firstname?: string;
 
   @ApiProperty()
   @IsString()
   @IsNotEmpty()
-  lastname: string;
+  lastname?: string;
 }

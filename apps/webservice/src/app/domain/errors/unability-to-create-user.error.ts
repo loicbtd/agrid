@@ -1,6 +1,6 @@
 import { DomainError } from './domain.error';
 
-export class UnabilityToCreateUserError extends DomainError {
+export class UnabilityToSaveUserError extends DomainError {
   constructor(originalErrorMessage: string) {
     super(originalErrorMessage);
   }

@@ -1,16 +1,16 @@
 import { Component } from '@angular/core';
 import { MenuItem } from 'primeng/api';
-import { subscriptionRoutes } from './constants/subscription-route.constant';
+import { SubscriptionRoutes } from './constants/subscription-route.constant';
 
 @Component({
   templateUrl: './subscription.component.html',
 })
 export class SubscriptionComponent {
   stepItems: MenuItem[] = [
-    { label: 'Offre', routerLink: subscriptionRoutes.planSelection },
-    { label: 'Conditions', routerLink: subscriptionRoutes.legal },
-    { label: 'Informations', routerLink: subscriptionRoutes.userInformation },
-    { label: 'Paiement', routerLink: subscriptionRoutes.payment },
-    { label: 'Récapitulatif', routerLink: subscriptionRoutes.summary },
+    { label: 'Offre', routerLink: SubscriptionRoutes.planSelection },
+    { label: 'Conditions', routerLink: SubscriptionRoutes.legal },
+    { label: 'Informations', routerLink: SubscriptionRoutes.userInformation },
+    { label: 'Paiement', routerLink: SubscriptionRoutes.payment },
+    { label: 'Récapitulatif', routerLink: SubscriptionRoutes.summary },
   ];
 }

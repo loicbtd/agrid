@@ -8,7 +8,7 @@ import { lastValueFrom, Observable } from 'rxjs';
 import { UpdateSelectedPlanId } from '../../store/actions/subscription.actions';
 import { SubscriptionState } from '../../store/state/subscription.state';
 import { SubscribeRequest } from '@workspace/common/requests';
-import { subscriptionRoutes } from '../../constants/subscription-route.constant';
+import { SubscriptionRoutes } from '../../constants/subscription-route.constant';
 
 @Component({
   template: `
@@ -39,6 +39,7 @@ import { subscriptionRoutes } from '../../constants/subscription-route.constant'
       <div class="flex flex-row">
         <a
           [routerLink]="['/showcase']"
+          fragment="pricing-section"
           class="m-auto text-green-600 no-underline"
           >En savoir plus</a
         >
@@ -126,7 +127,7 @@ export class SubscriptionStepPlanSelectionComponent implements OnInit {
 
     await lastValueFrom(this.store.dispatch(new UpdateSelectedPlanId(plan.id)));
 
-    this.router.navigate(['..', subscriptionRoutes.legal], {
+    this.router.navigate(['..', SubscriptionRoutes.legal], {
       relativeTo: this.activatedRoute,
     });
   }

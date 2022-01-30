@@ -9,7 +9,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Stripe } from 'stripe';
 import { InitiateSubscriptionRequest } from '@workspace/common/requests';
 import { UnabilityToRetrievePlans } from '../errors/unability-to-retrieve-plans.error';
-import { UnabilityToCreateUserError } from '../errors/unability-to-create-user.error';
+import { UnabilityToSaveUserError as UnabilityToSaveUserError } from '../errors/unability-to-create-user.error';
 import { DateFormatPostgreSQL } from '../enumerations/date-format-postgresql.enumeration';
 import {
   DateStatisticsResponseDto,
@@ -42,50 +42,59 @@ export class SubscriptionService {
       throw new UnabilityToRetrievePlans(error.message);
     }
 
-    let stripePrice: Stripe.Price;
-    try {
-      stripePrice = await this.stripe.prices.retrieve(
-        plan.stripeProductPriceId
-      );
-    } catch (error: any) {
-      throw new StripeError(error.message);
-    }
+    const userAlreadyExists =
+      (await this.usersRepository.count({ email: command.email })) > 0;
 
     let user: UserEntity;
-    if ((await this.usersRepository.count({ email: user.email })) == 0) {
+    if (!userAlreadyExists) {
       try {
-        await this.usersRepository.insert({
+        user = await this.usersRepository.save({
           email: command.email,
           firstname: command.firstname,
           lastname: command.lastname,
         });
       } catch (error: any) {
-        throw new UnabilityToCreateUserError(error.message);
+        throw new UnabilityToSaveUserError(error.message);
+      }
+    } else {
+      try {
+        user = await this.usersRepository.findOneOrFail({
+          email: command.email,
+        });
+      } catch (error: any) {
+        throw new UnabilityToRetrieveUsersError(error.message);
       }
     }
 
-    try {
-      user = await this.usersRepository.findOneOrFail({ email: command.email });
-    } catch (error: any) {
-      throw new UnabilityToRetrieveUsersError(error.message);
-    }
+    if (!user.stripeCustomerId) {
+      try {
+        user.stripeCustomerId = (
+          await this.stripe.customers.create({
+            email: command.email,
+          })
+        ).id;
+      } catch (error: any) {
+        throw new StripeError(error.message);
+      }
 
-    let stripeCustomer: Stripe.Customer;
-    try {
-      stripeCustomer = await this.stripe.customers.create({
-        email: command.email,
-      });
-    } catch (error: any) {
-      throw new StripeError(error.message);
+      try {
+        user = await this.usersRepository.save(user);
+      } catch (error: any) {
+        throw new UnabilityToSaveUserError(error.message);
+      }
+    } 
+
+    if(user.stripeCustomerId) {
+      
     }
 
     let subscription: Stripe.Subscription;
     try {
       subscription = await this.stripe.subscriptions.create({
-        customer: stripeCustomer.id,
+        customer: user.stripeCustomerId,
         items: [
           {
-            price: stripePrice.id,
+            price: plan.stripeProductPriceId,
           },
         ],
         payment_behavior: 'default_incomplete',

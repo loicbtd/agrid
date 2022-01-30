@@ -1,4 +1,4 @@
-export const subscriptionRoutes = {
+export const SubscriptionRoutes = {
   legal: 'legal',
   payment: 'payment',
   planSelection: 'plan-selection',
