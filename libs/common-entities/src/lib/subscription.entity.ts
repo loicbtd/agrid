@@ -26,7 +26,7 @@ export class SubscriptionEntity {
   @UpdateDateColumn()
   updateAt?: Date;
 
-  @Column()
+  @Column({ nullable: true })
   stripeSubscriptionId: string;
 
   @Column()

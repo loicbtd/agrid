@@ -18,6 +18,9 @@ import {
 import { STRIPE } from '../constants/provider-names.constant';
 import { StripeError } from '../errors/stripe.error';
 import { UnabilityToRetrieveUsersError } from '../errors/unability-to-retrieve-users.error';
+import { UnabilityToRetrieveSubscriptionsError } from '../errors/unability-to-retrieve-subscriptions.error';
+import { AlreadyActiveSubscriptionError } from '../errors/already-active-subscription.error';
+import { UnabilityToSaveSubscriptionsError } from '../errors/unability-to-save-subscriptions.error';
 
 @Injectable()
 export class SubscriptionService {
@@ -82,15 +85,39 @@ export class SubscriptionService {
       } catch (error: any) {
         throw new UnabilityToSaveUserError(error.message);
       }
-    } 
-
-    if(user.stripeCustomerId) {
-      
     }
 
-    let subscription: Stripe.Subscription;
+    let subscription: SubscriptionEntity;
     try {
-      subscription = await this.stripe.subscriptions.create({
+      subscription = await this.subscriptionsRepository.findOne({
+        user: user,
+        plan: plan,
+      });
+    } catch (error: any) {
+      throw new UnabilityToRetrieveSubscriptionsError(error.message);
+    }
+    console.log('ici');
+
+    if (!subscription) {
+      try {
+        subscription = await this.subscriptionsRepository.save({
+          user: user,
+          plan: plan,
+          active: false,
+          relations: ['user', 'plan'],
+        });
+      } catch (error: any) {
+        throw new UnabilityToRetrieveSubscriptionsError(error.message);
+      }
+    }
+
+    if (subscription.active) {
+      throw new AlreadyActiveSubscriptionError();
+    }
+
+    let stripeSubscription: Stripe.Subscription;
+    try {
+      stripeSubscription = await this.stripe.subscriptions.create({
         customer: user.stripeCustomerId,
         items: [
           {
@@ -104,9 +131,17 @@ export class SubscriptionService {
       throw new StripeError(error.message);
     }
 
+    subscription.stripeSubscriptionId = stripeSubscription.id;
+
+    try {
+      subscription = await this.subscriptionsRepository.save(subscription);
+    } catch (error: any) {
+      throw new UnabilityToSaveSubscriptionsError(error.message);
+    }
+
     return {
       clientSecret: (
-        (subscription.latest_invoice as Stripe.Invoice)
+        (stripeSubscription.latest_invoice as Stripe.Invoice)
           .payment_intent as Stripe.PaymentIntent
       ).client_secret,
     };
