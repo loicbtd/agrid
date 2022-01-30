@@ -70,7 +70,7 @@ WEBSERVICE_STRIPE_PUBLISHABLE_KEY="publishable"
 - Workspace : [Nx workspace](https://nx.dev)
 - Frontend framework : [Angular](https://angular.io)
 - Angular components : [PrimeNG](https://primefaces.org/primeng/showcase)
-- Angular states management : [NGXS](https://www.ngxs.io/)
+- Angular state management : [NGXS](https://www.ngxs.io/)
 - CSS framework : [PrimeFlex](https://www.primefaces.org/primeflex/display)
 - Icons pack : [Font Awesome](https://fontawesome.com/v5.15/icons)
 - ORM : [TypeORM](https://typeorm.io/#/)
