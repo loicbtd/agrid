@@ -12,7 +12,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import * as bcrypt from 'bcrypt';
 import { EmailTemplateEnumeration } from '../enumerations/email-template.emumeration';
 import { EmailsService } from './emails.service';
-import { TokenPayload } from '../models/token-payload.model';
+import { TokenPayloadModel } from '../models/token-payload.model';
 import { DateFormatPostgreSQL } from '../enumerations/date-format-postgresql.enumeration';
 import { UnkownUserError } from '../errors/unkown-user.error';
 import { IncorrectPasswordError } from '../errors/incorrect-password.error';
@@ -20,7 +20,7 @@ import { UnabilityToSendEmailError } from '../errors/unability-to-send-email.err
 import { GlobalRoleEnumeration } from '@workspace/common/enumerations';
 import { UnabilityToRetrieveGlobalRolesOfUserError } from '../errors/unability-to-retrieve-global-roles-of-user.error';
 import { UnabilityToCountExistingUsersWithRoleError } from '../errors/unability-to-count-existing-users-with-role.error';
-import { UnabilityRetrieveUsersError } from '../errors/unability-to-retrieve-users.error';
+import { UnabilityToRetrieveUsersError } from '../errors/unability-to-retrieve-users.error';
 
 @Injectable()
 export class UsersService {
@@ -59,7 +59,7 @@ export class UsersService {
       );
     }
 
-    const payload: TokenPayload = {
+    const payload: TokenPayloadModel = {
       userId: user.id,
       globalRoles: globalRoles,
     };
@@ -82,7 +82,7 @@ export class UsersService {
         })) > 0
       );
     } catch (error: any) {
-      throw new UnabilityRetrieveUsersError(error.message);
+      throw new UnabilityToRetrieveUsersError(error.message);
     }
   }
 

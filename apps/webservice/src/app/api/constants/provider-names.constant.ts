@@ -1,1 +1,0 @@
-export const FASTIFY_ADAPTER = 'FASTIFY_ADAPTER';

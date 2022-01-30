@@ -1,9 +1,14 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { Store } from '@ngxs/store';
+import { PlanEntity } from '@workspace/common/entities';
 import { UserProfileModel } from '@workspace/common/models';
 import { DateStatisticsResponseDto } from '@workspace/common/responses';
+import { PlansService } from '../../../../global/services/plans.service';
+import { PlansState } from '../../../../global/store/state/plans.state';
+import { ProfileService } from '../../../../global/services/profile.service';
 import { ToastMessageService } from '../../../../global/services/toast-message.service';
-import { ProfileService } from '../../services/profile.service';
 import { StatisticsService } from '../../services/statistics.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-dashboard',
@@ -37,19 +42,49 @@ export class DashboardComponent implements OnInit {
   activeStep = this.steps[0];
 
   users!: UserProfileModel[];
-  userSelected!: UserProfileModel;
-  clonedProducts: { [s: string]: UserProfileModel } = {};
+  clonedUsers: { [s: string]: UserProfileModel } = {};
   pageLoaded = 0;
+
+  planDialog: boolean;
+  plans: PlanEntity[];
+  clonedPlans: { [s: string]: PlanEntity } = {};
+  selectedPlans: PlanEntity[];
+  submitted: boolean;
+  newPlan!: PlanEntity;
+  form!: FormGroup;
 
   constructor(
     private readonly _statisticsController: StatisticsService,
     private readonly _profileService: ProfileService,
-    private readonly _toastMessage: ToastMessageService
+    private readonly _toastMessage: ToastMessageService,
+    private readonly plansService: PlansService,
+    private readonly store: Store,
+    private readonly fb: FormBuilder
   ) {}
 
   ngOnInit(): void {
-    this.updateCharts();
-    this.getAllUsers();
+    this.changeTabView({ index: 0 });
+  }
+
+  async changeTabView(event: { index: number }) {
+    switch (event.index) {
+      case 0:
+        this.updateCharts();
+        break;
+      case 1:
+        this.getAllUsers();
+        break;
+      case 2:
+        this.updatePlans();
+        break;
+    }
+  }
+
+  async updatePlans() {
+    await this.plansService.refresh();
+    this.plans = this.store
+      .selectSnapshot<PlanEntity[]>(PlansState)
+      .map((obj) => ({ ...obj }));
   }
 
   updateCharts() {
@@ -159,14 +194,12 @@ export class DashboardComponent implements OnInit {
       });
   }
 
-  onRowEditInit(user: UserProfileModel) {
-    this.userSelected = user;
-    this.clonedProducts[user.id] = { ...user };
+  onRowEditInitUser(user: UserProfileModel) {
+    this.clonedUsers[user.id] = { ...user };
   }
 
-  onRowEditSave(user: UserProfileModel) {
-    console.log(user);
-    delete this.clonedProducts[user.id];
+  onRowEditSaveUser(user: UserProfileModel) {
+    delete this.clonedUsers[user.id];
     this._profileService
       .updateProfile(user.id, {
         firstname: user.firstname,
@@ -178,8 +211,90 @@ export class DashboardComponent implements OnInit {
       });
   }
 
-  onRowEditCancel(user: UserProfileModel, index: number) {
-    this.users[index] = this.clonedProducts[user.id];
-    delete this.clonedProducts[user.id];
+  onRowEditCancelUser(user: UserProfileModel, index: number) {
+    this.users[index] = this.clonedUsers[user.id];
+    delete this.clonedUsers[user.id];
+  }
+
+  openNew() {
+    this.form = this.fb.group({
+      name: ['', [Validators.required]],
+      price: ['', [Validators.required, Validators.min(1)]],
+      stripeProductId: ['', [Validators.required]],
+      stripeProductPriceId: ['', [Validators.required]],
+    });
+    this.newPlan = {};
+    this.submitted = false;
+    this.planDialog = true;
+  }
+
+  async deleteSelectedProducts() {
+    let plan: PlanEntity;
+    for (let i = 0; i < this.selectedPlans.length; i++) {
+      plan = this.selectedPlans[i];
+      plan?.id && (await this.plansService.delete(plan?.id).subscribe());
+    }
+    this.newPlan = {};
+    const plural = this.selectedPlans.length > 1 ? 's' : '';
+    this.selectedPlans = [];
+    this._toastMessage.showSuccess('Plan' + plural + ' supprimé' + plural);
+    await this.updatePlans();
+  }
+
+  onRowEditInitPlan(plan: PlanEntity) {
+    plan.id && (this.clonedPlans[plan.id] = { ...plan });
+  }
+
+  onRowEditSavePlan(plan: PlanEntity) {
+    if (
+      plan.id &&
+      plan.name &&
+      plan.price &&
+      plan.stripeProductId &&
+      plan.stripeProductPriceId
+    ) {
+      delete this.clonedPlans[plan.id];
+      this.plansService
+        .update(plan.id, {
+          name: plan.name,
+          price: plan.price,
+          stripeProductId: plan.stripeProductId,
+          stripeProductPriceId: plan.stripeProductPriceId,
+        })
+        .subscribe(async () => {
+          await this.updatePlans();
+          this._toastMessage.showSuccess('Plan mit à jour');
+        });
+    }
+  }
+
+  onRowEditCancelPlan(plan: PlanEntity, index: number) {
+    if (plan.id) {
+      this.plans[index] = this.clonedPlans[plan.id];
+      delete this.clonedPlans[plan.id];
+    }
+  }
+
+  hideNewDialog() {
+    this.planDialog = false;
+    this.submitted = false;
+  }
+
+  saveProduct() {
+    if (this.form.invalid) {
+      return;
+    }
+    this.plansService
+      .create({
+        name: this.form.get('name')?.value,
+        price: this.form.get('price')?.value,
+        stripeProductId: this.form.get('stripeProductId')?.value,
+        stripeProductPriceId: this.form.get('stripeProductPriceId')?.value,
+      })
+      .subscribe(async () => {
+        await this.updatePlans();
+        this.hideNewDialog();
+        this._toastMessage.showSuccess('Le plan a été ajouté');
+      });
   }
 }

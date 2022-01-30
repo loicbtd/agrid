@@ -18,15 +18,18 @@ export const apiRoutes = {
     root: 'profiles',
     retrieveMyProfile: 'retrieveMyProfile',
     retrieveAllProfiles: 'retrieveAllProfiles',
+    updateMyProfile: 'updateMyProfile',
   },
   stripe: {
     root: 'stripe',
     retrieveConfiguration: 'retrieveConfiguration',
     createPaymentIntentForPlan: 'createPaymentIntentForPlan',
+    listenWebhook: 'listenWebhook',
   },
   subscriptions: {
     root: 'subscriptions',
-    subscribe: 'subscribe',
+    initiateSubscription: 'initiateSubscription',
+    retrieveMySubscriptions: 'retrieveMySubscriptions',
   },
   support: {
     root: 'support',

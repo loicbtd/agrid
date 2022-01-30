@@ -1,9 +1,17 @@
-import { Body, Controller, Get, Param, Put, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Post,
+  Put,
+  UseGuards,
+} from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { apiRoutes } from '@workspace/common/constants';
 import { MyProfileModel, UserProfileModel } from '@workspace/common/models';
 import { UpdateProfileRequest } from '@workspace/common/requests';
-import { TokenPayload } from '../../domain/models/token-payload.model';
+import { TokenPayloadModel } from '../../domain/models/token-payload.model';
 import { ProfilesService } from '../../domain/services/profiles.service';
 import { JwtPayload } from '../decorators/jwt-payload.decorator';
 import { JwtGuard } from '../guards/jwt.guard';
@@ -18,7 +26,7 @@ export class ProfilesController {
   @Get(apiRoutes.profiles.retrieveMyProfile)
   @ApiOperation({ summary: 'retrieves my profile' })
   async retrieveMyProfile(
-    @JwtPayload() payload: TokenPayload
+    @JwtPayload() payload: TokenPayloadModel
   ): Promise<MyProfileModel> {
     return await this.profilesService.retrieveMyProfile(payload.userId);
   }
@@ -40,5 +48,16 @@ export class ProfilesController {
     @Body() command: UpdateProfileRequest
   ): Promise<UserProfileModel> {
     return await this.profilesService.updateProfile(id, command);
+  }
+
+  @ApiBearerAuth()
+  @UseGuards(JwtGuard)
+  @Post(apiRoutes.profiles.updateMyProfile)
+  @ApiOperation({ summary: 'update my profile' })
+  async updateMyProfile(
+    @JwtPayload() payload: TokenPayloadModel,
+    @Body() command: UpdateProfileRequest
+  ): Promise<void> {
+    await this.profilesService.updateProfile(payload.userId, command);
   }
 }

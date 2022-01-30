@@ -2,22 +2,27 @@ import { NgModule } from '@angular/core';
 import { SharedModule } from '../../shared.module';
 import { RouterModule } from '@angular/router';
 import { SubscriptionComponent } from './subscription.component';
-import { SubscriptionStep1Component } from './components/subscription-step-1/subscription-step-1.component';
-import { SubscriptionStep2Component } from './components/subscription-step-2/subscription-step-2.component';
-import { SubscriptionStep3Component } from './components/subscription-step-3/subscription-step-3.component';
-import { SubscriptionStep4Component } from './components/subscription-step-4/subscription-step-4.component';
+import { SubscriptionStepPlanSelectionComponent } from './components/subscription-step-plan-selection/subscription-step-plan-selection.component';
+import { SubscriptionStepUserInformationComponent } from './components/subscription-step-user-information/subscription-step-user-information.component';
+import { SubscriptionStepPaymentComponent } from './components/subscription-step-payment/subscription-step-payment.component';
 import { NgxsModule } from '@ngxs/store';
-import { SubscribeState } from './store/state/subscribe.state';
+import { SubscriptionState } from './store/state/subscription.state';
 import { PlanMustBeSelectedGuard } from './guards/plan-must-be-selected.guard';
 import { UserInformationMustBeCompletedGuard } from './guards/user-information-must-be-completed.guard';
+import { SubscriptionStepSummaryComponent } from './components/subscription-step-summary/subscription-step-summary.component';
+import { SubscriptionRoutes } from './constants/subscription-route.constant';
+import { SubscriptionStepLegalConditionsAcceptationComponent } from './components/subscription-step-legal-conditions-acceptation/subscription-step-legal-conditions-acceptation.component';
+import { LegalConditionsMustBeAcceptedGuard } from './guards/legal-conditions-must-be-accepted.guard';
+import { PaymentStatusMustBeDefinedGuard } from './guards/payment-status-must-be-defined.guard';
 
 @NgModule({
   declarations: [
     SubscriptionComponent,
-    SubscriptionStep1Component,
-    SubscriptionStep2Component,
-    SubscriptionStep3Component,
-    SubscriptionStep4Component,
+    SubscriptionStepPlanSelectionComponent,
+    SubscriptionStepUserInformationComponent,
+    SubscriptionStepPaymentComponent,
+    SubscriptionStepSummaryComponent,
+    SubscriptionStepLegalConditionsAcceptationComponent,
   ],
   providers: [SubsriptionModule],
   imports: [
@@ -28,38 +33,49 @@ import { UserInformationMustBeCompletedGuard } from './guards/user-information-m
         component: SubscriptionComponent,
         children: [
           {
-            path: 'step-1',
-            component: SubscriptionStep1Component,
+            path: SubscriptionRoutes.planSelection,
+            component: SubscriptionStepPlanSelectionComponent,
           },
           {
-            path: 'step-2',
-            component: SubscriptionStep2Component,
+            path: SubscriptionRoutes.legal,
+            component: SubscriptionStepLegalConditionsAcceptationComponent,
             canActivate: [PlanMustBeSelectedGuard],
           },
           {
-            path: 'step-3',
-            component: SubscriptionStep3Component,
+            path: SubscriptionRoutes.userInformation,
+            component: SubscriptionStepUserInformationComponent,
             canActivate: [
               PlanMustBeSelectedGuard,
+              LegalConditionsMustBeAcceptedGuard,
+            ],
+          },
+          {
+            path: SubscriptionRoutes.payment,
+            component: SubscriptionStepPaymentComponent,
+            canActivate: [
+              PlanMustBeSelectedGuard,
+              LegalConditionsMustBeAcceptedGuard,
               UserInformationMustBeCompletedGuard,
             ],
           },
           {
-            path: 'step-4',
-            component: SubscriptionStep4Component,
+            path: SubscriptionRoutes.summary,
+            component: SubscriptionStepSummaryComponent,
             canActivate: [
-              PlanMustBeSelectedGuard,
-              UserInformationMustBeCompletedGuard,
+              // PlanMustBeSelectedGuard,
+              // LegalConditionsMustBeAcceptedGuard,
+              // UserInformationMustBeCompletedGuard,
+              // PaymentStatusMustBeDefinedGuard,
             ],
           },
           {
             path: '**',
-            redirectTo: 'step-1',
+            redirectTo: SubscriptionRoutes.planSelection,
           },
         ],
       },
     ]),
-    NgxsModule.forFeature([SubscribeState]),
+    NgxsModule.forFeature([SubscriptionState]),
   ],
 })
 export class SubsriptionModule {}

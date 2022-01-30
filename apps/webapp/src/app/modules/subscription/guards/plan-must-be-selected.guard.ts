@@ -8,7 +8,8 @@ import {
 import { Store } from '@ngxs/store';
 import { SubscribeRequest } from '@workspace/common/requests';
 import { Observable } from 'rxjs';
-import { SubscribeState } from '../store/state/subscribe.state';
+import { SubscriptionModel } from '../models/subscription.model';
+import { SubscriptionState } from '../store/state/subscription.state';
 
 @Injectable({
   providedIn: 'root',
@@ -25,7 +26,7 @@ export class PlanMustBeSelectedGuard implements CanActivate {
     | boolean
     | UrlTree {
     const subscribeState =
-      this.store.selectSnapshot<SubscribeRequest>(SubscribeState);
+      this.store.selectSnapshot<SubscriptionModel>(SubscriptionState);
 
     if (!subscribeState.planId || subscribeState.planId === '') {
       return false;

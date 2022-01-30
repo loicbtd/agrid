@@ -5,129 +5,450 @@
   <workspace-progress-spinner class="w-100 m-auto">
   </workspace-progress-spinner>
 </div>
+
 <div
-  class="flex flex-column align-items-center p-2"
+  class="py-4 px-4 mx-0 md:mx-10 lg:mx-8 lg:px-8 align-items-center justify-content-between relative lg:static"
   *ngIf="this.pageLoaded > 3"
 >
-  <p-tabMenu
-    #menuItems
-    [model]="steps"
-    [activeItem]="activeStep"
-    (click)="activateMenu()"
-  ></p-tabMenu>
-  <div class="flex mt-1 w-full justify-content-center">
-    <p-chart
-      class="flex-1"
-      type="line"
-      [data]="userChart"
-      [responsive]="true"
-    ></p-chart>
-    <p-divider layout="vertical"></p-divider>
-    <p-chart
-      class="flex-1"
-      type="line"
-      [data]="subscriptionChart"
-      [responsive]="true"
-    ></p-chart>
-  </div>
-  <p-divider class="w-full"></p-divider>
-  <div class="flex mt-1 w-full justify-content-center">
-    <p-chart
-      class="w-6 flex-1"
-      type="line"
-      [data]="salesChart"
-      [responsive]="true"
-    ></p-chart>
-    <p-divider layout="vertical"></p-divider>
-    <div
-      *ngIf="countUserOnCurrentMonth"
-      class="w-6 flex-1 text-center flex justify-content-center align-items-center flex-column"
-    >
-      <h2>Nouveaux visiteurs pour le mois courant :</h2>
-      <h1
-        [innerText]="countUserOnCurrentMonth.number"
-        style="color: var(--primary-color)"
-      ></h1>
+  <div class="grid justify-content-between mt-8 md:mt-0">
+    <div style="margin-left: 3rem">
+      <img
+        src="/assets/logo-agrid.svg"
+        alt="Agrid Logo"
+        class="mr-0 lg:mr-2"
+        height="50"
+      />
+    </div>
+
+    <div style="margin-right: 3rem">
+      <button
+        pbutton
+        pripple
+        label="Register"
+        class="p-ripple p-element p-button-rounded border-none ml-5 font-light line-height-2 bg-500 p-button p-component"
+      >
+        <span class="p-ink"></span>
+        <span class="p-button-label">Déconnexion</span>
+      </button>
     </div>
   </div>
-  <p-divider class="w-full"></p-divider>
-  <h3>Liste des utilisateurs :</h3>
 
-  <p-table
-    [value]="users"
-    dataKey="id"
-    responsiveLayout="scroll"
-    editMode="row"
-  >
-    <ng-template pTemplate="header">
-      <tr>
-        <th>Nom</th>
-        <th>Prénom</th>
-        <th>Adresse mail</th>
-        <th>Actions</th>
-      </tr>
-    </ng-template>
-    <ng-template
-      pTemplate="body"
-      let-user
-      let-editing="editing"
-      let-ri="rowIndex"
-    >
-      <tr [pEditableRow]="user">
-        <td>
-          <p-cellEditor>
-            <ng-template pTemplate="input">
-              <input pInputText type="text" [(ngModel)]="user.lastname" />
-            </ng-template>
-            <ng-template pTemplate="output">
-              {{ user.lastname }}
-            </ng-template>
-          </p-cellEditor>
-        </td>
-        <td>
-          <p-cellEditor>
-            <ng-template pTemplate="input">
-              <input pInputText type="text" [(ngModel)]="user.firstname" />
-            </ng-template>
-            <ng-template pTemplate="output">
-              {{ user.firstname }}
-            </ng-template>
-          </p-cellEditor>
-        </td>
-        <td>{{ user.email }}</td>
-        <td style="text-align: center">
-          <button
-            *ngIf="!editing"
-            pButton
-            pRipple
-            type="button"
-            pInitEditableRow
-            icon="pi pi-pencil"
-            (click)="onRowEditInit(user)"
-            class="p-button-rounded p-button-text"
-          ></button>
-          <button
-            *ngIf="editing"
-            pButton
-            pRipple
-            type="button"
-            pSaveEditableRow
-            icon="pi pi-check"
-            (click)="onRowEditSave(user)"
-            class="p-button-rounded p-button-text p-button-success mr-2"
-          ></button>
-          <button
-            *ngIf="editing"
-            pButton
-            pRipple
-            type="button"
-            pCancelEditableRow
-            icon="pi pi-times"
-            (click)="onRowEditCancel(user, ri)"
-            class="p-button-rounded p-button-text p-button-danger"
-          ></button>
-        </td>
-      </tr>
-    </ng-template>
-  </p-table>
+  <p-tabView (onChange)="changeTabView($event)">
+    <p-tabPanel header="Graphiques">
+      <p-tabMenu
+        #menuItems
+        [model]="steps"
+        [activeItem]="activeStep"
+        (click)="activateMenu()"
+      ></p-tabMenu>
+      <div class="flex mt-1 w-full justify-content-center">
+        <p-chart
+          class="flex-1"
+          type="line"
+          [data]="userChart"
+          [responsive]="true"
+        ></p-chart>
+        <p-divider layout="vertical"></p-divider>
+        <p-chart
+          class="flex-1"
+          type="line"
+          [data]="subscriptionChart"
+          [responsive]="true"
+        ></p-chart>
+      </div>
+      <p-divider class="w-full"></p-divider>
+      <div class="flex mt-1 w-full justify-content-center">
+        <p-chart
+          class="w-6 flex-1"
+          type="line"
+          [data]="salesChart"
+          [responsive]="true"
+        ></p-chart>
+        <p-divider layout="vertical"></p-divider>
+        <div
+          *ngIf="countUserOnCurrentMonth"
+          class="w-6 flex-1 text-center flex justify-content-center align-items-center flex-column"
+        >
+          <h2>Nouveaux visiteurs pour le mois courant :</h2>
+          <h1
+            [innerText]="countUserOnCurrentMonth.number"
+            style="color: var(--primary-color)"
+          ></h1>
+        </div>
+      </div>
+      <p-divider class="w-full"></p-divider>
+    </p-tabPanel>
+
+    <p-tabPanel header="Liste utilisateurs">
+      <h3>Liste des utilisateurs :</h3>
+
+      <p-table
+        [value]="users"
+        dataKey="id"
+        responsiveLayout="scroll"
+        editMode="row"
+      >
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Nom</th>
+            <th>Prénom</th>
+            <th>Adresse mail</th>
+            <th>Actions</th>
+          </tr>
+        </ng-template>
+        <ng-template
+          pTemplate="body"
+          let-user
+          let-editing="editing"
+          let-ri="rowIndex"
+        >
+          <tr [pEditableRow]="user">
+            <td>
+              <p-cellEditor>
+                <ng-template pTemplate="input">
+                  <input pInputText type="text" [(ngModel)]="user.lastname" />
+                </ng-template>
+                <ng-template pTemplate="output">
+                  {{ user.lastname }}
+                </ng-template>
+              </p-cellEditor>
+            </td>
+            <td>
+              <p-cellEditor>
+                <ng-template pTemplate="input">
+                  <input pInputText type="text" [(ngModel)]="user.firstname" />
+                </ng-template>
+                <ng-template pTemplate="output">
+                  {{ user.firstname }}
+                </ng-template>
+              </p-cellEditor>
+            </td>
+            <td>{{ user.email }}</td>
+            <td style="text-align: center">
+              <button
+                *ngIf="!editing"
+                pButton
+                pRipple
+                type="button"
+                pInitEditableRow
+                icon="pi pi-pencil"
+                (click)="onRowEditInitUser(user)"
+                class="p-button-rounded p-button-text"
+              ></button>
+              <button
+                *ngIf="editing"
+                pButton
+                pRipple
+                type="button"
+                pSaveEditableRow
+                icon="pi pi-check"
+                (click)="onRowEditSaveUser(user)"
+                class="p-button-rounded p-button-text p-button-success mr-2"
+              ></button>
+              <button
+                *ngIf="editing"
+                pButton
+                pRipple
+                type="button"
+                pCancelEditableRow
+                icon="pi pi-times"
+                (click)="onRowEditCancelUser(user, ri)"
+                class="p-button-rounded p-button-text p-button-danger"
+              ></button>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </p-tabPanel>
+
+    <p-tabPanel header="Gestion des offres">
+      <div class="card">
+        <p-toolbar styleClass="mb-4">
+          <ng-template pTemplate="left">
+            <button
+              pButton
+              pRipple
+              label="Nouveau"
+              icon="pi pi-plus"
+              class="p-button-success mr-2"
+              (click)="openNew()"
+            ></button>
+            <button
+              pButton
+              pRipple
+              label="Supprimer"
+              icon="pi pi-trash"
+              class="p-button-danger"
+              (click)="deleteSelectedProducts()"
+              [disabled]="!selectedPlans || !selectedPlans.length"
+            ></button>
+          </ng-template>
+        </p-toolbar>
+
+        <p-table
+          [value]="plans"
+          dataKey="id"
+          responsiveLayout="scroll"
+          editMode="row"
+          [(selection)]="selectedPlans"
+          [rowHover]="true"
+          currentPageReportTemplate="Affichage de {first} à {last} sur {totalRecords} entrées"
+          [showCurrentPageReport]="true"
+        >
+          <ng-template pTemplate="caption">
+            <div class="flex align-items-center justify-content-between">
+              <h5 class="m-0">Gérer les plans</h5>
+            </div>
+          </ng-template>
+          <ng-template pTemplate="header">
+            <tr>
+              <th style="width: 3rem">
+                <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+              </th>
+              <th>Nom</th>
+              <th>Prix (en cts)</th>
+              <th>Id du produit Stripe</th>
+              <th>Id du prix du produit Stripe</th>
+              <th>Action</th>
+            </tr>
+          </ng-template>
+          <ng-template
+            pTemplate="body"
+            let-plan
+            let-ri="rowIndex"
+            let-editing="editing"
+          >
+            <tr [pEditableRow]="plan">
+              <td>
+                <p-tableCheckbox [value]="plan"></p-tableCheckbox>
+              </td>
+              <td>
+                <p-cellEditor>
+                  <ng-template pTemplate="input">
+                    <input
+                      pInputText
+                      type="text"
+                      [(ngModel)]="plan.name"
+                      [required]="true"
+                    />
+                  </ng-template>
+                  <ng-template pTemplate="output">
+                    {{ plan.name }}
+                  </ng-template>
+                </p-cellEditor>
+              </td>
+              <td>
+                <p-cellEditor>
+                  <ng-template pTemplate="input">
+                    <p-inputNumber
+                      [(ngModel)]="plan.price"
+                      mode="currency"
+                      currency="EUR"
+                      locale="fr-fr"
+                      [required]="true"
+                      [min]="0"
+                    >
+                    </p-inputNumber>
+                  </ng-template>
+                  <ng-template pTemplate="output">
+                    {{ plan.price }}
+                  </ng-template>
+                </p-cellEditor>
+              </td>
+              <td>
+                <p-cellEditor>
+                  <ng-template pTemplate="input">
+                    <input
+                      pInputText
+                      type="text"
+                      [(ngModel)]="plan.stripeProductId"
+                      [required]="true"
+                    />
+                  </ng-template>
+                  <ng-template pTemplate="output">
+                    {{ plan.stripeProductId }}
+                  </ng-template>
+                </p-cellEditor>
+              </td>
+              <td>
+                <p-cellEditor>
+                  <ng-template pTemplate="input">
+                    <input
+                      pInputText
+                      type="text"
+                      [(ngModel)]="plan.stripeProductPriceId"
+                      [required]="true"
+                    />
+                  </ng-template>
+                  <ng-template pTemplate="output">
+                    {{ plan.stripeProductPriceId }}
+                  </ng-template>
+                </p-cellEditor>
+              </td>
+              <td style="text-align: center">
+                <button
+                  *ngIf="!editing"
+                  pButton
+                  pRipple
+                  type="button"
+                  pInitEditableRow
+                  icon="pi pi-pencil"
+                  (click)="onRowEditInitPlan(plan)"
+                  class="p-button-rounded p-button-text"
+                ></button>
+                <button
+                  *ngIf="editing"
+                  pButton
+                  pRipple
+                  type="button"
+                  pSaveEditableRow
+                  icon="pi pi-check"
+                  (click)="onRowEditSavePlan(plan)"
+                  class="p-button-rounded p-button-text p-button-success mr-2"
+                ></button>
+                <button
+                  *ngIf="editing"
+                  pButton
+                  pRipple
+                  type="button"
+                  pCancelEditableRow
+                  icon="pi pi-times"
+                  (click)="onRowEditCancelPlan(plan, ri)"
+                  class="p-button-rounded p-button-text p-button-danger"
+                ></button>
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>
+    </p-tabPanel>
+  </p-tabView>
 </div>
+
+<p-dialog
+  [(visible)]="planDialog"
+  [style]="{ width: '450px' }"
+  header="Product Details"
+  [modal]="true"
+  styleClass="p-fluid"
+>
+  <ng-template pTemplate="content">
+    <form [formGroup]="form" novalidate class="form-group">
+      <div class="field">
+        <label for="name">Nom</label>
+        <input
+          type="text"
+          pInputText
+          id="name"
+          formControlName="name"
+          [required]="true"
+          [ngClass]="{
+            'ng-invalid ng-dirty':
+              form.controls.name.touched && form.controls.name.invalid
+          }"
+        />
+        <small
+          class="p-error"
+          *ngIf="
+            form.controls.name.touched && form.controls.name.errors?.required
+          "
+        >
+          Le nom est requis
+        </small>
+      </div>
+      <div class="field">
+        <label for="price">Prix</label>
+        <p-inputNumber
+          formControlName="price"
+          [min]="0"
+          mode="currency"
+          currency="EUR"
+          locale="fr-fr"
+          [required]="true"
+        >
+        </p-inputNumber>
+        <small
+          class="p-error"
+          *ngIf="
+            form.controls.price.touched && form.controls.price.errors?.required
+          "
+        >
+          Le prix est requis </small
+        ><small
+          class="p-error"
+          *ngIf="form.controls.price.touched && form.controls.price.errors?.min"
+        >
+          Le prix doit être suppérieur à 1
+        </small>
+      </div>
+      <div class="field">
+        <label for="stripeProductId">Id du produit Stripe</label>
+        <input
+          type="text"
+          pInputText
+          id="stripeProductId"
+          formControlName="stripeProductId"
+          [required]="true"
+          [ngClass]="{
+            'ng-invalid ng-dirty':
+              form.controls.stripeProductId.touched &&
+              form.controls.stripeProductId.invalid
+          }"
+        />
+        <small
+          class="p-error"
+          *ngIf="
+            form.controls.stripeProductId.touched &&
+            form.controls.stripeProductId.errors?.required
+          "
+        >
+          L'id du produit Stripe est requis
+        </small>
+      </div>
+      <div class="field">
+        <label for="stripeProductPriceId">Id du prix du produit Stripe </label>
+        <input
+          type="text"
+          pInputText
+          id="stripeProductPriceId"
+          formControlName="stripeProductPriceId"
+          [required]="true"
+          [ngClass]="{
+            'ng-invalid ng-dirty':
+              form.controls.stripeProductPriceId.touched &&
+              form.controls.stripeProductPriceId.invalid
+          }"
+        />
+        <small
+          class="p-error"
+          *ngIf="
+            form.controls.stripeProductPriceId.touched &&
+            form.controls.stripeProductPriceId.errors?.required
+          "
+        >
+          L'id du prix du produit Stripe est requis
+        </small>
+      </div>
+    </form>
+  </ng-template>
+  <ng-template pTemplate="footer">
+    <button
+      #cancelButton
+      pButton
+      pRipple
+      label="Annuler"
+      icon="pi pi-times"
+      class="p-button-text"
+      (click)="hideNewDialog()"
+    ></button>
+    <button
+      #saveButton
+      pButton
+      pRipple
+      label="Sauvegarder"
+      icon="pi pi-check"
+      class="p-button-text"
+      (click)="saveProduct()"
+    ></button>
+  </ng-template>
+</p-dialog>

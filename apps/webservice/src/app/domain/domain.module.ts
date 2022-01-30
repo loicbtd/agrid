@@ -1,15 +1,12 @@
 import { EmailsService } from './services/emails.service';
 import { PlansService } from './services/plans.service';
 import { JwtModule } from '@nestjs/jwt';
-import { Global, Module } from '@nestjs/common';
+import { Global, Module, Scope } from '@nestjs/common';
 import { HttpModule } from '@nestjs/axios';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import {
   PlanEntity,
-  ServiceIncludedInPlanEntity,
-  ServiceEntity,
   SubscriptionEntity,
-  SupportTypeEntity,
   UserEntity,
   OrganizationTypeEntity,
   OrganizationEntity,
@@ -24,6 +21,8 @@ import { SupportService } from './services/support.service';
 import { SubscriptionService } from './services/subscriptions.service';
 import { ProfilesService } from './services/profiles.service';
 import { InitialSetupService } from './services/initial-setup.service';
+import Stripe from 'stripe';
+import { STRIPE } from './constants/provider-names.constant';
 
 const SERVICES = [
   EmailsService,
@@ -43,10 +42,7 @@ const ENTITIES = [
   OrganizationTypeEntity,
   OrganizationEntity,
   PlanEntity,
-  ServiceIncludedInPlanEntity,
-  ServiceEntity,
   SubscriptionEntity,
-  SupportTypeEntity,
   UserEntity,
 ];
 
@@ -78,7 +74,15 @@ const ENTITIES = [
     }),
     TypeOrmModule.forFeature([...ENTITIES]),
   ],
-  providers: [...SERVICES, ...STRATEGIES],
+  providers: [
+    ...SERVICES,
+    ...STRATEGIES,
+    {
+      provide: STRIPE,
+      useValue: new Stripe(environment.stripeSecretKey, null),
+      scope: Scope.DEFAULT,
+    },
+  ],
   exports: [
     ...SERVICES,
     ...STRATEGIES,
