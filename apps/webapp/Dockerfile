@@ -1,8 +1,9 @@
 FROM node:16.13.1-alpine AS builder
-COPY . /app
-WORKDIR /app
+COPY . /solution
+WORKDIR /solution
 RUN npm install && npm run postinstall
-RUN npx nx build webapp --configuration=development
+RUN npm run nx build -- webapp --configuration=production
 
 FROM nginx:1.20-alpine
-COPY --from=builder /app/dist/apps/webapp /usr/share/nginx/html
+COPY --from=builder /solution/dist/apps/webapp /usr/share/nginx/html
+EXPOSE 80

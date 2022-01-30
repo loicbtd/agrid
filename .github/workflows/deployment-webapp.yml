@@ -13,9 +13,7 @@ jobs:
       - uses: actions/checkout@v2
       - name: docker login
         run: echo ${{ secrets.REGISTRY_PASSWORD }} | docker login https://registry.agrid.ml/v2 -u ${{ secrets.REGISTRY_USERNAME }} --password-stdin
-      # - name: docker build
-      #   run: docker build -t :latest .
-      # - name: Tag the Docker image
-      #   run: docker tag myimage:latest myimage:1.0
-      # - name: Push the Docker image to the registry
-      #   run: docker push myimage:1.0
+      - name: docker build
+        run: docker build -f apps/webapp -t registry.agrid.ml/agrid-webapp:$(git rev-parse --short "$GITHUB_SHA") -t registry.agrid.ml/agrid-webapp:latest .
+      - name: docker push
+        run: docker push registry.agrid.ml/agrid-webapp --all-tags
