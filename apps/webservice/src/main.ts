@@ -53,7 +53,7 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
   app.register(fastifyHelmet, { contentSecurityPolicy: false });
 
-  await app.listen(environment.port);
+  await app.listen(environment.port, environment.host);
 
   app
     .get(Logger)
