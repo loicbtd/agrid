@@ -5,11 +5,9 @@
   "scripts": {
     "typeorm": "ts-node -P ./migrations/tsconfig.json --transpile-only -r tsconfig-paths/register ./node_modules/typeorm/cli.js",
     "nx": "nx",
-    "start:step1": "nx serve webservice",
-    "start:step2": "wait-on tcp:3333 && nx serve webapp",
-    "start": "run-p start:step1 start:step2",
-    "webapp": "nx serve webapp",
-    "webservice": "nx serve webservice",
+    "start": "run-p webapp webservice",
+    "webapp": "nx serve webapp --configuration=development",
+    "webservice": "nx serve webservice --configuration=development",
     "postinstall": "ngcc --properties es2015 browser module main"
   },
   "private": true,

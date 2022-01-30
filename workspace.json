@@ -278,8 +278,7 @@
               "optimization": false,
               "vendorChunk": true,
               "extractLicenses": false,
-              "sourceMap": true,
-              "namedChunks": true
+              "sourceMap": true
             },
             "production": {
               "fileReplacements": [
@@ -302,14 +301,14 @@
         "serve": {
           "executor": "@angular-devkit/build-angular:dev-server",
           "configurations": {
-            "production": {
-              "browserTarget": "webapp:build:production"
-            },
             "development": {
               "browserTarget": "webapp:build:development"
+            },
+            "production": {
+              "browserTarget": "webapp:build:production"
             }
           },
-          "defaultConfiguration": "development"
+          "defaultConfiguration": "production"
         },
         "extract-i18n": {
           "executor": "@angular-devkit/build-angular:extract-i18n",
@@ -364,6 +363,10 @@
           "executor": "@nrwl/node:execute",
           "options": {
             "buildTarget": "webservice:build"
+          },
+          "configurations": {
+            "development": {},
+            "production": {}
           }
         },
         "lint": {
