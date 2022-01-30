@@ -1,5 +1,12 @@
 import { UserEntity } from '../lib/user.entity';
-import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 import { PlanEntity } from './plan.entity';
 
 @Entity('subscription')
@@ -22,4 +29,6 @@ export class SubscriptionEntity {
   @Column()
   stripeSubscriptionId: string;
 
+  @Column()
+  active: boolean;
 }
