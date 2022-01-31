@@ -1,4 +1,4 @@
-import { ErrorHandler, NgModule } from '@angular/core';
+import { APP_INITIALIZER, ErrorHandler, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppComponent } from './app.component';
@@ -8,6 +8,7 @@ import { AppRoute } from './global/constants/app-route.constant';
 import { NgxsModule, Store } from '@ngxs/store';
 import { NgxsStoragePluginModule } from '@ngxs/storage-plugin';
 import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
+import { NgxsRouterPluginModule } from '@ngxs/router-plugin';
 import { environment } from '../environments/environment';
 import { StripeConfigurationState } from './global/store/state/stripe-configuration.state';
 import {
@@ -23,8 +24,18 @@ import { MyProfileState } from './global/store/state/my-profile.state';
 import { JwtState } from './global/store/state/jwt.state';
 import { JwtInterceptor } from './global/interceptors/jwt.interceptor';
 import { ToastMessageService } from './global/services/toast-message.service';
+import { VisitedRoutesHistoryService } from './global/services/visited-routes-history.service';
+import { VisitedRoutesHistoryState } from './global/store/state/visited-routes-history.state';
 
-const states = [JwtState, MyProfileState, PlansState, StripeConfigurationState];
+const states = [
+  JwtState,
+  MyProfileState,
+  PlansState,
+  StripeConfigurationState,
+  VisitedRoutesHistoryState,
+];
+
+const persistedStates = [JwtState, MyProfileState];
 
 export function createTranslateLoader(httpClient: HttpClient) {
   return new TranslateHttpLoader(
@@ -124,8 +135,9 @@ export function createJwtInterceptor(store: Store) {
     NgxsModule.forRoot(states, {
       developmentMode: !environment.production,
     }),
-    NgxsStoragePluginModule.forRoot({ key: [JwtState, MyProfileState] }),
+    NgxsStoragePluginModule.forRoot({ key: persistedStates }),
     NgxsReduxDevtoolsPluginModule.forRoot({ disabled: environment.production }),
+    NgxsRouterPluginModule.forRoot(),
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -137,6 +149,12 @@ export function createJwtInterceptor(store: Store) {
   ],
   bootstrap: [AppComponent],
   providers: [
+    {
+      provide: APP_INITIALIZER,
+      useFactory: () => () => null,
+      deps: [VisitedRoutesHistoryService],
+      multi: true,
+    },
     {
       provide: ErrorHandler,
       useFactory: createErrorsHandler,

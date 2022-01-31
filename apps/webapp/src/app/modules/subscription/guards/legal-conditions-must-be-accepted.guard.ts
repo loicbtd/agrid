@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {
   ActivatedRouteSnapshot,
   CanActivate,
+  Router,
   RouterStateSnapshot,
   UrlTree,
 } from '@angular/router';
@@ -14,7 +15,7 @@ import { SubscriptionState } from '../store/state/subscription.state';
   providedIn: 'root',
 })
 export class LegalConditionsMustBeAcceptedGuard implements CanActivate {
-  constructor(private readonly store: Store) {}
+  constructor(private readonly store: Store, private readonly router: Router) {}
 
   canActivate(
     _route: ActivatedRouteSnapshot,
@@ -28,7 +29,7 @@ export class LegalConditionsMustBeAcceptedGuard implements CanActivate {
       this.store.selectSnapshot<SubscriptionModel>(SubscriptionState);
 
     if (!subscribeState.legalConditionsAccepted) {
-      return false;
+      return this.router.createUrlTree(['/errors/access-denied']);
     }
 
     return true;
