@@ -5,6 +5,7 @@ import { ImpossibleToSigninError } from '../../global/errors/impossible-to-signi
 import { SigninService } from './signin.service';
 
 @Component({
+  selector:'app-signin',
   styles: [
     `
       :host ::ng-deep {
@@ -26,6 +27,7 @@ import { SigninService } from './signin.service';
   template: `
     <div
       class="surface-card flex align-items-center justify-content-center min-h-screen min-w-screen overflow-hidden"
+      style="background:#faf6ca;"
     >
       <div
         class="grid justify-content-center p-2 lg:p-0"
@@ -48,7 +50,7 @@ import { SigninService } from './signin.service';
         >
           <div
             class="surface-card h-full w-full m-0 py-7 px-4"
-            style="border-radius: 53px"
+            style="border-radius: 53px ;background:#faf6ca;"
           >
             <div class="text-center mb-5">
               <div class="text-900 text-3xl font-medium mb-3">Bienvenue !</div>

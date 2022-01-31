@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-landing',
@@ -6,11 +6,7 @@ import { Component } from '@angular/core';
   styles: [
     `
       .footer-section {
-        background: radial-gradient(
-          77.36% 256.97% at 77.36% 57.52%,
-          #4bc714 0%,
-          #e8be28 100%
-        );
+        ;
       }
       #hero {
         background: linear-gradient(
@@ -62,8 +58,15 @@ import { Component } from '@angular/core';
   ],
   styleUrls: ['./landing-page.component.scss'],
 })
-export class LandingPageComponent {
+export class LandingPageComponent implements OnInit{
   displayMobileMenu = true;
 
   themeElement: any;
+
+  display: boolean;
+
+  ngOnInit() {
+    this.display = false;
+  }
+
 }
