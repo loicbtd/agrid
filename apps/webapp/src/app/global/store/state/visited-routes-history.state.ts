@@ -10,8 +10,8 @@ import { Remember } from '../actions/visited-routes-history.actions';
 export class VisitedRoutesHistoryState {
   @Action(Remember)
   remember(context: StateContext<string[]>, action: Remember) {
-    if (context.getState().length > 4) {
-      context.setState([...context.getState().slice(-4), action.url]);
+    if (context.getState().length > 10) {
+      context.setState([...context.getState().slice(-10), action.url]);
     } else {
       context.setState([...context.getState(), action.url]);
     }

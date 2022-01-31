@@ -1,4 +1,8 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { Store } from '@ngxs/store';
+import { GoBackService } from 'apps/webapp/src/app/global/services/go-back.service';
+import { VisitedRoutesHistoryState } from 'apps/webapp/src/app/global/store/state/visited-routes-history.state';
 
 @Component({
   template: `
@@ -29,14 +33,20 @@ import { Component } from '@angular/core';
                 semble pas normal, veuillez contacter le support.</span
               >
               <div class="col-12 mt-5 text-center">
-                <i
-                  class="pi pi-fw pi-arrow-left text-blue-500 mr-2"
-                  style="vertical-align:center;"
-                ></i
-                >
-                <a [routerLink]="['/showcase']" class="text-blue-500"
-                  >Aller à l'accueil</a
-                >
+                <p-button
+                  pRipple
+                  styleClass="p-button-rounded p-button-warning mr-2"
+                  icon="pi pi-home"
+                  label="Accueil"
+                  [routerLink]="['/showcase']"
+                ></p-button>
+                <p-button
+                  pRipple
+                  icon="pi pi-arrow-left"
+                  label="Retour"
+                  styleClass="p-button-rounded p-button-warning p-button-text"
+                  (click)="goBack()"
+                ></p-button>
               </div>
             </div>
           </div>
@@ -45,4 +55,10 @@ import { Component } from '@angular/core';
     </div>
   `,
 })
-export class AccessDeniedComponent {}
+export class AccessDeniedComponent {
+  constructor(private readonly goBackService: GoBackService) {}
+
+  goBack() {
+    this.goBackService.goBack();
+  }
+}
