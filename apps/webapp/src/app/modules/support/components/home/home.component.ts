@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { ToastMessageService } from '../../../../global/services/toast-message.service';
+import { environment } from '../../../../../environments/environment';
+import { Router } from '@angular/router';
 declare global {
   interface Window {
     chatwootSDK?: any;
@@ -10,9 +13,15 @@ declare global {
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
-  ngOnInit(): void {
+  isChatwootLoaded = false;
+
+  constructor(
+    private readonly toastService: ToastMessageService,
+    private readonly router: Router
+  ) {}
+
+  async ngOnInit(): Promise<void> {
     const t = 'script';
-    const BASE_URL = 'https://support.agrid.ml';
     const g = document.createElement(t),
       s = document.getElementsByTagName(t)[0];
     g.src = '/assets/js/chatwoot_sdk.js';
@@ -22,15 +31,22 @@ export class HomeComponent implements OnInit {
     g.onload = function () {
       if (window.chatwootSDK) {
         window.chatwootSDK.run({
-          websiteToken: 'JDtptbJgfyAYjLJkTUW6eegv',
-          baseUrl: BASE_URL,
+          websiteToken: environment.chatwootEnvironmentToken,
+          baseUrl: environment.chatwootBaseUrl,
         });
       }
     };
-
     window.addEventListener('chatwoot:ready', function () {
-      console.log('antho le bg');
-      window.$chatwoot.toggle('open'); // To open widget
+      window.$chatwoot.toggle('open');
     });
+    await new Promise((resolve) => setTimeout(resolve, 3000));
+    if (!window.$chatwoot.hasLoaded) {
+      this.toastService.showWarning(
+        'La discussion en temps réel ne peut pas être chargée. Vous pouvez nous contacter via le formulaire'
+      );
+      this.router.navigate(['/support/contact']);
+    } else {
+      this.isChatwootLoaded = true;
+    }
   }
 }

@@ -8,4 +8,6 @@ export const environment = {
     .toUpperCase()}${packageDotJson.name.slice(1).split('-').join(' ')}`,
   version: packageDotJson.version,
   webserviceOrigin: 'https://api.agrid.ml',
+  chatwootBaseUrl: 'https://support.agrid.ml',
+  chatwootEnvironmentToken: 'JDtptbJgfyAYjLJkTUW6eegv',
 };

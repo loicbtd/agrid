@@ -163,7 +163,7 @@ export class SubscriptionService {
     return await this.subscriptionsRepository
       .createQueryBuilder('subscription')
       .select('COUNT(subscription.id) AS number')
-      .addSelect(`to_char(date(subscription.creationDate),'${format}') as date`)
+      .addSelect(`to_char(date(subscription.createdAt),'${format}') as date`)
       .groupBy('date')
       .orderBy('date')
       .execute();
@@ -186,15 +186,15 @@ export class SubscriptionService {
     return await this.subscriptionsRepository
       .createQueryBuilder('subscription')
       .select(
-        `to_char(generate_series(subscription.creationDate, NOW(), interval  '1 ${filter}')::date,'${format}') as date`
+        `to_char(generate_series(subscription.createdAt, NOW(), interval  '1 ${filter}')::date,'${format}') as date`
       )
       .addSelect('sum(p.price) as number')
       .innerJoin('subscription.plan', 'p')
       .groupBy(
-        `to_char(generate_series(subscription.creationDate, NOW(), interval  '1 ${filter}')::date,'${format}')`
+        `to_char(generate_series(subscription.createdAt, NOW(), interval  '1 ${filter}')::date,'${format}')`
       )
       .orderBy(
-        `to_char(generate_series(subscription.creationDate, NOW(), interval  '1 ${filter}')::date,'${format}')`
+        `to_char(generate_series(subscription.createdAt, NOW(), interval  '1 ${filter}')::date,'${format}')`
       )
       .execute();
   }
