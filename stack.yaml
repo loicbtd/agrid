@@ -246,5 +246,3 @@ services:
       - ENABLE_PUSH_RELAY_SERVER=${ENABLE_PUSH_RELAY_SERVER}
     volumes:
       - /data/redis:/data
-    ports:
-      - "6379:6379"
