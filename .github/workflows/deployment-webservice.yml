@@ -1,9 +1,9 @@
-name: "[Deployment] webservice"
+name: '[Deployment] webservice'
 on:
   push:
-    branches: [master, deployment/production]
+    branches: [deployment/production]
   pull_request:
-    branches: [master, deployment/production]
+    branches: [deployment/production]
 
 jobs:
   build:
