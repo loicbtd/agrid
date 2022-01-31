@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-my-profile',
-  templateUrl: './my-profile.component.html',
+  template: `<router-outlet></router-outlet>`,
 })
 export class MyProfileComponent {}

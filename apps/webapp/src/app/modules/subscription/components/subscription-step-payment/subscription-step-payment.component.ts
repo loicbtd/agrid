@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Stripe, StripeElements } from '@stripe/stripe-js';
-import { SubscriptionRoutes } from '../../constants/subscription-route.constant';
+import { subscriptionRoutes } from '../../constants/subscription-routes.constant';
 import { SubscriptionService } from '../../services/subscription.service';
 
 @Component({
@@ -50,7 +50,7 @@ export class SubscriptionStepPaymentComponent implements OnInit {
       this.stripeElements
     );
 
-    this.router.navigate(['..', SubscriptionRoutes.summary], {
+    this.router.navigate(['..', subscriptionRoutes.summary], {
       relativeTo: this.activatedRoute,
     });
   }

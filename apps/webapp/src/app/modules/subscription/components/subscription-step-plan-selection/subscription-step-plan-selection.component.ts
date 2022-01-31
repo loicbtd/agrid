@@ -8,7 +8,7 @@ import { lastValueFrom, Observable } from 'rxjs';
 import { UpdateSelectedPlanId } from '../../store/actions/subscription.actions';
 import { SubscriptionState } from '../../store/state/subscription.state';
 import { SubscribeRequest } from '@workspace/common/requests';
-import { SubscriptionRoutes } from '../../constants/subscription-route.constant';
+import { subscriptionRoutes } from '../../constants/subscription-routes.constant';
 
 @Component({
   template: `
@@ -127,7 +127,7 @@ export class SubscriptionStepPlanSelectionComponent implements OnInit {
 
     await lastValueFrom(this.store.dispatch(new UpdateSelectedPlanId(plan.id)));
 
-    this.router.navigate(['..', SubscriptionRoutes.legal], {
+    this.router.navigate(['..', subscriptionRoutes.legal], {
       relativeTo: this.activatedRoute,
     });
   }

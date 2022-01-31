@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-legal',
-  templateUrl: './legal.component.html',
+  template: `<router-outlet></router-outlet>`,
 })
 export class LegalComponent {}

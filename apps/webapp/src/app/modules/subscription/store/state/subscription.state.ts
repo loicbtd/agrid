@@ -11,10 +11,10 @@ import { SubscriptionModel } from '../../models/subscription.model';
 @State<SubscriptionModel>({
   name: 'SubscriptionState',
   defaults: {
-    email: 'test@test.fr',
-    firstname: 'test',
-    lastname: 'test',
-    planId: 'ec6095b6-eb64-4e66-85a6-4589cee561bd',
+    email: '',
+    firstname: '',
+    lastname: '',
+    planId: '',
     legalConditionsAccepted: false,
   },
 })

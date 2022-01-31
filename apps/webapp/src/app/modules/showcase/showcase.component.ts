@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-showcase',
-  templateUrl: './showcase.component.html',
+  template: `<router-outlet></router-outlet>`,
 })
 export class ShowcaseComponent {}

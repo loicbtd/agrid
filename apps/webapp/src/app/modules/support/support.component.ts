@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 
 @Component({
-  templateUrl: './support.component.html',
+  template: `
+    <p-toast key="support-toast"></p-toast>
+    <router-outlet></router-outlet>
+  `,
 })
 export class SupportComponent {}

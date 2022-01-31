@@ -4,7 +4,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppComponent } from './app.component';
 import { RouterModule } from '@angular/router';
 import { SharedModule } from './shared.module';
-import { AppRoute } from './global/constants/app-route.constant';
+import { appRoutes } from './global/constants/app-route.constant';
 import { NgxsModule, Store } from '@ngxs/store';
 import { NgxsStoragePluginModule } from '@ngxs/storage-plugin';
 import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
@@ -64,61 +64,61 @@ export function createJwtInterceptor(store: Store) {
     RouterModule.forRoot(
       [
         {
-          path: AppRoute.showcase,
+          path: appRoutes.showcase,
           loadChildren: () =>
             import('./modules/showcase/showcase.module').then(
               (m) => m.ShowcaseModule
             ),
         },
         {
-          path: AppRoute.legal,
+          path: appRoutes.legal,
           loadChildren: () =>
             import('./modules/legal/legal.module').then((m) => m.LegalModule),
         },
         {
-          path: AppRoute.support,
+          path: appRoutes.support,
           loadChildren: () =>
             import('./modules/support/support.module').then(
               (m) => m.SupportModule
             ),
         },
         {
-          path: AppRoute.subscription,
+          path: appRoutes.subscription,
           loadChildren: () =>
             import('./modules/subscription/subscription.module').then(
               (m) => m.SubsriptionModule
             ),
         },
         {
-          path: AppRoute.signin,
+          path: appRoutes.signin,
           loadChildren: () =>
             import('./modules/signin/signin.module').then(
               (m) => m.SigninModule
             ),
         },
         {
-          path: AppRoute.initialSetup,
+          path: appRoutes.initialSetup,
           loadChildren: () =>
             import('./modules/initial-setup/initial-setup.module').then(
               (m) => m.InitialSetupModule
             ),
         },
         {
-          path: AppRoute.administration,
+          path: appRoutes.administration,
           loadChildren: () =>
             import('./modules/administration/administration.module').then(
               (m) => m.AdministrationModule
             ),
         },
         {
-          path: AppRoute.myProfile,
+          path: appRoutes.myProfile,
           loadChildren: () =>
             import('./modules/my-profile/my-profile.module').then(
               (m) => m.MyProfileModule
             ),
         },
         {
-          path: AppRoute.errors,
+          path: appRoutes.errors,
           loadChildren: () =>
             import('./modules/errors/errors.module').then(
               (m) => m.ErrorsModule
@@ -126,7 +126,7 @@ export function createJwtInterceptor(store: Store) {
         },
         {
           path: '**',
-          redirectTo: AppRoute.showcase,
+          redirectTo: appRoutes.showcase,
         },
       ],
       { initialNavigation: 'enabledBlocking', useHash: true }

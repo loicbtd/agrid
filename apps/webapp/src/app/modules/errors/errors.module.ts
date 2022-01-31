@@ -3,7 +3,7 @@ import { SharedModule } from '../../shared.module';
 import { RouterModule } from '@angular/router';
 import { AccessDeniedComponent } from './components/access-denied/access-denied.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
-import { ErrorsRoute } from './constants/errors-route.constant';
+import { errorsRoutes } from './constants/errors-routes.constant';
 import { ErrorPagesComponent } from './errors.component';
 
 @NgModule({
@@ -17,16 +17,16 @@ import { ErrorPagesComponent } from './errors.component';
         component: ErrorPagesComponent,
         children: [
           {
-            path: ErrorsRoute.accessDenied,
+            path: errorsRoutes.accessDenied,
             component: AccessDeniedComponent,
           },
           {
-            path: ErrorsRoute.notFound,
+            path: errorsRoutes.notFound,
             component: NotFoundComponent,
           },
           {
             path: '**',
-            redirectTo: ErrorsRoute.notFound,
+            redirectTo: errorsRoutes.notFound,
           },
         ],
       },

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
-import { SubscriptionRoutes } from '../../constants/subscription-route.constant';
+import { subscriptionRoutes } from '../../constants/subscription-routes.constant';
 import { SubscriptionModel } from '../../models/subscription.model';
 import { UpdateLegalConditionsAcceptation } from '../../store/actions/subscription.actions';
 import { SubscriptionState } from '../../store/state/subscription.state';
@@ -64,7 +64,7 @@ export class SubscriptionStepLegalConditionsAcceptationComponent
   }
 
   goToNextStep() {
-    this.router.navigate(['..', SubscriptionRoutes.userInformation], {
+    this.router.navigate(['..', subscriptionRoutes.userInformation], {
       relativeTo: this.activatedRoute,
     });
   }

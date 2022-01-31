@@ -10,7 +10,7 @@ import { SubscriptionState } from './store/state/subscription.state';
 import { PlanMustBeSelectedGuard } from './guards/plan-must-be-selected.guard';
 import { UserInformationMustBeCompletedGuard } from './guards/user-information-must-be-completed.guard';
 import { SubscriptionStepSummaryComponent } from './components/subscription-step-summary/subscription-step-summary.component';
-import { SubscriptionRoutes } from './constants/subscription-route.constant';
+import { subscriptionRoutes } from './constants/subscription-routes.constant';
 import { SubscriptionStepLegalConditionsAcceptationComponent } from './components/subscription-step-legal-conditions-acceptation/subscription-step-legal-conditions-acceptation.component';
 import { LegalConditionsMustBeAcceptedGuard } from './guards/legal-conditions-must-be-accepted.guard';
 import { PaymentStatusMustBeDefinedGuard } from './guards/payment-status-must-be-defined.guard';
@@ -33,16 +33,16 @@ import { PaymentStatusMustBeDefinedGuard } from './guards/payment-status-must-be
         component: SubscriptionComponent,
         children: [
           {
-            path: SubscriptionRoutes.planSelection,
+            path: subscriptionRoutes.planSelection,
             component: SubscriptionStepPlanSelectionComponent,
           },
           {
-            path: SubscriptionRoutes.legal,
+            path: subscriptionRoutes.legal,
             component: SubscriptionStepLegalConditionsAcceptationComponent,
             canActivate: [PlanMustBeSelectedGuard],
           },
           {
-            path: SubscriptionRoutes.userInformation,
+            path: subscriptionRoutes.userInformation,
             component: SubscriptionStepUserInformationComponent,
             canActivate: [
               PlanMustBeSelectedGuard,
@@ -50,7 +50,7 @@ import { PaymentStatusMustBeDefinedGuard } from './guards/payment-status-must-be
             ],
           },
           {
-            path: SubscriptionRoutes.payment,
+            path: subscriptionRoutes.payment,
             component: SubscriptionStepPaymentComponent,
             canActivate: [
               PlanMustBeSelectedGuard,
@@ -59,7 +59,7 @@ import { PaymentStatusMustBeDefinedGuard } from './guards/payment-status-must-be
             ],
           },
           {
-            path: SubscriptionRoutes.summary,
+            path: subscriptionRoutes.summary,
             component: SubscriptionStepSummaryComponent,
             canActivate: [
               // PlanMustBeSelectedGuard,
@@ -70,7 +70,7 @@ import { PaymentStatusMustBeDefinedGuard } from './guards/payment-status-must-be
           },
           {
             path: '**',
-            redirectTo: SubscriptionRoutes.planSelection,
+            redirectTo: subscriptionRoutes.planSelection,
           },
         ],
       },

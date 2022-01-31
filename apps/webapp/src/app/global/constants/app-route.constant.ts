@@ -1,4 +1,4 @@
-export const AppRoute = {
+export const appRoutes = {
   administration: 'administration',
   errors: 'errors',
   initialSetup: 'initial-setup',

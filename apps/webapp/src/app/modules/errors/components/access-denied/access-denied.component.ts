@@ -1,8 +1,5 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
-import { Store } from '@ngxs/store';
-import { GoBackService } from 'apps/webapp/src/app/global/services/go-back.service';
-import { VisitedRoutesHistoryState } from 'apps/webapp/src/app/global/store/state/visited-routes-history.state';
+import { GoBackService } from '../../../../global/services/go-back.service';
 
 @Component({
   template: `

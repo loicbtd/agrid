@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { GoBackService } from '../../../../global/services/go-back.service';
 
 @Component({
   styles: [
@@ -53,13 +54,20 @@ import { Component } from '@angular/core';
               </a>
 
               <div class="col-12 mt-5 text-center">
-                <i
-                  class="pi pi-fw pi-arrow-left text-blue-500 mr-2"
-                  style="vertical-align:center;"
-                ></i>
-                <a [routerLink]="['/showcase']" class="text-blue-500 decoration"
-                  >Aller à l'accueil</a
-                >
+                <p-button
+                  pRipple
+                  styleClass="p-button-rounded p-button-info mr-2"
+                  icon="pi pi-home"
+                  label="Accueil"
+                  [routerLink]="['/showcase']"
+                ></p-button>
+                <p-button
+                  pRipple
+                  icon="pi pi-arrow-left"
+                  label="Retour"
+                  styleClass="p-button-rounded p-button-info p-button-text"
+                  (click)="goBack()"
+                ></p-button>
               </div>
             </div>
           </div>
@@ -68,4 +76,10 @@ import { Component } from '@angular/core';
     </div>
   `,
 })
-export class NotFoundComponent {}
+export class NotFoundComponent {
+  constructor(private readonly goBackService: GoBackService) {}
+
+  goBack() {
+    this.goBackService.goBack();
+  }
+}

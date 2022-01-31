@@ -8,6 +8,7 @@ import {
 } from '@angular/router';
 import { Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
+import { appRoutes as appRoutes } from '../../../global/constants/app-route.constant';
 import { SubscriptionModel } from '../models/subscription.model';
 import { SubscriptionState } from '../store/state/subscription.state';
 
@@ -29,7 +30,7 @@ export class LegalConditionsMustBeAcceptedGuard implements CanActivate {
       this.store.selectSnapshot<SubscriptionModel>(SubscriptionState);
 
     if (!subscribeState.legalConditionsAccepted) {
-      return this.router.createUrlTree(['/errors/access-denied']);
+      return this.router.createUrlTree([appRoutes.errors]);
     }
 
     return true;

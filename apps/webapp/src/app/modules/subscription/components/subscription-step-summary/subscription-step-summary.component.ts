@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Select } from '@ngxs/store';
 import { Observable } from 'rxjs';
-import { SubscriptionRoutes } from '../../constants/subscription-route.constant';
+import { subscriptionRoutes } from '../../constants/subscription-routes.constant';
 import { SubscriptionModel } from '../../models/subscription.model';
 import { SubscriptionService } from '../../services/subscription.service';
 import { SubscriptionState } from '../../store/state/subscription.state';
@@ -71,7 +71,7 @@ export class SubscriptionStepSummaryComponent {
   async retryToPay() {
     await this.subscriptionService.resetPayment();
 
-    this.router.navigate(['..', SubscriptionRoutes.payment], {
+    this.router.navigate(['..', subscriptionRoutes.payment], {
       relativeTo: this.activatedRoute,
     });
   }

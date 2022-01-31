@@ -6,7 +6,6 @@ import {
   UrlTree,
 } from '@angular/router';
 import { Store } from '@ngxs/store';
-import { SubscribeRequest } from '@workspace/common/requests';
 import { Observable } from 'rxjs';
 import { SubscriptionModel } from '../models/subscription.model';
 import { SubscriptionState } from '../store/state/subscription.state';
