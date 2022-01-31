@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Refresh } from '../actions/jwt.actions';
 
 @State<string>({
-  name: JwtState.name,
+  name: 'JwtState',
 })
 @Injectable()
 export class JwtState {

@@ -9,7 +9,7 @@ import {
 import { SubscriptionModel } from '../../models/subscription.model';
 
 @State<SubscriptionModel>({
-  name: SubscriptionState.name,
+  name: 'SubscriptionState',
   defaults: {
     email: 'test@test.fr',
     firstname: 'test',

@@ -4,7 +4,7 @@ import { Refresh } from '../actions/my-profile.actions';
 import { MyProfileModel } from '@workspace/common/models';
 
 @State<string>({
-  name: MyProfileState.name,
+  name: 'MyProfileState',
 })
 @Injectable()
 export class MyProfileState {

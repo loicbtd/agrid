@@ -4,7 +4,7 @@ import { StripeConfigurationModel } from '@workspace/common/models';
 import { Refresh } from '../actions/stripe-configuration.actions';
 
 @State<StripeConfigurationModel>({
-  name: StripeConfigurationState.name,
+  name: 'StripeConfigurationState',
   defaults: undefined,
 })
 @Injectable()

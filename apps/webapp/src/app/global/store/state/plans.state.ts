@@ -4,7 +4,7 @@ import { PlanEntity } from '@workspace/common/entities';
 import { Refresh } from '../actions/plans.actions';
 
 @State<PlanEntity[]>({
-  name: PlansState.name,
+  name: 'PlanState',
   defaults: [],
 })
 @Injectable()
