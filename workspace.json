@@ -32,7 +32,146 @@
             ]
           }
         }
-      }
+      },
+      "tags": []
+    },
+    "angular-components-progress-spinner": {
+      "projectType": "library",
+      "root": "libs/angular-components-progress-spinner",
+      "sourceRoot": "libs/angular-components-progress-spinner/src",
+      "prefix": "workspace",
+      "targets": {
+        "build": {
+          "executor": "@nrwl/angular:ng-packagr-lite",
+          "outputs": ["dist/libs/angular-components-progress-spinner"],
+          "options": {
+            "project": "libs/angular-components-progress-spinner/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "libs/angular-components-progress-spinner/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "libs/angular-components-progress-spinner/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/angular-components-progress-spinner/src/**/*.ts",
+              "libs/angular-components-progress-spinner/src/**/*.html"
+            ]
+          }
+        }
+      },
+      "tags": []
+    },
+    "common-constants": {
+      "root": "libs/common-constants",
+      "sourceRoot": "libs/common-constants/src",
+      "projectType": "library",
+      "targets": {
+        "build": {
+          "executor": "@nrwl/node:package",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "dist/libs/common-constants",
+            "tsConfig": "libs/common-constants/tsconfig.lib.json",
+            "packageJson": "libs/common-constants/package.json",
+            "main": "libs/common-constants/src/index.ts",
+            "assets": ["libs/common-constants/*.md"]
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "outputs": ["{options.outputFile}"],
+          "options": {
+            "lintFilePatterns": ["libs/common-constants/**/*.ts"]
+          }
+        }
+      },
+      "tags": []
+    },
+    "common-entities": {
+      "root": "libs/common-entities",
+      "sourceRoot": "libs/common-entities/src",
+      "projectType": "library",
+      "targets": {
+        "build": {
+          "executor": "@nrwl/node:package",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "dist/libs/common-entities",
+            "tsConfig": "libs/common-entities/tsconfig.lib.json",
+            "packageJson": "libs/common-entities/package.json",
+            "main": "libs/common-entities/src/index.ts",
+            "assets": ["libs/common-entities/*.md"]
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "outputs": ["{options.outputFile}"],
+          "options": {
+            "lintFilePatterns": ["libs/common-entities/**/*.ts"]
+          }
+        }
+      },
+      "tags": []
+    },
+    "common-enumerations": {
+      "root": "libs/common-enumerations",
+      "sourceRoot": "libs/common-enumerations/src",
+      "projectType": "library",
+      "targets": {
+        "build": {
+          "executor": "@nrwl/node:package",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "dist/libs/common-enumerations",
+            "tsConfig": "libs/common-enumerations/tsconfig.lib.json",
+            "packageJson": "libs/common-enumerations/package.json",
+            "main": "libs/common-enumerations/src/index.ts",
+            "assets": ["libs/common-enumerations/*.md"]
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "outputs": ["{options.outputFile}"],
+          "options": {
+            "lintFilePatterns": ["libs/common-enumerations/**/*.ts"]
+          }
+        }
+      },
+      "tags": []
+    },
+    "common-models": {
+      "root": "libs/common-models",
+      "sourceRoot": "libs/common-models/src",
+      "projectType": "library",
+      "targets": {
+        "build": {
+          "executor": "@nrwl/node:package",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "dist/libs/common-models",
+            "tsConfig": "libs/common-models/tsconfig.lib.json",
+            "packageJson": "libs/common-models/package.json",
+            "main": "libs/common-models/src/index.ts",
+            "assets": ["libs/common-models/*.md"]
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "outputs": ["{options.outputFile}"],
+          "options": {
+            "lintFilePatterns": ["libs/common-models/**/*.ts"]
+          }
+        }
+      },
+      "tags": []
     },
     "common-regexp": {
       "root": "libs/common-regexp",
@@ -57,7 +196,8 @@
             "lintFilePatterns": ["libs/common-regex/**/*.ts"]
           }
         }
-      }
+      },
+      "tags": []
     },
     "common-requests": {
       "root": "libs/common-requests",
@@ -82,7 +222,8 @@
             "lintFilePatterns": ["libs/common-requests/**/*.ts"]
           }
         }
-      }
+      },
+      "tags": []
     },
     "common-responses": {
       "root": "libs/common-responses",
@@ -107,7 +248,8 @@
             "lintFilePatterns": ["libs/common-responses/**/*.ts"]
           }
         }
-      }
+      },
+      "tags": []
     },
     "webapp": {
       "projectType": "application",
@@ -127,37 +269,31 @@
             "inlineStyleLanguage": "scss",
             "assets": ["apps/webapp/src/favicon.ico", "apps/webapp/src/assets"],
             "styles": ["apps/webapp/src/styles.scss"],
-            "scripts": []
+            "scripts": ["node_modules/chart.js/dist/chart.js"],
+            "outputHashing": "none"
           },
           "configurations": {
-            "production": {
-              "budgets": [
-                {
-                  "type": "initial",
-                  "maximumWarning": "500kb",
-                  "maximumError": "1mb"
-                },
-                {
-                  "type": "anyComponentStyle",
-                  "maximumWarning": "2kb",
-                  "maximumError": "4kb"
-                }
-              ],
-              "fileReplacements": [
-                {
-                  "replace": "apps/webapp/src/environments/environment.ts",
-                  "with": "apps/webapp/src/environments/environment.prod.ts"
-                }
-              ],
-              "outputHashing": "all"
-            },
             "development": {
               "buildOptimizer": false,
               "optimization": false,
               "vendorChunk": true,
               "extractLicenses": false,
-              "sourceMap": true,
-              "namedChunks": true
+              "sourceMap": true
+            },
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/webapp/src/environments/environment.ts",
+                  "with": "apps/webapp/src/environments/environment.production.ts"
+                }
+              ],
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "3mb",
+                  "maximumError": "6mb"
+                }
+              ]
             }
           },
           "defaultConfiguration": "production"
@@ -165,14 +301,14 @@
         "serve": {
           "executor": "@angular-devkit/build-angular:dev-server",
           "configurations": {
-            "production": {
-              "browserTarget": "webapp:build:production"
-            },
             "development": {
               "browserTarget": "webapp:build:development"
+            },
+            "production": {
+              "browserTarget": "webapp:build:production"
             }
           },
-          "defaultConfiguration": "development"
+          "defaultConfiguration": "production"
         },
         "extract-i18n": {
           "executor": "@angular-devkit/build-angular:extract-i18n",
@@ -189,7 +325,8 @@
             ]
           }
         }
-      }
+      },
+      "tags": []
     },
     "webservice": {
       "root": "apps/webservice",
@@ -206,6 +343,9 @@
             "assets": ["apps/webservice/src/assets"]
           },
           "configurations": {
+            "development": {
+              "optimization": false
+            },
             "production": {
               "optimization": true,
               "extractLicenses": true,
@@ -213,7 +353,7 @@
               "fileReplacements": [
                 {
                   "replace": "apps/webservice/src/environments/environment.ts",
-                  "with": "apps/webservice/src/environments/environment.prod.ts"
+                  "with": "apps/webservice/src/environments/environment.production.ts"
                 }
               ]
             }
@@ -223,6 +363,10 @@
           "executor": "@nrwl/node:execute",
           "options": {
             "buildTarget": "webservice:build"
+          },
+          "configurations": {
+            "development": {},
+            "production": {}
           }
         },
         "lint": {
@@ -232,27 +376,34 @@
             "lintFilePatterns": ["apps/webservice/**/*.ts"]
           }
         }
-      }
-    }
-  },
-  "cli": {
-    "defaultCollection": "@nrwl/angular"
-  },
-  "generators": {
-    "@nrwl/angular:application": {
-      "style": "scss",
-      "linter": "eslint",
-      "unitTestRunner": "none",
-      "e2eTestRunner": "cypress"
+      },
+      "tags": []
     },
-    "@nrwl/angular:library": {
-      "style": "scss",
-      "linter": "eslint",
-      "unitTestRunner": "none"
-    },
-    "@nrwl/angular:component": {
-      "style": "scss"
+    "winston-transports": {
+      "root": "libs/winston-transports",
+      "sourceRoot": "libs/winston-transports/src",
+      "projectType": "library",
+      "targets": {
+        "build": {
+          "executor": "@nrwl/node:package",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "dist/libs/winston-transports",
+            "tsConfig": "libs/winston-transports/tsconfig.lib.json",
+            "packageJson": "libs/winston-transports/package.json",
+            "main": "libs/winston-transports/src/index.ts",
+            "assets": ["libs/winston-transports/*.md"]
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "outputs": ["{options.outputFile}"],
+          "options": {
+            "lintFilePatterns": ["libs/winston-transports/**/*.ts"]
+          }
+        }
+      },
+      "tags": []
     }
-  },
-  "defaultProject": "webapp"
+  }
 }

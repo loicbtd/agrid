@@ -39,3 +39,26 @@ testem.log
 Thumbs.db
 
 .env
+
+terraform.tfvars
+.terraform
+.generated/
+
+**/.terraform/*
+*.tfstate
+*.tfstate.*
+crash.log
+*.tfvars
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+.terraformrc
+terraform.rc
+
+ormconfig.json
+
+.angular/
+
+.angular

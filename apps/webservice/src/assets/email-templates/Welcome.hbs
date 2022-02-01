@@ -1,0 +1,179 @@
+<html>
+
+  <head>
+    <meta name='viewport' content='width=device-width' />
+    <meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+
+    <style>
+      table { border-collapse: separate; box-shadow: 0px 7px 15px rgba(0, 0, 0,
+      0.1); } h2 h3, h4, h5, h6 { color: #000; } table, td, tr { vertical-align:
+      top; border-collapse: collapse; } * { line-height: inherit; }
+    </style>
+  </head>
+
+  <body
+    style='
+      margin: 0;
+      padding: 0;
+      -webkit-text-size-adjust: 100%;
+      background-color: #fafafa;
+    '
+  >
+    <table
+      width='100%'
+      cellpadding='0'
+      cellspacing='0'
+      style='
+        width: 100%;
+        -moz-box-shadow: none;
+        -webkit-box-shadow: none;
+        box-shadow: none;
+      '
+    >
+      <tr>
+        <td valign='top'>
+          <table
+            cellpadding='0'
+            cellspacing='0'
+            style='
+              margin: 0 auto;
+              min-width: 320px;
+              max-width: 640px;
+              overflow-wrap: break-word;
+              word-wrap: break-word;
+              word-break: break-word;
+              background-color: #ffffff;
+            '
+          >
+            <tr>
+              <td style='padding-right: 0px; padding-left: 0px'>
+                <img
+                  alt='Email header'
+                  src='{{emailHeaderSource}}'
+                  style='
+                    text-decoration: none;
+                    -ms-interpolation-mode: bicubic;
+                    border: 0;
+                    height: auto;
+                    width: 100%;
+                    max-width: 640px;
+                    display: block;
+                  '
+                  width='640'
+                />
+              </td>
+            </tr>
+
+            <tr>
+              <td
+                style='
+                  text-align: center;
+                  font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
+                  line-height: 1.2;
+                  padding: 30px;
+                '
+              >
+                <div style='font-size: 22px; color: #4BC714'>
+                  <strong>Bienvenue sur Agrid !</strong> 🚜
+                </div>
+              </td>
+            </tr>
+
+            <tr>
+              <td
+                style='
+                  color: #202020;
+                  font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
+                  line-height: 1.2;
+                  padding: 30px;
+                '
+              >
+                <div
+                  style='
+                    font-size: 16px;
+                    line-height: 1.2;
+                    color: #202020;
+                    font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
+                  '
+                >
+                  Bonjour
+                  {{firstname}},<br />
+                  <br />
+                  Nous avons le plaisir de vous accueillir sur Agrid, votre
+                  nouvelle plateforme de gestion stratégique dédiée aux
+                  agriculteurs.<br />
+                  <br />
+                  <br />
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <table
+                  cellspacing='0'
+                  cellpadding='0'
+                  style='margin:0 auto'
+                  align='center'
+                >
+                  <tbody>
+                    <tr>
+                      <td
+                        style='background-color: #4BC714; border-radius: 8px; font-size: 16px; padding: 14px 18px;'
+                      >
+                        <a
+                          href='{{webappUrl}}/#/signin'
+                          style='border:none; border-radius: 6px; color:#fff; text-decoration:none; display:inline-block'
+                          target='_blank'
+                        >
+                          Se connecter
+                        </a>
+                      </td>
+                    </tr>
+                  </tbody></table>
+              </td>
+            </tr>
+
+            <tr>
+              <td style='line-height: 1.2em; padding: 10px'>
+                <br />
+              </td>
+            </tr>
+
+            <tr>
+              <td>
+                <div
+                  style='
+                  font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
+                  line-height: 1.2;
+                  background-color: #4BC714;
+                  color: #ffffff;
+                  padding: 20px 10px;
+                '
+                ></div>
+              </td>
+            </tr>
+
+            <tr>
+              <td
+                style='font-family:Arial,Helvetica Neue,Helvetica,sans-serif;line-height:1.2;font-size:12px;background-color:#404040;color:#fafafa;padding:20px 10px'
+              >
+                Vous recevez ce courriel dans le cadre de votre inscription à
+                Agrid. Il s’agit d’un message de notification duquel vous ne
+                pouvez vous désinscrire. Pour toute question, nous vous invitons
+                à écrire à
+                <a
+                  href='mailto:{{supportEmailAddress}}'
+                  style='color:#4BC714'
+                  target='_blank'
+                >
+                  {{supportEmailAddress}}
+                </a>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+  </body>
+
+</html>

@@ -1,0 +1,20 @@
+{
+  "QAs": [
+    {
+      "question": "Comment souscrire à un abonnement ?",
+      "answer": "Il suffit d'aller sur notre site et de cliquer un des bouttons suivants : 'Inscrption', 'Choissiser votre offre' ou bien 'Rejoignez Agrid'. Vous serez alors rediriger vers une page pour que vous puissiez choisir une de nos offres.\r\n"
+    },
+    {
+      "question": "Je souhaiterai vous contacter, où dois-je le faire ?",
+      "answer": "Si vous n'êtes pas inscrit, vous avez la possibilité d'envoyer un mail à l'adresse suivante : contact@agrid.ml. Les délais de réponses peuvent varier.\r\nSi vous êtes déjà inscrit, cela dépend de la nature de votre demande ainsi que du niveau de votre abonnement. Vous pourrez néanmoins utilisez le formulaire de contact disponible dans votre espace client.\r\n"
+    },
+    {
+      "question": "Je souhaite passer à un abonnement supérieur, comment puis-je faire ?",
+      "answer": "Accéder à votre espace personnel ('Connexion' sur notre site) puis cliquer sur le bouton 'changer mon abonnement'. Vous serez rediriger vers une page pour que vous puissiez choisir une de nos offres.\r\n"
+    },
+    {
+      "question": "Quand mon abonnement sera-t-il prélevé ?",
+      "answer": "La première mensualité sera prélevée a la date du paiment. Les mensualités suivante seront prélevées le même jour chaque mois (exemple : si vous avez souscrit le 4 janvier, votre prochaine mensualité sera le 4 février).\r\n"
+    }
+  ]
+}

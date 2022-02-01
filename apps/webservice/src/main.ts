@@ -2,39 +2,62 @@ import {
   FastifyAdapter,
   NestFastifyApplication,
 } from '@nestjs/platform-fastify';
-import { ValidationPipe } from '@nestjs/common';
+import { Logger } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app/app.module';
-import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
-import * as helmet from 'helmet';
 import { environment } from './environments/environment';
+import { WinstonModule } from 'nest-winston';
+import { ConsoleTransport } from '@workspace/winston/transports';
+import fastifyHelmet from 'fastify-helmet';
+import fastifyCors from 'fastify-cors';
+import fastifyRawBody from 'fastify-raw-body';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 (async () => {
   const app = await NestFactory.create<NestFastifyApplication>(
     AppModule,
     new FastifyAdapter(),
     {
-      cors: true,
+      logger: WinstonModule.createLogger({
+        transports: [new ConsoleTransport()],
+      }),
     }
   );
 
-  const config = new DocumentBuilder()
-    .setTitle(environment.webserviceName)
-    .setVersion(environment.version)
-    .addBearerAuth()
-    .build();
-  const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('/', app, document);
+  app.register(fastifyRawBody);
 
-  app.useGlobalPipes(new ValidationPipe({ transform: true }));
+  app.register(fastifyCors, {
+    origin: [environment.webappUrl],
+    allowedHeaders: [
+      'Origin',
+      'X-Requested-With',
+      'Accept',
+      'Content-Type',
+      'Authorization',
+    ],
+    methods: ['GET', 'PUT', 'OPTIONS', 'POST', 'DELETE'],
+  });
 
-  app.use(helmet());
+  SwaggerModule.setup(
+    '/',
+    app,
+    SwaggerModule.createDocument(
+      app,
+      new DocumentBuilder()
+        .setTitle(`${environment.solutionName} Api`)
+        .setVersion(environment.version)
+        .addBearerAuth()
+        .build()
+    )
+  );
+
+  app.register(fastifyHelmet, { contentSecurityPolicy: false });
 
   await app.listen(environment.port, environment.host);
 
-  if (!environment.production) {
-    console.log(
-      `\nWebservice running on http://${environment.host}:${environment.port}\n`
+  app
+    .get(Logger)
+    .log(
+      `Listening ${environment.protocol}://${environment.host}:${environment.port}`
     );
-  }
 })();

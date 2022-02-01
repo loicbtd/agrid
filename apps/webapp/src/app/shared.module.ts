@@ -2,7 +2,10 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MenubarModule } from 'primeng/menubar';
 import { InputTextModule } from 'primeng/inputtext';
-import { MessageService, SharedModule as PrimengSharedModule } from 'primeng/api';
+import {
+  MessageService,
+  SharedModule as PrimengSharedModule,
+} from 'primeng/api';
 import { TerminalModule } from 'primeng/terminal';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { ButtonModule } from 'primeng/button';
@@ -39,6 +42,12 @@ import { ToolbarModule } from 'primeng/toolbar';
 import { AngularComponentsBlockableDivModule } from '@workspace/angular/components/blockablediv';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputSwitchModule } from 'primeng/inputswitch';
+import { CarouselModule } from 'primeng/carousel';
+import { DividerModule } from 'primeng/divider';
+import { TranslateModule } from '@ngx-translate/core';
+import { AngularComponentsProgressSpinnerModule } from '@workspace/angular/components/progress-spinner';
+import { ChartModule } from 'primeng/chart';
+import { TabViewModule } from 'primeng/tabview';
 
 const importedAndExportedModules = [
   CommonModule,
@@ -83,18 +92,17 @@ const importedAndExportedModules = [
   AngularComponentsBlockableDivModule,
   InputNumberModule,
   InputSwitchModule,
+  CarouselModule,
+  DividerModule,
+  AngularComponentsProgressSpinnerModule,
+  ChartModule,
+  TabViewModule,
 ];
 
 @NgModule({
   declarations: [],
   imports: [...importedAndExportedModules],
-  exports: [...importedAndExportedModules],
-  providers: [
-    {
-      provide: Window,
-      useValue: window,
-    },
-    MessageService,
-  ],
+  exports: [...importedAndExportedModules, TranslateModule],
+  providers: [MessageService],
 })
 export class SharedModule {}

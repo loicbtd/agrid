@@ -1,32 +1,55 @@
 import { environment } from '../../../environments/environment';
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { MailerService } from '@nestjs-modules/mailer';
+import { join } from 'path';
 import { Address } from '@nestjs-modules/mailer/dist/interfaces/send-mail-options.interface';
 import { EmailTemplateEnumeration } from '../enumerations/email-template.emumeration';
+import { UnabilityToSendEmailError } from '../errors/unability-to-send-email.error';
 
 @Injectable()
 export class EmailsService {
-  private readonly mailBannerSrc = `https://${environment.host}:${environment.port}/static/mail-banner.png`;
-
-  constructor(private mailerService: MailerService) {}
+  constructor(private readonly mailerService: MailerService) {}
 
   async send(
     template: EmailTemplateEnumeration,
     to: string | string[],
     subject: string,
-    data?: unknown,
-    from?: Address
+    options?: {
+      data?: any;
+      from?: Address;
+      replyto?: string;
+    }
   ): Promise<void> {
+    if (!options) {
+      options = {};
+    }
+
+    if (!options.data) {
+      options.data = {};
+    }
+
+    options.data = {
+      ...options.data,
+      emailHeaderSource: `${environment.protocol}://${environment.host}:${environment.port}/images/email-header.png`,
+      supportEmailAddress: environment.supportEmailAddress,
+      webappUrl: environment.webappUrl,
+    };
+
     try {
       await this.mailerService.sendMail({
-        from: from,
-        to: environment.production ? environment.emailSenderAddress : to,
+        to: environment.production ? to : environment.emailSenderAddress,
         subject: subject,
-        template: `assets/email-templates/${template}.hbs`,
-        context: data,
+        template: join(
+          __dirname,
+          'assets',
+          'email-templates',
+          `${template}.hbs`
+        ),
+        context: options.data,
+        replyTo: options.replyto,
       });
     } catch (error) {
-      throw new BadRequestException();
+      throw new UnabilityToSendEmailError(error.message, to, template);
     }
   }
 }

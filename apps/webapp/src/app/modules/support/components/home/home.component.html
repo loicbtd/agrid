@@ -1,1 +1,180 @@
-<div>home page works !</div>
+<div class="flex justify-content-center w-full" *ngIf="!isChatwootLoaded">
+  <workspace-progress-spinner></workspace-progress-spinner>
+</div>
+<div class="surface-card overflow-hidden" id="home-return">
+  <div
+    class="py-4 px-4 mx-0 md:mx-6 lg:mx-8 lg:px-8 flex align-items-center justify-content-between relative lg:static"
+  >
+    <a class="flex align-items-center"
+      ><img
+        src="/assets/logo-agrid.svg"
+        alt="Agrid Logo"
+        class="mr-0 lg:mr-2"
+        height="50"
+      />
+    </a>
+    <a
+      pRipple
+      enterclass="hidden"
+      leavetoclass="hidden"
+      class="p-ripple p-element cursor-pointer block lg:hidden text-700"
+      (click)="displayMobileMenu = !displayMobileMenu"
+      ><i class="pi pi-bars text-4xl"></i><span class="p-ink"></span>
+    </a>
+    <div
+      class="align-items-center flex-grow-1 justify-content-between lg:flex absolute lg:static w-full surface-overlay left-0 px-6 lg:px-0 z-2 hidden"
+      style="top: 92%"
+      [ngClass]="{ hidden: displayMobileMenu }"
+    >
+      <ul
+        class="list-none p-0 m-0 flex lg:align-items-center select-none flex-column lg:flex-row cursor-pointer"
+      >
+        <li>
+          <a
+            pripple
+            class="p-ripple p-element flex m-0 md:ml-5 px-0 py-3 text-gray-900 font-medium line-height-3 menu-link"
+            [routerLink]="['/showcase']"
+            ><span>Accueil</span><span class="p-ink"></span
+          ></a>
+        </li>
+        <li>
+          <a
+            pripple
+            class="p-ripple p-element flex m-0 md:ml-5 px-0 py-3 text-gray-900 font-medium line-height-3 menu-link"
+            [routerLink]="['/showcase#about-section']"
+            ><span>À Propos</span><span class="p-ink"></span
+          ></a>
+        </li>
+        <li>
+          <a
+            pripple
+            class="p-ripple p-element flex m-0 md:ml-5 px-0 py-3 text-gray-900 font-medium line-height-3 menu-link"
+            [routerLink]="['/showcase#pricing-section']"
+            ><span>Nos Prix</span><span class="p-ink"></span
+          ></a>
+        </li>
+        <li>
+          <a
+            pripple
+            class="p-ripple p-element flex m-0 md:ml-5 px-0 py-3 text-gray-900 font-medium line-height-3 menu-link"
+            [routerLink]="['/support']"
+            ><span>Contact</span><span class="p-ink"></span
+          ></a>
+        </li>
+      </ul>
+      <div
+        class="flex justify-content-between lg:block border-top-1 lg:border-top-none surface-border py-3 lg:py-0 mt-3 lg:mt-0"
+      >
+        <button
+          pbutton
+          pripple
+          label="Login"
+          class="p-ripple p-element p-button-text p-button-rounded border-none font-light line-height-2 text-500 p-button p-component"
+          [routerLink]="['/signin']"
+        >
+          <span class="p-ink"></span
+          ><span class="p-button-label" style="color: #4bc714">Connexion</span>
+        </button>
+        <button
+          [routerLink]="['/subscription']"
+          pbutton
+          pripple
+          label="Register"
+          class="p-ripple p-element p-button-rounded border-none ml-5 font-light line-height-2 bg-500 p-button p-component"
+        >
+          <span class="p-ink"></span
+          ><span class="p-button-label">Inscription</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div style="height: 70vh;">
+
+  </div>
+
+  <div class="py-4 px-4 mx-0 mt-8 footer-section">
+    <div class="grid justify-content-between">
+      <div class="col-12 md:col-2" style="margin-top: -1.5rem">
+        <div
+          class="flex flex-wrap align-items-center justify-content-center md:justify-content-start md:mb-0 mb-3"
+        >
+          <img
+            src="/assets/logo-agrid.svg"
+            alt="footer sections"
+            class="mr-2 footer-logo"
+            width="50"
+            height="50"
+          />
+        </div>
+      </div>
+      <div class="col-12 md:col-7">
+        <div class="grid text-center md:text-left">
+          <div class="col-12 md:col-3">
+            <h4 class="font-medium text-2xl line-height-3 mb-3 text-gray-900">
+              Navigation
+            </h4>
+            <a
+              class="line-height-3 text-xl block cursor-pointer mb-2 text-gray-700 menu-link"
+              [routerLink]="['/showcase#home-return']"
+              >Accueil</a
+            ><a
+              class="line-height-3 text-xl block cursor-pointer mb-2 text-gray-700 menu-link"
+              [routerLink]="['/showcase#about-section']"
+              >À propos</a
+            ><a
+              class="line-height-3 text-xl block cursor-pointer mb-2 text-gray-700 menu-link"
+              [routerLink]="['/showcase#pricing-section']"
+              >Nos Prix</a
+            ><a
+              class="line-height-3 text-xl block cursor-pointer mb-2 text-gray-700 menu-link"
+              [routerLink]="['/support']"
+              >Contact</a
+            >
+          </div>
+
+          <div class="col-12 md:col-3">
+            <h4 class="font-medium text-2xl line-height-3 mb-3 text-gray-900">
+              Informations
+            </h4>
+            <a
+              class="line-height-3 text-xl block cursor-pointer mb-2 text-gray-700 menu-link"
+              [routerLink]="['/support/faq']"
+              >F.A.Q.</a
+            ><a
+              class="line-height-3 text-xl block cursor-pointer mb-2 text-gray-700 menu-link"
+              [routerLink]="['/support']"
+              >Contact</a
+            >
+          </div>
+
+          <div class="col-12 md:col-3 mt-4 md:mt-0">
+            <h4 class="font-medium text-2xl line-height-3 mb-3 text-gray-900">
+              Profil
+            </h4>
+            <a
+              [routerLink]="['/subscription']"
+              class="line-height-3 text-xl block cursor-pointer mb-2 text-gray-700 menu-link"
+              >Inscription</a
+            >
+            <a
+              [routerLink]="['/signin']"
+              class="line-height-3 text-xl block cursor-pointer mb-2 text-gray-700 menu-link"
+              >Connexion</a
+            >
+          </div>
+
+          <div class="col-12 md:col-3 mt-4 md:mt-0">
+            <h4 class="font-medium text-2xl line-height-3 mb-3 text-gray-900">
+              Légal
+            </h4>
+            <a
+              class="line-height-3 text-xl block cursor-pointer mb-2 text-gray-700 menu-link"
+              >Mentions légales</a
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
