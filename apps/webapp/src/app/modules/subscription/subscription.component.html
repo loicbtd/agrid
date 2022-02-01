@@ -1,4 +1,4 @@
-<p-card styleClass="mt-2 mx-2">
+<p-card class="md:mt-2 md:mx-2 hidden md:inline">
   <p-steps
     [model]="stepItems"
     [readonly]="false"
@@ -6,4 +6,36 @@
   ></p-steps>
 </p-card>
 
-<router-outlet></router-outlet>
+<ng-container *ngIf="subscription$ | async as subscription">
+  <p-card
+    class="mt-2 mx-2 inline md:hidden"
+    *ngIf="subscription.previousStep || subscription.nextStep"
+  >
+    <div class="flex">
+      <p-button
+        pRipple
+        icon="pi pi-arrow-left"
+        label="Retour"
+        class="mr-auto"
+        styleClass="p-button-rounded p-button-text"
+        [hidden]="!subscription?.previousStep"
+        [routerLink]="[subscription?.previousStep]"
+      ></p-button>
+
+      <p-button
+        pRipple
+        icon="pi pi-arrow-right"
+        iconPos="right"
+        label="Suivant"
+        class="ml-auto"
+        styleClass="p-button-rounded p-button-text"
+        [hidden]="!subscription.nextStep"
+        [routerLink]="[subscription.nextStep]"
+      ></p-button>
+    </div>
+  </p-card>
+</ng-container>
+
+<p-card class="mt-2 mx-2">
+  <router-outlet></router-outlet>
+</p-card>

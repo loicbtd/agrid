@@ -2,11 +2,14 @@ import { Injectable } from '@angular/core';
 import {
   ActivatedRouteSnapshot,
   CanActivate,
+  Router,
   RouterStateSnapshot,
   UrlTree,
 } from '@angular/router';
 import { Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
+import { appRoutes } from '../../../global/constants/app-route.constant';
+import { errorsRoutes } from '../../errors/constants/errors-routes.constant';
 import { SubscriptionModel } from '../models/subscription.model';
 import { SubscriptionState } from '../store/state/subscription.state';
 
@@ -14,7 +17,7 @@ import { SubscriptionState } from '../store/state/subscription.state';
   providedIn: 'root',
 })
 export class UserInformationMustBeCompletedGuard implements CanActivate {
-  constructor(private readonly store: Store) {}
+  constructor(private readonly store: Store, private readonly router: Router) {}
 
   canActivate(
     _route: ActivatedRouteSnapshot,
@@ -27,16 +30,18 @@ export class UserInformationMustBeCompletedGuard implements CanActivate {
     const subscribeState =
       this.store.selectSnapshot<SubscriptionModel>(SubscriptionState);
 
-    if (!subscribeState.firstname || subscribeState.firstname === '') {
-      return false;
-    }
-
-    if (!subscribeState.lastname || subscribeState.lastname === '') {
-      return false;
-    }
-
-    if (!subscribeState.email || subscribeState.email === '') {
-      return false;
+    if (
+      !subscribeState.firstname ||
+      subscribeState.firstname === '' ||
+      !subscribeState.lastname ||
+      subscribeState.lastname === '' ||
+      !subscribeState.email ||
+      subscribeState.email === ''
+    ) {
+      return this.router.createUrlTree([
+        appRoutes.errors,
+        errorsRoutes.accessDenied,
+      ]);
     }
 
     return true;

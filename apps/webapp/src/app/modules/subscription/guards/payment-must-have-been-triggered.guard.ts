@@ -2,19 +2,22 @@ import { Injectable } from '@angular/core';
 import {
   ActivatedRouteSnapshot,
   CanActivate,
+  Router,
   RouterStateSnapshot,
   UrlTree,
 } from '@angular/router';
 import { Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
+import { appRoutes } from '../../../global/constants/app-route.constant';
+import { errorsRoutes } from '../../errors/constants/errors-routes.constant';
 import { SubscriptionModel } from '../models/subscription.model';
 import { SubscriptionState } from '../store/state/subscription.state';
 
 @Injectable({
   providedIn: 'root',
 })
-export class PaymentStatusMustBeDefinedGuard implements CanActivate {
-  constructor(private readonly store: Store) {}
+export class PaymentMustHaveBeenTriggeredGuard implements CanActivate {
+  constructor(private readonly store: Store, private readonly router: Router) {}
 
   canActivate(
     _route: ActivatedRouteSnapshot,
@@ -27,8 +30,11 @@ export class PaymentStatusMustBeDefinedGuard implements CanActivate {
     const subscribeState =
       this.store.selectSnapshot<SubscriptionModel>(SubscriptionState);
 
-    if (!subscribeState.paymentStatus) {
-      return false;
+    if (!subscribeState.paymentTriggered) {
+      return this.router.createUrlTree([
+        appRoutes.errors,
+        errorsRoutes.accessDenied,
+      ]);
     }
 
     return true;

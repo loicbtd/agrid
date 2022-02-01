@@ -16,7 +16,7 @@ import { SubscriptionState } from '../store/state/subscription.state';
 @Injectable({
   providedIn: 'root',
 })
-export class LegalConditionsMustBeAcceptedGuard implements CanActivate {
+export class PaymentMustNotHaveAlreadyBeenTriggeredGuard implements CanActivate {
   constructor(private readonly store: Store, private readonly router: Router) {}
 
   canActivate(
@@ -30,7 +30,7 @@ export class LegalConditionsMustBeAcceptedGuard implements CanActivate {
     const subscribeState =
       this.store.selectSnapshot<SubscriptionModel>(SubscriptionState);
 
-    if (!subscribeState.legalConditionsAccepted) {
+    if (subscribeState.paymentTriggered) {
       return this.router.createUrlTree([
         appRoutes.errors,
         errorsRoutes.accessDenied,

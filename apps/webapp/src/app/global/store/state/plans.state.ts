@@ -3,9 +3,9 @@ import { Injectable } from '@angular/core';
 import { PlanEntity } from '@workspace/common/entities';
 import { Refresh } from '../actions/plans.actions';
 
-@State<PlanEntity[]>({
+@State<PlanEntity[] | null>({
   name: 'PlanState',
-  defaults: [],
+  defaults: null,
 })
 @Injectable()
 export class PlansState {

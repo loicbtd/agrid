@@ -10,4 +10,10 @@ export class SubscriptionModel {
   legalConditionsAccepted?: boolean;
 
   paymentStatus?: unknown;
+
+  paymentTriggered?: boolean;
+
+  previousStep?: string;
+
+  nextStep?: string;
 }

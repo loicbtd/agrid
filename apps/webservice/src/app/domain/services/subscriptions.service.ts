@@ -96,7 +96,6 @@ export class SubscriptionService {
     } catch (error: any) {
       throw new UnabilityToRetrieveSubscriptionsError(error.message);
     }
-    console.log('ici');
 
     if (!subscription) {
       try {

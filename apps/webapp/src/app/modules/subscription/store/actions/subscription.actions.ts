@@ -25,3 +25,16 @@ export class UpdatePaymentStatus {
   static readonly type = '[Subscription] Update Payment Status';
   constructor(public status?: unknown) {}
 }
+
+export class Reset {
+  static readonly type = '[Subscription] Reset';
+}
+
+export class ResetPayment {
+  static readonly type = '[Subscription] Reset Payment';
+}
+
+export class UpdateSteps {
+  static readonly type = '[Subscription] Update Steps';
+  constructor(public previousStep?: string, public nextStep?: string) {}
+}

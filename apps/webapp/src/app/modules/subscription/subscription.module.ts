@@ -13,7 +13,8 @@ import { SubscriptionStepSummaryComponent } from './components/subscription-step
 import { subscriptionRoutes } from './constants/subscription-routes.constant';
 import { SubscriptionStepLegalConditionsAcceptationComponent } from './components/subscription-step-legal-conditions-acceptation/subscription-step-legal-conditions-acceptation.component';
 import { LegalConditionsMustBeAcceptedGuard } from './guards/legal-conditions-must-be-accepted.guard';
-import { PaymentStatusMustBeDefinedGuard } from './guards/payment-status-must-be-defined.guard';
+import { PaymentMustHaveBeenTriggeredGuard } from './guards/payment-must-have-been-triggered.guard';
+import { PaymentMustNotHaveAlreadyBeenTriggeredGuard } from './guards/payment-must-not-have-already-been-triggered.guard';
 
 @NgModule({
   declarations: [
@@ -35,11 +36,15 @@ import { PaymentStatusMustBeDefinedGuard } from './guards/payment-status-must-be
           {
             path: subscriptionRoutes.planSelection,
             component: SubscriptionStepPlanSelectionComponent,
+            canActivate: [PaymentMustNotHaveAlreadyBeenTriggeredGuard],
           },
           {
             path: subscriptionRoutes.legal,
             component: SubscriptionStepLegalConditionsAcceptationComponent,
-            canActivate: [PlanMustBeSelectedGuard],
+            canActivate: [
+              PlanMustBeSelectedGuard,
+              PaymentMustNotHaveAlreadyBeenTriggeredGuard,
+            ],
           },
           {
             path: subscriptionRoutes.userInformation,
@@ -47,6 +52,7 @@ import { PaymentStatusMustBeDefinedGuard } from './guards/payment-status-must-be
             canActivate: [
               PlanMustBeSelectedGuard,
               LegalConditionsMustBeAcceptedGuard,
+              PaymentMustNotHaveAlreadyBeenTriggeredGuard,
             ],
           },
           {
@@ -56,16 +62,17 @@ import { PaymentStatusMustBeDefinedGuard } from './guards/payment-status-must-be
               PlanMustBeSelectedGuard,
               LegalConditionsMustBeAcceptedGuard,
               UserInformationMustBeCompletedGuard,
+              PaymentMustNotHaveAlreadyBeenTriggeredGuard,
             ],
           },
           {
             path: subscriptionRoutes.summary,
             component: SubscriptionStepSummaryComponent,
             canActivate: [
-              // PlanMustBeSelectedGuard,
-              // LegalConditionsMustBeAcceptedGuard,
-              // UserInformationMustBeCompletedGuard,
-              // PaymentStatusMustBeDefinedGuard,
+              PlanMustBeSelectedGuard,
+              LegalConditionsMustBeAcceptedGuard,
+              UserInformationMustBeCompletedGuard,
+              PaymentMustHaveBeenTriggeredGuard,
             ],
           },
           {

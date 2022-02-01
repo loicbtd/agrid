@@ -15,7 +15,14 @@ import { SubscriptionState } from '../store/state/subscription.state';
 import { SubscriptionModel } from '../models/subscription.model';
 import { InitiateSubscriptionResponse } from '@workspace/common/responses';
 import { StripeConfigurationService } from '../../../global/services/stripe-configuration.service';
-import { UpdatePaymentStatus } from '../store/actions/subscription.actions';
+import {
+  Reset,
+  ResetPayment,
+  UpdatePaymentStatus,
+} from '../store/actions/subscription.actions';
+import { Router } from '@angular/router';
+import { subscriptionRoutes } from '../constants/subscription-routes.constant';
+import { appRoutes } from '../../../global/constants/app-route.constant';
 
 @Injectable({
   providedIn: 'root',
@@ -24,7 +31,8 @@ export class SubscriptionService {
   constructor(
     private readonly httpClient: HttpClient,
     private readonly store: Store,
-    private readonly stripeConfiturationService: StripeConfigurationService
+    private readonly stripeConfiturationService: StripeConfigurationService,
+    private readonly router: Router
   ) {}
 
   async initiateSubscription(): Promise<[Stripe, StripeElements]> {
@@ -87,7 +95,11 @@ export class SubscriptionService {
     );
   }
 
+  async reset() {
+    await lastValueFrom(this.store.dispatch(new Reset()));
+  }
+
   async resetPayment() {
-    await lastValueFrom(this.store.dispatch(new UpdatePaymentStatus(null)));
+    await lastValueFrom(this.store.dispatch(new ResetPayment()));
   }
 }

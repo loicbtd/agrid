@@ -5,16 +5,18 @@ import { PlansService } from '../../../../global/services/plans.service';
 import { Select, Store } from '@ngxs/store';
 import { PlansState } from '../../../../global/store/state/plans.state';
 import { lastValueFrom, Observable } from 'rxjs';
-import { UpdateSelectedPlanId } from '../../store/actions/subscription.actions';
+import {
+  UpdateSelectedPlanId,
+  UpdateSteps,
+} from '../../store/actions/subscription.actions';
 import { SubscriptionState } from '../../store/state/subscription.state';
 import { SubscribeRequest } from '@workspace/common/requests';
 import { subscriptionRoutes } from '../../constants/subscription-routes.constant';
 
 @Component({
   template: `
-    <p-card styleClass="mt-2 mx-2">
+    <ng-container *ngIf="plans$ | async as plans; else loading">
       <p-carousel
-        *ngIf="plans$ | async as plans; else loading"
         [value]="plans"
         [circular]="true"
         [responsiveOptions]="responsiveOptions"
@@ -44,7 +46,7 @@ import { subscriptionRoutes } from '../../constants/subscription-routes.constant
           >En savoir plus</a
         >
       </div>
-    </p-card>
+    </ng-container>
 
     <ng-template #loading>
       <div class="flex w-100">
@@ -116,8 +118,14 @@ export class SubscriptionStepPlanSelectionComponent implements OnInit {
     private readonly store: Store
   ) {}
 
-  ngOnInit() {
+  async ngOnInit() {
     this.plansService.refresh();
+
+    await lastValueFrom(
+      this.store.dispatch(
+        new UpdateSteps(undefined, subscriptionRoutes.legal)
+      )
+    );
   }
 
   async selectPlan(plan: PlanEntity) {

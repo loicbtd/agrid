@@ -1,9 +1,12 @@
 import { Action, State, StateContext } from '@ngxs/store';
 import { Injectable } from '@angular/core';
 import {
+  Reset,
+  ResetPayment,
   UpdateLegalConditionsAcceptation,
   UpdatePaymentStatus,
   UpdateSelectedPlanId,
+  UpdateSteps,
   UpdateUserInformation,
 } from '../actions/subscription.actions';
 import { SubscriptionModel } from '../../models/subscription.model';
@@ -16,6 +19,10 @@ import { SubscriptionModel } from '../../models/subscription.model';
     lastname: '',
     planId: '',
     legalConditionsAccepted: false,
+    paymentStatus: undefined,
+    paymentTriggered: false,
+    previousStep: undefined,
+    nextStep: undefined,
   },
 })
 @Injectable()
@@ -60,6 +67,40 @@ export class SubscriptionState {
     context.setState({
       ...context.getState(),
       paymentStatus: action.status,
+      paymentTriggered: true,
+    });
+  }
+
+  @Action(Reset)
+  reset(context: StateContext<SubscriptionModel>) {
+    context.setState({
+      email: '',
+      firstname: '',
+      lastname: '',
+      planId: '',
+      legalConditionsAccepted: false,
+      paymentStatus: undefined,
+      paymentTriggered: false,
+      previousStep: undefined,
+      nextStep: undefined,
+    });
+  }
+
+  @Action(ResetPayment)
+  resetPayment(context: StateContext<SubscriptionModel>) {
+    context.setState({
+      ...context.getState(),
+      paymentStatus: undefined,
+      paymentTriggered: false,
+    });
+  }
+
+  @Action(UpdateSteps)
+  updateSteps(context: StateContext<SubscriptionModel>, action: UpdateSteps) {
+    context.setState({
+      ...context.getState(),
+      previousStep: action.previousStep,
+      nextStep: action.nextStep,
     });
   }
 }

@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { Store } from '@ngxs/store';
 import { Remember } from '../store/actions/visited-routes-history.actions';
-import { VisitedRoutesHistoryState } from '../store/state/visited-routes-history.state';
 
 @Injectable({ providedIn: 'root' })
 export class VisitedRoutesHistoryService {
@@ -12,9 +11,6 @@ export class VisitedRoutesHistoryService {
     router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         this.store.dispatch(new Remember(event.url));
-        console.log(
-          this.store.selectSnapshot<string[]>(VisitedRoutesHistoryState)
-        );
       }
     });
   }

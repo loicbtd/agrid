@@ -5,122 +5,122 @@ import { Store } from '@ngxs/store';
 import { SubscribeRequest } from '@workspace/common/requests';
 import { lastValueFrom } from 'rxjs';
 import { subscriptionRoutes } from '../../constants/subscription-routes.constant';
-import { UpdateUserInformation } from '../../store/actions/subscription.actions';
+import {
+  UpdateSteps,
+  UpdateUserInformation,
+} from '../../store/actions/subscription.actions';
 import { SubscriptionState } from '../../store/state/subscription.state';
 
 @Component({
   template: `
-    <p-card styleClass="m-2">
-      <div class="flex flex-column">
-        <form [formGroup]="form" novalidate class="form-group grid formgrid">
-          <div class="field col-12">
-            <span class="p-float-label w-full">
-              <input
-                id="email"
-                formControlName="email"
-                type="email"
-                pInputText
-                class="w-full"
-                [ngClass]="{
-                  'ng-invalid ng-dirty':
-                    form.controls.email.touched && form.controls.email.invalid
-                }"
-              />
-              <label for="email">Courriel</label>
-            </span>
-            <div class="flex p-flex-column">
-              <small
-                class="p-error"
-                *ngIf="
-                  form.controls.email.touched &&
-                  form.controls.email.errors?.required
-                "
-              >
-                Le courriel est requis
-              </small>
-              <small
-                class="p-error"
-                *ngIf="
-                  form.controls.email.touched &&
-                  form.controls.email.errors?.email
-                "
-              >
-                Le courriel n'est pas valide
-              </small>
-            </div>
-          </div>
-
-          <div class="field col-12 md:col-6">
-            <span class="p-float-label w-full mt-3">
-              <input
-                id="lastname"
-                formControlName="lastname"
-                type="text"
-                pInputText
-                class="w-full"
-                [ngClass]="{
-                  'ng-invalid ng-dirty':
-                    form.controls.lastname.touched &&
-                    form.controls.lastname.invalid
-                }"
-              />
-              <label for="lastname">Nom</label>
-            </span>
-            <div class="flex flex-column">
-              <small
-                class="p-error"
-                *ngIf="
-                  form.controls.lastname.touched &&
-                  form.controls.lastname.errors?.required
-                "
-              >
-                Le nom est requis
-              </small>
-            </div>
-          </div>
-
-          <div class="field col-12 md:col-6">
-            <span class="p-float-label w-full mt-3">
-              <input
-                id="firstname"
-                formControlName="firstname"
-                type="text"
-                pInputText
-                class="w-full"
-                [ngClass]="{
-                  'ng-invalid ng-dirty':
-                    form.controls.firstname.touched &&
-                    form.controls.firstname.invalid
-                }"
-              />
-              <label for="firstname">Prénom</label>
-            </span>
-            <div class="flex flex-column">
-              <small
-                class="p-error"
-                *ngIf="
-                  form.controls.firstname.touched &&
-                  form.controls.firstname.errors?.required
-                "
-              >
-                Le prénom est requis
-              </small>
-            </div>
-          </div>
-
-          <div class="field col-12 flex mt-3">
-            <p-button
-              pRipple
-              label="Suivant"
+    <div class="flex flex-column">
+      <form [formGroup]="form" novalidate class="form-group grid formgrid">
+        <div class="field col-12">
+          <span class="p-float-label w-full">
+            <input
+              id="email"
+              formControlName="email"
+              type="email"
+              pInputText
               class="w-full"
-              styleClass="w-full m-auto"
-              [disabled]="form.invalid"
-              (click)="saveInformation()"
-            ></p-button>
+              [ngClass]="{
+                'ng-invalid ng-dirty':
+                  form.controls.email.touched && form.controls.email.invalid
+              }"
+            />
+            <label for="email">Courriel</label>
+          </span>
+          <div class="flex p-flex-column">
+            <small
+              class="p-error"
+              *ngIf="
+                form.controls.email.touched &&
+                form.controls.email.errors?.required
+              "
+            >
+              Le courriel est requis
+            </small>
+            <small
+              class="p-error"
+              *ngIf="
+                form.controls.email.touched && form.controls.email.errors?.email
+              "
+            >
+              Le courriel n'est pas valide
+            </small>
           </div>
-        </form>
-      </div>
-    </p-card>
+        </div>
+
+        <div class="field col-12 md:col-6">
+          <span class="p-float-label w-full mt-3">
+            <input
+              id="lastname"
+              formControlName="lastname"
+              type="text"
+              pInputText
+              class="w-full"
+              [ngClass]="{
+                'ng-invalid ng-dirty':
+                  form.controls.lastname.touched &&
+                  form.controls.lastname.invalid
+              }"
+            />
+            <label for="lastname">Nom</label>
+          </span>
+          <div class="flex flex-column">
+            <small
+              class="p-error"
+              *ngIf="
+                form.controls.lastname.touched &&
+                form.controls.lastname.errors?.required
+              "
+            >
+              Le nom est requis
+            </small>
+          </div>
+        </div>
+
+        <div class="field col-12 md:col-6">
+          <span class="p-float-label w-full mt-3">
+            <input
+              id="firstname"
+              formControlName="firstname"
+              type="text"
+              pInputText
+              class="w-full"
+              [ngClass]="{
+                'ng-invalid ng-dirty':
+                  form.controls.firstname.touched &&
+                  form.controls.firstname.invalid
+              }"
+            />
+            <label for="firstname">Prénom</label>
+          </span>
+          <div class="flex flex-column">
+            <small
+              class="p-error"
+              *ngIf="
+                form.controls.firstname.touched &&
+                form.controls.firstname.errors?.required
+              "
+            >
+              Le prénom est requis
+            </small>
+          </div>
+        </div>
+
+        <div class="field col-12 flex mt-3">
+          <p-button
+            pRipple
+            label="Suivant"
+            class="w-full"
+            styleClass="w-full m-auto"
+            [disabled]="form.invalid"
+            (click)="saveInformation()"
+          ></p-button>
+        </div>
+      </form>
+    </div>
   `,
 })
 export class SubscriptionStepUserInformationComponent implements OnInit {
@@ -137,12 +137,21 @@ export class SubscriptionStepUserInformationComponent implements OnInit {
     private readonly activatedRoute: ActivatedRoute
   ) {}
 
-  ngOnInit(): void {
+  async ngOnInit() {
     const subscribeState =
       this.store.selectSnapshot<SubscribeRequest>(SubscriptionState);
     this.form.controls.email.setValue(subscribeState.email);
     this.form.controls.lastname.setValue(subscribeState.lastname);
     this.form.controls.firstname.setValue(subscribeState.firstname);
+
+    await lastValueFrom(
+      this.store.dispatch(
+        new UpdateSteps(
+          subscriptionRoutes.legal,
+          subscriptionRoutes.payment
+        )
+      )
+    );
   }
 
   async saveInformation() {
