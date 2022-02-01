@@ -45,7 +45,7 @@ export class SigninService {
         GlobalRoleEnumeration.Administrator
       )
     ) {
-      this.router.navigate(['/administation']);
+      this.router.navigate(['/administration']);
     } else {
       this.router.navigate(['/my-profile']);
     }
