@@ -2,7 +2,7 @@ version: '3'
 
 services:
   base: &base
-    image: chatwoot/chatwoot:v2.1.0
+    image: chatwoot/chatwoot:v2.1.1
     environment:
       - SECRET_KEY_BASE=${SECRET_KEY_BASE}
       - FRONTEND_URL=${FRONTEND_URL}
