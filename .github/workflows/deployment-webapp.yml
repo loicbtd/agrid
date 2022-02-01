@@ -15,3 +15,11 @@ jobs:
         run: echo ${{ secrets.REGISTRY_PASSWORD }} | docker login registry.agrid.ml -u ${{ secrets.REGISTRY_USERNAME }} --password-stdin
       - name: docker push
         run: docker push registry.agrid.ml/agrid-webapp --all-tags
+      - name: Discord Commits
+        uses: Sniddl/discord-commits@v1.3
+        with:
+          # discord webhook url without /github
+          webhook: https://discord.com/api/webhooks/938055838306811965/BWMafN351QGb_n4ruaxj1zdE6rcjkiXE9QNN0DSyQK8UKmupcFcNSImQfO0IMwhkHC2U
+          # A general message that is displayed for all commits.
+          message: Webapp deployée
+          # JSON string that accepts double braces for templating.
