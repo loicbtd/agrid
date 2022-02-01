@@ -21,6 +21,12 @@ import { UnabilityToRetrieveUsersError } from '../errors/unability-to-retrieve-u
 import { UnabilityToRetrieveSubscriptionsError } from '../errors/unability-to-retrieve-subscriptions.error';
 import { AlreadyActiveSubscriptionError } from '../errors/already-active-subscription.error';
 import { UnabilityToSaveSubscriptionsError } from '../errors/unability-to-save-subscriptions.error';
+import { EmailsService } from './emails.service';
+import { EmailTemplateEnumeration } from '../enumerations/email-template.emumeration';
+import { environment } from '../../../environments/environment';
+import * as generatePassword from 'generate-password';
+import * as bcrypt from 'bcrypt';
+import { UnabilityToSendEmailError } from '../errors/unability-to-send-email.error';
 
 @Injectable()
 export class SubscriptionService {
@@ -32,7 +38,8 @@ export class SubscriptionService {
     @InjectRepository(PlanEntity)
     private readonly plansRepository: Repository<PlanEntity>,
     @Inject(STRIPE)
-    private readonly stripe: Stripe
+    private readonly stripe: Stripe,
+    private readonly emailsService: EmailsService
   ) {}
 
   async initiateSubscription(
@@ -205,5 +212,96 @@ export class SubscriptionService {
         user: { id: userId },
       },
     });
+  }
+
+  async activateSubscriptionFromStripe(stripeSubscriptionId?: string) {
+    let subscription: SubscriptionEntity;
+    try {
+      subscription = await this.subscriptionsRepository.findOneOrFail({
+        where: {
+          stripeSubscriptionId: stripeSubscriptionId,
+        },
+        relations: ['user', 'plan'],
+      });
+    } catch (error: any) {
+      throw new UnabilityToRetrieveSubscriptionsError(error.message);
+    }
+
+    subscription.active = true;
+
+    try {
+      subscription = await this.subscriptionsRepository.save(subscription);
+    } catch (error: any) {
+      throw new UnabilityToSaveSubscriptionsError(error.message);
+    }
+
+    let user: UserEntity;
+    try {
+      user = await this.usersRepository.findOneOrFail({
+        where: { id: subscription.user.id },
+      });
+    } catch (error: any) {
+      throw new UnabilityToRetrieveUsersError(error.message);
+    }
+
+    let plan: PlanEntity;
+    try {
+      plan = await this.plansRepository.findOneOrFail({
+        where: { id: subscription.plan.id },
+      });
+    } catch (error: any) {
+      throw new UnabilityToRetrieveUsersError(error.message);
+    }
+
+    this.emailsService.send(
+      EmailTemplateEnumeration.Welcome,
+      user.email,
+      `[${environment.solutionName}] Bienvenue !`,
+      {
+        data: {
+          planName: plan.name,
+          firstname: user.firstname,
+        },
+      }
+    );
+
+    if (!user.mustDefinePassword) {
+      return;
+    }
+
+    const password = generatePassword.generate();
+
+    const hashedPassword = await bcrypt.hash(
+      password,
+      environment.passwordHashSalt
+    );
+
+    user.password = hashedPassword;
+
+    try {
+      user = await this.usersRepository.save(user);
+    } catch (error: any) {
+      throw new UnabilityToSaveUserError(error.message);
+    }
+
+    try {
+      this.emailsService.send(
+        EmailTemplateEnumeration.ResetPassword,
+        user.email,
+        `[${environment.solutionName}] Votre nouveau mot de passe`,
+        {
+          data: {
+            firstname: user.firstname,
+            password: password,
+          },
+        }
+      );
+    } catch (error: any) {
+      throw new UnabilityToSendEmailError(
+        error.message,
+        user.email,
+        EmailTemplateEnumeration.ResetPassword
+      );
+    }
   }
 }

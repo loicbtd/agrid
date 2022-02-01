@@ -8,5 +8,6 @@
   "UnabilityToSendEmailError": "Unability to send an email",
   "UnkownPlanError": "Unknown plan",
   "Unkown": "Unknown error",
-  "Unauthorized": "Unauthorized action"
+  "Unauthorized": "Unauthorized action",
+  "AlreadyActiveSubscriptionError": "A subscription is already active"
 }

@@ -1,9 +1,10 @@
-import { ErrorHandler, Injector } from '@angular/core';
+import { ErrorHandler } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { environment } from '../../../environments/environment';
 import { lastValueFrom } from 'rxjs';
 import { ApplicationError } from '../errors/application.error';
 import { ToastMessageService } from '../services/toast-message.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 export class ErrorsHandler implements ErrorHandler {
   constructor(
@@ -24,6 +25,10 @@ export class ErrorsHandler implements ErrorHandler {
       this.toastMessageService.showError(
         await lastValueFrom(this.translateService.get(error.constructor.name))
       );
+    } else if (error instanceof HttpErrorResponse) {
+      if (error.url?.includes(environment.webserviceOrigin)) {
+        this.toastMessageService.showError(error.error.message);
+      }
     } else {
       this.toastMessageService.showError(
         await lastValueFrom(this.translateService.get('UNKOWN_ERROR'))

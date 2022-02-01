@@ -21,7 +21,8 @@ import { GlobalRoleEnumeration } from '@workspace/common/enumerations';
 import { UnabilityToRetrieveGlobalRolesOfUserError } from '../errors/unability-to-retrieve-global-roles-of-user.error';
 import { UnabilityToCountExistingUsersWithRoleError } from '../errors/unability-to-count-existing-users-with-role.error';
 import { UnabilityToRetrieveUsersError } from '../errors/unability-to-retrieve-users.error';
-
+import * as generatePassword from 'generate-password';
+import { UnabilityToSaveUserError } from '../errors/unability-to-create-user.error';
 @Injectable()
 export class UsersService {
   constructor(
@@ -186,5 +187,41 @@ export class UsersService {
       )
       .groupBy(`to_char(date(user.createdAt),'${DateFormatPostgreSQL.MONTH}')`)
       .execute();
+  }
+
+  async resetPassword(user: UserEntity) {
+    const password = generatePassword.generate();
+    const hashedPassword = await bcrypt.hash(
+      password,
+      environment.passwordHashSalt
+    );
+
+    user.password = hashedPassword;
+
+    try {
+      user = await this.usersRepository.save(user);
+    } catch (error: any) {
+      throw new UnabilityToSaveUserError(error.message);
+    }
+
+    try {
+      this.emailsService.send(
+        EmailTemplateEnumeration.ResetPassword,
+        user.email,
+        `[${environment.solutionName}] Votre nouveau mot de passe`,
+        {
+          data: {
+            firstname: user.firstname,
+            password: password,
+          },
+        }
+      );
+    } catch (error: any) {
+      throw new UnabilityToSendEmailError(
+        error.message,
+        user.email,
+        EmailTemplateEnumeration.ResetPassword
+      );
+    }
   }
 }

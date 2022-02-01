@@ -74,11 +74,11 @@ export class SubscriptionState {
   @Action(Reset)
   reset(context: StateContext<SubscriptionModel>) {
     context.setState({
-      email: '',
-      firstname: '',
-      lastname: '',
-      planId: '',
-      legalConditionsAccepted: false,
+      email: '5@test.fr',
+      firstname: 'def',
+      lastname: 'dfewfewf',
+      planId: 'ec6095b6-eb64-4e66-85a6-4589cee561bd',
+      legalConditionsAccepted: true,
       paymentStatus: undefined,
       paymentTriggered: false,
       previousStep: undefined,

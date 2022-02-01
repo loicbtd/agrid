@@ -30,7 +30,7 @@ export class EmailsService {
 
     options.data = {
       ...options.data,
-      emailHeaderSource: `${environment.protocol}://${environment.host}:${environment.port}/images/email-header.png`,
+      emailHeaderSource: `${environment.protocol}://${environment.host}:${environment.port}/images/email-header.jpg`,
       supportEmailAddress: environment.supportEmailAddress,
       webappUrl: environment.webappUrl,
     };

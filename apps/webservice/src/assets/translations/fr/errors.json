@@ -8,5 +8,6 @@
   "UnabilityToSendEmailError": "Impossible d'envoyer un courriel",
   "UnkownPlanError": "Plan inconnu",
   "Unkown": "Erreur inconnue",
-  "Unauthorized": "Cette action n'est pas permise"
+  "Unauthorized": "Cette action n'est pas permise",
+  "AlreadyActiveSubscriptionError": "Une souscription est déjà active"
 }
