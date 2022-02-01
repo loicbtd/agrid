@@ -6,9 +6,7 @@ import { environment } from '../../environments/environment';
 import { join } from 'path';
 import { UsersPostgresqlAdapter } from './adapters/users-postgresql.adapter';
 
-const ADAPTERS = [
-  UsersPostgresqlAdapter
-];
+const ADAPTERS = [UsersPostgresqlAdapter];
 
 @Global()
 @Module({

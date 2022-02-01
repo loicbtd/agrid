@@ -1,5 +1,5 @@
 {
-  "emailHeaderSource": "http://localhost:3333/images/email-header.png",
+  "emailHeaderSource": "https://real-it.fr/wp-content/uploads/2022/02/email-header.jpg",
   "webappUrl": "http://localhost:4200",
   "firstname": "Jean-Claude",
   "lastname": "DUJARDIN",
