@@ -9,6 +9,8 @@ import { Refresh as RefreshMyProfile } from '../../global/store/actions/my-profi
 import { Refresh as RefreshJwt } from '../../global/store/actions/jwt.actions';
 import { UndefinedSigninResponseError } from '../../global/errors/undefined-signin-response.error';
 import { apiRoutes } from '@workspace/common/constants';
+import { GlobalRoleEnumeration } from '@workspace/common/enumerations';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -16,7 +18,8 @@ import { apiRoutes } from '@workspace/common/constants';
 export class SigninService {
   constructor(
     private readonly httpClient: HttpClient,
-    private readonly store: Store
+    private readonly store: Store,
+    private readonly router: Router
   ) {}
 
   async signin(command: SigninRequest): Promise<void> {
@@ -36,5 +39,15 @@ export class SigninService {
     );
 
     await lastValueFrom(this.store.dispatch(new RefreshJwt(response.token)));
+
+    if (
+      response.profile.globalRoles?.includes(
+        GlobalRoleEnumeration.Administrator
+      )
+    ) {
+      this.router.navigate(['/administation']);
+    } else {
+      this.router.navigate(['/my-profile']);
+    }
   }
 }

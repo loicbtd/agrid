@@ -8,6 +8,7 @@ import { ToastMessageService } from '../../../../global/services/toast-message.s
 import { MyProfileState } from '../../../../global/store/state/my-profile.state';
 import { Router } from '@angular/router';
 import { SubscriptionService } from '../../services/subscription.service';
+import { SignoutService } from 'apps/webapp/src/app/global/services/signout.service';
 
 @Component({
   selector: 'app-my-profile-view',
@@ -29,9 +30,10 @@ export class MyProfileViewComponent implements OnInit {
     private readonly store: Store,
     private readonly fb: FormBuilder,
     private readonly profileService: ProfileService,
-    private toastMessageService: ToastMessageService,
+    private readonly toastMessageService: ToastMessageService,
     private readonly subscriptionService: SubscriptionService,
-    private readonly router: Router
+    private readonly router: Router,
+    private readonly signoutService: SignoutService
   ) {}
 
   async ngOnInit(): Promise<void> {
@@ -88,8 +90,12 @@ export class MyProfileViewComponent implements OnInit {
         this.disabledEditing();
       });
   }
-  
+
   getPrice(price: number | undefined): string {
     return price ? price / 100 + '' : '?';
+  }
+
+  signout() {
+    this.signoutService.signout();
   }
 }

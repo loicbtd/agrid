@@ -6,6 +6,12 @@
   <h1 style="color: var(--primary-color)">
     {{ currentProfile.firstname }} {{ currentProfile.lastname }}
   </h1>
+  <p-button
+    pRipple
+    label="Déconnexion"
+    styleClass="p-button-text p-button-rounded p-button-danger"
+    (click)="signout()"
+  ></p-button>
   <p-divider [align]="'center'" class="w-full">
     <div class="inline-flex align-items-center">
       <h2 style="color: var(--text-color-secondary)">

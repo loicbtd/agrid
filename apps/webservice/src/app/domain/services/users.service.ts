@@ -71,6 +71,7 @@ export class UsersService {
         email: user.email,
         firstname: user.firstname,
         lastname: user.lastname,
+        globalRoles: globalRoles,
       },
     };
   }

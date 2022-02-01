@@ -9,6 +9,7 @@ import { ProfileService } from '../../../../global/services/profile.service';
 import { ToastMessageService } from '../../../../global/services/toast-message.service';
 import { StatisticsService } from '../../services/statistics.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { SignoutService } from 'apps/webapp/src/app/global/services/signout.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -58,7 +59,8 @@ export class DashboardComponent implements OnInit {
     private readonly _toastMessage: ToastMessageService,
     private readonly plansService: PlansService,
     private readonly store: Store,
-    private readonly fb: FormBuilder
+    private readonly fb: FormBuilder,
+    private readonly signoutService: SignoutService
   ) {}
 
   ngOnInit(): void {
@@ -295,5 +297,9 @@ export class DashboardComponent implements OnInit {
         this.hideNewDialog();
         this._toastMessage.showSuccess('Le plan a été ajouté');
       });
+  }
+
+  async signout() {
+    this.signoutService.signout();
   }
 }

@@ -26,6 +26,9 @@ import { JwtInterceptor } from './global/interceptors/jwt.interceptor';
 import { ToastMessageService } from './global/services/toast-message.service';
 import { VisitedRoutesHistoryService } from './global/services/visited-routes-history.service';
 import { VisitedRoutesHistoryState } from './global/store/state/visited-routes-history.state';
+import { NotSignedInStateIsRequiredGuard } from './global/guards/not-signed-in-state-is-required.guard';
+import { AdministratorGlobalRoleIsRequiredGuard } from './global/guards/administrator-global-role-is-required.guard';
+import { AuthenticationIsRequiredGuard } from './global/guards/authentication-is-required.guard';
 
 const states = [
   JwtState,
@@ -95,6 +98,7 @@ export function createJwtInterceptor(store: Store) {
             import('./modules/signin/signin.module').then(
               (m) => m.SigninModule
             ),
+          canActivate: [NotSignedInStateIsRequiredGuard],
         },
         {
           path: appRoutes.initialSetup,
@@ -109,6 +113,10 @@ export function createJwtInterceptor(store: Store) {
             import('./modules/administration/administration.module').then(
               (m) => m.AdministrationModule
             ),
+          canActivate: [
+            AuthenticationIsRequiredGuard,
+            AdministratorGlobalRoleIsRequiredGuard,
+          ],
         },
         {
           path: appRoutes.myProfile,
@@ -116,6 +124,7 @@ export function createJwtInterceptor(store: Store) {
             import('./modules/my-profile/my-profile.module').then(
               (m) => m.MyProfileModule
             ),
+          canActivate: [AuthenticationIsRequiredGuard],
         },
         {
           path: appRoutes.errors,

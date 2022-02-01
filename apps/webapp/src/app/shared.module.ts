@@ -48,6 +48,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { AngularComponentsProgressSpinnerModule } from '@workspace/angular/components/progress-spinner';
 import { ChartModule } from 'primeng/chart';
 import { TabViewModule } from 'primeng/tabview';
+import { AvatarModule } from 'primeng/avatar';
 
 const importedAndExportedModules = [
   CommonModule,
@@ -97,6 +98,7 @@ const importedAndExportedModules = [
   AngularComponentsProgressSpinnerModule,
   ChartModule,
   TabViewModule,
+  AvatarModule,
 ];
 
 @NgModule({
