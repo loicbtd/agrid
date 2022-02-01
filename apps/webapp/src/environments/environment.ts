@@ -9,5 +9,5 @@ export const environment = {
   version: packageDotJson.version,
   webserviceOrigin: 'http://localhost:3333',
   chatwootBaseUrl: 'https://support.agrid.ml',
-  chatwootEnvironmentToken: 'JDtptbJgfyAYjLJkTUW6eegv',
+  chatwootEnvironmentToken: 'Baejovc9Be5SUa3URiHwP7WE',
 };

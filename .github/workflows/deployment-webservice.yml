@@ -2,8 +2,6 @@ name: '[Deployment] webservice'
 on:
   push:
     branches: [deployment/production]
-  pull_request:
-    branches: [deployment/production]
 
 jobs:
   build:
