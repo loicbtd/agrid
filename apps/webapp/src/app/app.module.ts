@@ -98,7 +98,6 @@ export function createJwtInterceptor(store: Store) {
             import('./modules/signin/signin.module').then(
               (m) => m.SigninModule
             ),
-          canActivate: [NotSignedInStateIsRequiredGuard],
         },
         {
           path: appRoutes.initialSetup,
